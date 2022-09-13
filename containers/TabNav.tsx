@@ -5,8 +5,7 @@ import { COLORS } from '../styles/global';
 import Home from './Home';
 import Profile from './Profile';
 import Transactions from './Transactions';
-import * as Animatable from 'react-native-animatable';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 
 
 const styles = StyleSheet.create({
@@ -30,9 +29,7 @@ const TabButton = (props: any) => {
       onPress={onPress}
       activeOpacity={1}
     >
-      <Animatable.View ref={viewRef} style={styles.container} animation="zoomIn" duration={200}>
-        <Ionicons name={focused ? item.activeIcon : item.inactiveIcon} color={COLORS.black} size={24} />
-      </Animatable.View>
+      <Ionicons name={focused ? item.activeIcon : item.inactiveIcon} color={COLORS.black} size={24} />
     </TouchableOpacity>
   )
 }

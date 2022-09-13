@@ -42,6 +42,10 @@ export const global = StyleSheet.create({
     paddingTop: 20,
     paddingHorizontal: 20,
   },
+  initialMargin: {
+    marginTop: 20,
+    marginHorizontal: 20,
+  },
   h1: {
     fontSize: 50,
     color: COLORS.black,
