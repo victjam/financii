@@ -3,6 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { darkTheme, lightTheme } from '../styles/theme';
 import { useDarkMode } from "../hooks/useDarkMode"
 import { useSelector, useDispatch } from "react-redux";
+import { ThemeProvider } from 'styled-components/native';
 import { Dimensions } from 'react-native';
 import { TOGGLE_DARKTHEME } from "../store/theme/actions";
 import { Container, Text, TitleText, Header, ThemeButton, ThemeButtonText } from '../styles/global';
@@ -10,13 +11,15 @@ const windowWidth = Dimensions.get('window').width;
 
 const Main = ({ navigation }: any) => {
   const dispatch = useDispatch();
-
+  const onChangeTheme = () => {
+    dispatch({ type: TOGGLE_DARKTHEME })
+  }
   return (
     <Container>
       <Header>
         <TitleText fontSize='24px'>Blog</TitleText>
         <ThemeButton>
-          <ThemeButtonText>asdas
+          <ThemeButtonText onPress={onChangeTheme}>asdas
           </ThemeButtonText>
         </ThemeButton>
       </Header>
