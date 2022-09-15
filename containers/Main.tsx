@@ -1,44 +1,33 @@
-import React from 'react';
-import { Text, Dimensions, StyleSheet, Image, SafeAreaView, View, TouchableOpacity, TouchableWithoutFeedback } from 'react-native'
-import { global } from '../styles/global';
-
+import React, { useState } from 'react';
+import { StatusBar } from 'expo-status-bar';
+import { darkTheme, lightTheme } from '../styles/theme';
+import { useDarkMode } from "../hooks/useDarkMode"
+import { useSelector, useDispatch } from "react-redux";
+import { Dimensions } from 'react-native';
+import { TOGGLE_DARKTHEME } from "../store/theme/actions";
+import { Container, Text, TitleText, Header, ThemeButton, ThemeButtonText } from '../styles/global';
 const windowWidth = Dimensions.get('window').width;
 
-const styles = StyleSheet.create({
-    marginBottom: {
-        marginBottom: 40
-    },
-    image: {
-        width: windowWidth,
-        height: windowWidth
-    }
-})
-const Main = ({ navigation }: any) => (
-    <SafeAreaView style={global.safeView}>
-        <View style={global.initialPadding}>
-            <Image
-                style={styles.image}
-                source={require('../assets/yogi.gif')}
-            />
-            <View style={styles.marginBottom}>
-                <Text style={[global.h5, global.left, global.marginBottom]}>ALPHA VERSION</Text>
-                <Text style={[global.h2, global.left]}>Bienvenidos a</Text>
-                <Text style={[global.h1, global.left, global.marginBottom]}>Financii</Text>
-                <Text style={global.center}>Una app para gestionar tus gatos y metas de la forma mas segura y simple posible.</Text>
-            </View>
-            <View style={[styles.marginBottom, global.centerElement]}>
-                <TouchableOpacity onPress={() => navigation.navigate('Signup')} style={global.buttonPrimary}>
-                    <Text style={global.buttonPrimaryText}>Crear cuenta</Text>
-                </TouchableOpacity>
-            </View>
-            <View></View>
-            <TouchableWithoutFeedback onPress={() => navigation.navigate('Login')}>
-                <Text style={global.hyperlinkText}>Ya tienes una cuenta?, inicia
-                    <Text style={global.highlight}> aqui.</Text>
-                </Text>
-            </TouchableWithoutFeedback>
-        </View>
-    </SafeAreaView>
-)
+const Main = ({ navigation }: any) => {
+  const dispatch = useDispatch();
+
+  return (
+    <Container>
+      <Header>
+        <TitleText fontSize='24px'>Blog</TitleText>
+        <ThemeButton>
+          <ThemeButtonText>asdas
+          </ThemeButtonText>
+        </ThemeButton>
+      </Header>
+      <Container>
+        <TitleText>sadasd</TitleText>
+        <Text>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veniam, dolores, aut exercitationem magnam obcaecati impedit illum ipsam quos consequuntur, laborum blanditiis at ducimus sapiente ratione consequatur minus mollitia esse in.</Text>
+        <Text fontWeight='600'>22/12/1194</Text>
+      </Container>
+      <StatusBar style='auto' />
+    </Container>
+  )
+}
 
 export default Main;

@@ -1,7 +1,7 @@
 
 import { StyleSheet } from 'react-native'
 import { Dimensions } from 'react-native';
-
+import { Props } from '../models/styleProps'
 export const windowWidth = Dimensions.get('window').width;
 
 export const REGEX = {
@@ -126,3 +126,51 @@ export const global = StyleSheet.create({
     fontWeight: 'bold'
   },
 });
+
+/// styled 
+import styled from 'styled-components/native';
+import Constants from 'expo-constants';
+export const Container = styled.SafeAreaView<Props>`
+    background-color: ${(props) => props.theme.PRIMARY_COLOR};
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    padding-top: ${Constants.statusBarHeight + 'px'};
+    transition: all .3s ease;
+`;
+export const Header = styled.View`
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+`;
+export const ThemeButton = styled.Pressable<Props>`
+    padding: 10px;
+    border: 1px solid ${(props) => props.theme.BUTTON_COLOR};
+    transition: all .3s ease;
+`;
+export const ThemeButtonText = styled.Text<Props>`
+    font-size: 16px;
+    color: ${(props) => props.theme.BUTTON_COLOR};
+    transition: all .3s ease;
+`;
+export const TitleText = styled.Text<Props>`
+    font-weight: 600;
+    font-size: ${(props) => props.fontSize || '18px'};
+    color: ${(props) => props.theme.TITLE_COLOR};
+    transition: all .3s ease;
+`;
+export const PostContainer = styled.View`
+    padding: 10px 20px;
+    width: 100%;
+`;
+export const Text = styled.Text<Props>`
+    color: ${(props) => props.theme.SECONDARY_COLOR};
+    transition: all .3s ease;
+    font-size: 16px;
+    padding: 10px 0 0;
+    font-weight: ${(props) => props.fontWeight || '400'};
+`;
