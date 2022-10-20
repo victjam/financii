@@ -1,34 +1,41 @@
-import React, { useState } from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { darkTheme, lightTheme } from '../styles/theme';
-import { useDarkMode } from "../hooks/useDarkMode"
-import { useSelector, useDispatch } from "react-redux";
-import { ThemeProvider } from 'styled-components/native';
-import { Dimensions } from 'react-native';
+import React, { useState, } from 'react';
+import { useDispatch } from "react-redux";
+import { Dimensions, View, TouchableOpacity, TouchableWithoutFeedback, Image } from 'react-native';
 import { TOGGLE_DARKTHEME } from "../store/theme/actions";
-import { Container, Text, TitleText, Header, ThemeButton, ThemeButtonText } from '../styles/global';
-const windowWidth = Dimensions.get('window').width;
+import { Container, Text, Div, PrimaryButton, WrappedBox, SText, LGText, XLGText, TextButton, global } from '../styles/global';
 
 const Main = ({ navigation }: any) => {
   const dispatch = useDispatch();
-  const onChangeTheme = () => {
-    dispatch({ type: TOGGLE_DARKTHEME })
-  }
   return (
     <Container>
-      <Header>
-        <TitleText fontSize='24px'>Blog</TitleText>
-        <ThemeButton>
-          <ThemeButtonText onPress={onChangeTheme}>asdas
-          </ThemeButtonText>
-        </ThemeButton>
-      </Header>
-      <Container>
-        <TitleText>sadasd</TitleText>
-        <Text>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veniam, dolores, aut exercitationem magnam obcaecati impedit illum ipsam quos consequuntur, laborum blanditiis at ducimus sapiente ratione consequatur minus mollitia esse in.</Text>
-        <Text fontWeight='600'>22/12/1194</Text>
-      </Container>
-      <StatusBar style='auto' />
+      <WrappedBox>
+        <View style={global.centerElement}>
+          <Image
+            style={global.imagePersonal}
+            source={require('../assets/finance.png')}
+          />
+        </View>
+        <SText fontWeight="bold">ALPHA VERSION</SText>
+        <LGText fontWeight="bold">Bienvenidos a</LGText>
+        <XLGText fontWeight="bold">Financii</XLGText>
+        <Div paddingTop="10">
+          <Text>Una app para gestionar tus gatos y metas de la forma mas segura y simple posible.</Text>
+        </Div>
+        <View>
+        </View>
+        <Div paddingTop="30">
+          <PrimaryButton onPress={() => navigation.navigate('Signup')} >
+            <TextButton fontWeight="bold">Crear cuenta</TextButton>
+          </PrimaryButton>
+        </Div>
+        //
+        {/* onPress={() => dispatch({ type: TOGGLE_DARKTHEME })}*/}
+        <TouchableWithoutFeedback onPress={() => navigation.navigate('Login')}>
+          <Text paddingTop='10' >Ya tienes una cuenta?, inicia
+            <Text fontWeight='bold'> aqui.</Text>
+          </Text>
+        </TouchableWithoutFeedback>
+      </WrappedBox>
     </Container>
   )
 }

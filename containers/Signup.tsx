@@ -1,8 +1,9 @@
 import React from 'react'
-import { Dimensions, View, Text, SafeAreaView, ScrollView, StyleSheet, KeyboardAvoidingView, TouchableOpacity, TouchableWithoutFeedback } from 'react-native'
-import { global, COLORS, REGEX } from '../styles/global';
+import { Dimensions, View, ScrollView, StyleSheet, KeyboardAvoidingView, TouchableOpacity, TouchableWithoutFeedback } from 'react-native'
+import { global, COLORS, REGEX, Container, Text, LGText, Div, PrimaryButton, TextButton, PrimaryButtonWithIcon } from '../styles/global';
 import { AntDesign } from '@expo/vector-icons';
 import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
 import CustomInput from '../components/form/CustomInput';
 
 
@@ -18,7 +19,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   highlightForgot: {
-    color: COLORS.black
+    color: COLORS.BLACK
   },
   buttonWidth: {
     alignItems: 'stretch'
@@ -36,12 +37,12 @@ const styles = StyleSheet.create({
   left: {
     height: 1,
     width: 150,
-    backgroundColor: COLORS.gray
+    backgroundColor: COLORS.GRAY
   },
   right: {
     height: 1,
     width: 150,
-    backgroundColor: COLORS.gray
+    backgroundColor: COLORS.GRAY
   },
   iconWidth: {
     position: 'absolute',
@@ -52,11 +53,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   lineText: {
-    color: COLORS.darkGray
+    color: COLORS.DARKGRAY
   }
 })
 
 const Login = ({ navigation }: any) => {
+  const darkThemeEnabled = useSelector((state: any) => state.theme.preferences.darkThemeEnabled);
   const { control, handleSubmit, watch } = useForm({
     defaultValues: {
       email: '',
@@ -82,11 +84,11 @@ const Login = ({ navigation }: any) => {
   }
 
   return (
-    <SafeAreaView style={global.safeView}>
+    <Container>
       <KeyboardAvoidingView behavior="padding">
         <ScrollView>
-          <View style={[global.initialPadding, styles.paddingTop]}>
-            <Text style={[global.h2, styles.marginBottom]}>Registrate</Text>
+          <Div>
+            <LGText paddingTop='20' fontWeight="bold">Registrate</LGText>
             <CustomInput
               name="name"
               label="Nombres"
@@ -135,37 +137,39 @@ const Login = ({ navigation }: any) => {
                 validate: (value: any) => value === pwd || 'La contraseña no es la misma.'
               }}
             />
-            <View style={styles.marginTop}>
+            <Div paddingTop='20'>
               <TouchableWithoutFeedback onPress={() => navigation.navigate('Login')}>
-                <Text style={[global.hyperlinkText]}>Ya tienes una cuenta?, inicia sesion
-                  <Text style={global.highlight}> aqui.</Text>
+                <Text>Ya tienes una cuenta?, inicia sesion
+                  <Text fontWeight='bold'> aqui.</Text>
                 </Text>
               </TouchableWithoutFeedback>
-            </View>
-            <View style={[styles.marginTop, global.centerElement]}>
-              <TouchableOpacity onPress={handleSubmit(signup)} style={global.buttonPrimary}>
-                <Text style={global.buttonPrimaryText}>Crear cuenta</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.box}>
+            </Div>
+            <Div paddingTop='10'>
+              <PrimaryButton onPress={handleSubmit(signup)}>
+                <TextButton fontWeight="bold">Crear cuenta</TextButton>
+              </PrimaryButton>
+            </Div>
+            <Div style={styles.box}>
               <View style={styles.left}></View>
               <Text style={[styles.marginHorizontal, styles.lineText]}>OR</Text>
               <View style={styles.right}></View>
-            </View>
-            <View style={[styles.marginTop, global.centerElement]}>
-              <TouchableOpacity style={[global.buttonPrimary, global.centerElement, styles.marginBottom]}>
-                <AntDesign style={styles.iconWidth} name="apple1" size={24} color="white" />
-                <Text style={global.buttonPrimaryText}>Continua con Apple</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={[global.buttonPrimary, global.centerElement, styles.marginBottom]}>
-                <AntDesign style={styles.iconWidth} name="google" size={24} color="white" />
-                <Text style={global.buttonPrimaryText}>Continua con Google</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
+            </Div>
+            <Div paddingTop="30">
+              <PrimaryButtonWithIcon onPress={handleSubmit(signup)}>
+                <AntDesign style={{ marginRight: 10 }} name="apple1" size={24} color={!darkThemeEnabled ? COLORS.WHITE : COLORS.BLACK} />
+                <TextButton fontWeight="bold">Continua con Apple</TextButton>
+              </PrimaryButtonWithIcon>
+            </Div>
+            <Div paddingTop="30">
+              <PrimaryButtonWithIcon onPress={handleSubmit(signup)}>
+                <AntDesign style={{ marginRight: 10 }} name="google" size={24} color={!darkThemeEnabled ? COLORS.WHITE : COLORS.BLACK} />
+                <TextButton fontWeight="bold">Continua con Google</TextButton>
+              </PrimaryButtonWithIcon>
+            </Div>
+          </Div>
         </ScrollView>
       </KeyboardAvoidingView>
-    </SafeAreaView>
+    </Container>
   )
 }
 

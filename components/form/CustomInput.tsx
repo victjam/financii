@@ -1,25 +1,12 @@
 import React from 'react'
-import { View, Text, TextInput, StyleSheet } from 'react-native'
+import { View, TextInput, StyleSheet } from 'react-native'
 import { IInput } from '../../models/Input.interface'
-import { FONTS, COLORS } from '../../styles/global';
+import { FONTS, COLORS, Text, InputField } from '../../styles/global';
 import { Controller } from "react-hook-form";
 
 const styles = StyleSheet.create({
   paddingTop: {
     paddingTop: 100
-  },
-  input: {
-    borderWidth: 1,
-    borderRadius: 5,
-    height: 40,
-    fontSize: FONTS.xxs,
-    padding: 10,
-    borderColor: COLORS.gray
-  },
-  label: {
-    fontSize: FONTS.xxs,
-    paddingBottom: 5,
-    color: COLORS.black
   },
   inputBox: {
     marginTop: 15,
@@ -33,19 +20,19 @@ const styles = StyleSheet.create({
 const CustomInput = ({ label, name, control, rules = {}, secureTextEntry }: any) => {
   return (
     <View style={styles.inputBox}>
-      <Text style={styles.label}>{label}</Text>
+      <Text paddingBottom='5'>{label}</Text>
       <Controller
         name={name}
         rules={rules}
         control={control}
         render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
           <View>
-            <TextInput style={[styles.input, { borderColor: error ? COLORS.danger : COLORS.gray }]}
+            <InputField style={[{ borderColor: error ? COLORS.DANGER : COLORS.GRAY }]}
               onBlur={onBlur}
               secureTextEntry={secureTextEntry}
               onChangeText={onChange}
               value={value} />
-            {error && <Text style={[styles.error, { color: error ? COLORS.danger : COLORS.gray }]}>{error.message || 'Error'}</Text>}
+            {error && <Text style={[styles.error, { color: error ? COLORS.DANGER : COLORS.GRAY }]}>{error.message || 'Error'}</Text>}
           </View>
         )}
       />

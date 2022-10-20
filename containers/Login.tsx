@@ -1,7 +1,8 @@
 import React from 'react'
-import { Dimensions, View, Text, SafeAreaView, StyleSheet, TouchableOpacity, TouchableWithoutFeedback } from 'react-native'
-import { global, COLORS, REGEX } from '../styles/global';
+import { Dimensions, View, StyleSheet, TouchableOpacity, TouchableWithoutFeedback } from 'react-native'
+import { global, COLORS, REGEX, Div, Container, LGText, WrappedBox, PrimaryButton, PrimaryButtonWithIcon, Text, TextButton } from '../styles/global';
 import { AntDesign } from '@expo/vector-icons';
+import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import CustomInput from '../components/form/CustomInput';
 
@@ -18,7 +19,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   highlightForgot: {
-    color: COLORS.black
+    color: COLORS.BLACK
   },
   buttonWidth: {
     alignItems: 'stretch'
@@ -36,27 +37,23 @@ const styles = StyleSheet.create({
   left: {
     height: 1,
     width: 150,
-    backgroundColor: COLORS.gray
+    backgroundColor: COLORS.GRAY
   },
   right: {
     height: 1,
     width: 150,
-    backgroundColor: COLORS.gray
-  },
-  iconWidth: {
-    position: 'absolute',
-    left: 10,
-    top: 7,
+    backgroundColor: COLORS.GRAY
   },
   marginHorizontal: {
     marginHorizontal: 10,
   },
   lineText: {
-    color: COLORS.darkGray
+    color: COLORS.DARKGRAY
   }
 })
 
 const Login = ({ navigation }: any) => {
+  const darkThemeEnabled = useSelector((state: any) => state.theme.preferences.darkThemeEnabled);
   const { control, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {
       email: '',
@@ -76,9 +73,9 @@ const Login = ({ navigation }: any) => {
   }
 
   return (
-    <SafeAreaView style={global.safeView}>
-      <View style={[global.initialPadding, styles.paddingTop]}>
-        <Text style={[global.h2, styles.marginBottom]}>Inicia sesion</Text>
+    <Container>
+      <WrappedBox>
+        <LGText paddingTop='20' fontWeight="bold">Inicia sesion</LGText>
         <CustomInput
           name="email"
           label="Email"
@@ -100,7 +97,7 @@ const Login = ({ navigation }: any) => {
         />
         <View style={styles.marginTop}>
           <TouchableWithoutFeedback onPress={() => navigation.navigate('Login')}>
-            <Text style={styles.highlightForgot}> Olvidaste la contraseña?</Text>
+            <Text> Olvidaste la contraseña?</Text>
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback onPress={() => navigation.navigate('Signup')}>
             <Text style={[global.hyperlinkText]}>No tienes una cuenta?, registrate
@@ -108,28 +105,31 @@ const Login = ({ navigation }: any) => {
             </Text>
           </TouchableWithoutFeedback>
         </View>
-        <View style={[styles.marginTop, global.centerElement]}>
-          <TouchableOpacity onPress={handleSubmit(signing)} style={global.buttonPrimary}>
-            <Text style={global.buttonPrimaryText}>Iniciar sesion</Text>
-          </TouchableOpacity>
-        </View>
+
+        <Div paddingTop="30">
+          <PrimaryButton onPress={handleSubmit(signing)}>
+            <TextButton fontWeight="bold">Iniciar sesion</TextButton>
+          </PrimaryButton>
+        </Div>
         <View style={styles.box}>
           <View style={styles.left}></View>
           <Text style={[styles.marginHorizontal, styles.lineText]}>OR</Text>
           <View style={styles.right}></View>
         </View>
-        <View style={[styles.marginTop, global.centerElement]}>
-          <TouchableOpacity style={[global.buttonPrimary, global.centerElement, styles.marginBottom]}>
-            <AntDesign style={styles.iconWidth} name="apple1" size={24} color="white" />
-            <Text style={global.buttonPrimaryText}>Continua con Apple</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={[global.buttonPrimary, global.centerElement, styles.marginBottom]}>
-            <AntDesign style={styles.iconWidth} name="google" size={24} color="white" />
-            <Text style={global.buttonPrimaryText}>Continua con Google</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </SafeAreaView>
+        <Div paddingTop="30">
+          <PrimaryButtonWithIcon onPress={() => navigation.navigate('Home')}>
+            <AntDesign style={{ marginRight: 10 }} name="apple1" size={24} color={!darkThemeEnabled ? COLORS.WHITE : COLORS.BLACK} />
+            <TextButton fontWeight="bold">Continua con Apple</TextButton>
+          </PrimaryButtonWithIcon>
+        </Div>
+        <Div paddingTop="30">
+          <PrimaryButtonWithIcon onPress={() => navigation.navigate('Home')}>
+            <AntDesign style={{ marginRight: 10 }} name="google" size={24} color={!darkThemeEnabled ? COLORS.WHITE : COLORS.BLACK} />
+            <TextButton fontWeight="bold">Continua con Google</TextButton>
+          </PrimaryButtonWithIcon>
+        </Div>
+      </WrappedBox>
+    </Container>
   )
 }
 

@@ -9,13 +9,14 @@ export const REGEX = {
   password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/g
 }
 export const COLORS = {
-  white: '#fff',
-  black: '#333',
-  gray: '#DCDCDD',
-  darkGray: '#a3a3a3',
-  green: '#315917',
-  danger: '#C70039',
-  darkBlue: '#070f24'
+  WHITE: '#fff',
+  BLACK: '#121318',
+  DANGER: '#C70039',
+  GRAY: '#DCDCDD',
+  DARKGRAY: '#a3a3a3',
+  GREEN: '#315917',
+  RED: '#C70039',
+  DARKBLUE: '#070f24'
 }
 
 export const FONTS = {
@@ -27,9 +28,20 @@ export const FONTS = {
   l: 50,
 }
 export const global = StyleSheet.create({
+  imagePersonal: {
+    width: windowWidth,
+    height: 300,
+    alignItems: 'center',
+    marginBottom: 20
+  },
+
+  centerElement: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   safeView: {
     flex: 1,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.WHITE,
   },
   container: {
     display: 'flex',
@@ -48,30 +60,26 @@ export const global = StyleSheet.create({
   },
   h1: {
     fontSize: 50,
-    color: COLORS.black,
+    color: COLORS.BLACK,
     fontWeight: 'bold'
   },
   h2: {
     fontSize: 30,
-    color: COLORS.black,
+    color: COLORS.BLACK,
     fontWeight: 'bold'
   },
   h3: {
     fontSize: 25,
-    color: COLORS.black,
+    color: COLORS.BLACK,
     fontWeight: 'bold'
   },
   h5: {
     fontSize: 10,
-    color: COLORS.black,
+    color: COLORS.BLACK,
     fontWeight: 'bold'
   },
   center: {
     textAlign: 'center'
-  },
-  centerElement: {
-    display: 'flex',
-    alignSelf: 'stretch',
   },
   spaceBetween: {
     display: 'flex',
@@ -97,17 +105,17 @@ export const global = StyleSheet.create({
   buttonPrimaryText: {
     fontSize: 15,
     fontWeight: '600',
-    color: COLORS.white,
+    color: COLORS.WHITE,
   },
   buttonPrimary: {
     position: 'relative',
     alignItems: "center",
     paddingVertical: 12,
     borderWidth: 3,
-    borderColor: COLORS.black,
+    borderColor: COLORS.BLACK,
     borderRadius: 5,
     fontWeight: 'bold',
-    backgroundColor: COLORS.black,
+    backgroundColor: COLORS.BLACK,
     padding: 10
   },
   buttonContainer: {
@@ -134,11 +142,96 @@ export const Container = styled.SafeAreaView<Props>`
     background-color: ${(props) => props.theme.PRIMARY_COLOR};
     flex: 1;
     align-items: center;
-    justify-content: center;
-    padding: 20px;
-    padding-top: ${Constants.statusBarHeight + 'px'};
     transition: all .3s ease;
 `;
+
+export const WrappedBox = styled.View<Props>`
+  padding-top: ${Constants.statusBarHeight + 'px'};
+  background-color: ${(props) => props.theme.PRIMARY_COLOR};
+  width: 100%;
+  height: 100%;
+  padding-left: 10px;
+  padding-right: 10px;
+  transition: all .3s ease;
+`
+export const Div = styled.View<Props>`
+  padding-top: ${(props) => (props.paddingTop || '0') + 'px'};
+`
+
+
+export const Image = styled.View<Props>`
+  background: ${props => `url(${props.source}) no-repeat top center`};
+  background-position: center;
+  height: 340px;
+  background-repeat: no-repeat;
+`
+
+export const SText = styled.Text<Props>`
+  font-size: 10px;
+  font-weight: ${(props) => props.fontWeight || 'normal'};
+  text-align: ${(props) => props.align || 'left'};
+  padding-top: ${(props) => (props.paddingTop || '0') + 'px'};
+  color: ${(props) => props.color ? props.color : props.theme.TITLE_COLOR};
+`
+export const Text = styled.Text<Props>`
+  font-size: ${(props) => (props.fontSize || '14') + 'px'};
+  padding-top: ${(props) => (props.paddingTop || '0') + 'px'};
+  padding-bottom: ${(props) => (props.paddingBottom || '0') + 'px'};
+  text-align: ${(props) => props.align || 'left'};
+  font-weight: ${(props) => props.fontWeight || 'normal'};
+  color: ${(props) => props.color ? props.color : props.theme.TITLE_COLOR};
+`
+export const TextButton = styled.Text<Props>`
+  font-size: ${(props) => (props.fontSize || '14') + 'px'};
+  padding-top: ${(props) => (props.paddingTop || '0') + 'px'};
+  text-align: ${(props) => props.align || 'left'};
+  font-weight: ${(props) => props.fontWeight || 'normal'};
+  color: ${(props) => props.color ? props.color : props.theme.BUTTON_TITLE_COLOR};
+`
+export const LGText = styled.Text<Props>`
+  font-size: 30px;
+  padding-top: ${(props) => (props.paddingTop || '0') + 'px'};
+  font-weight: ${(props) => props.fontWeight || 'normal'};
+  text-align: ${(props) => props.align || 'left'};
+  color: ${(props) => props.color ? props.color : props.theme.TITLE_COLOR};
+`
+export const XLGText = styled.Text<Props>`
+  font-size: 50px;
+  font-weight: ${(props) => props.fontWeight || 'normal'};
+  padding-top: ${(props) => (props.paddingTop || '0') + 'px'};
+  text-align: ${(props) => props.align || 'left'};
+  color: ${(props) => props.color ? props.color : props.theme.TITLE_COLOR};
+`
+
+export const InputField = styled.TextInput<Props>`
+  color: ${(props) => props.color ? props.color : props.theme.TITLE_COLOR};
+  border-width: 1px;
+  border-radius: 5px;
+  height: 40px;
+  font-size: 14px;
+  padding: 10px;
+  border-color: ${(props) => props.color ? props.color : props.theme.TITLE_COLOR};
+`
+
+export const PrimaryButton = styled.Pressable<Props>`
+  background: ${(props) => props.theme.BUTTON_COLOR}
+  border-radius: 5px;
+  height: 50px;
+  justify-content: center;
+  text-align: center;
+  display: flex;
+  align-items: center;
+`
+
+export const PrimaryButtonWithIcon = styled.Pressable<Props>`
+  background: ${(props) => props.theme.BUTTON_COLOR}
+  border-radius: 5px;
+  height: 50px;
+  flex-direction: row;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+`
 export const Header = styled.View`
     display: flex;
     width: 100%;
@@ -160,17 +253,10 @@ export const ThemeButtonText = styled.Text<Props>`
 export const TitleText = styled.Text<Props>`
     font-weight: 600;
     font-size: ${(props) => props.fontSize || '18px'};
-    color: ${(props) => props.theme.TITLE_COLOR};
+     color: ${(props) => props.color ? props.color : props.theme.TITLE_COLOR};
     transition: all .3s ease;
 `;
 export const PostContainer = styled.View`
     padding: 10px 20px;
     width: 100%;
-`;
-export const Text = styled.Text<Props>`
-    color: ${(props) => props.theme.SECONDARY_COLOR};
-    transition: all .3s ease;
-    font-size: 16px;
-    padding: 10px 0 0;
-    font-weight: ${(props) => props.fontWeight || '400'};
 `;
