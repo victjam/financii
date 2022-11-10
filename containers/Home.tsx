@@ -1,7 +1,7 @@
 
 import { useEffect } from 'react';
-import { StyleSheet, Text, View, Image, SafeAreaView, FlatList, Dimensions } from 'react-native'
-import { global, FONTS, COLORS } from '../styles/global';
+import { StyleSheet, View, Image, SafeAreaView, FlatList, Dimensions } from 'react-native'
+import { global, FONTS, COLORS, Container, Text } from '../styles/global';
 import { LinearGradient } from 'expo-linear-gradient';
 
 
@@ -17,7 +17,7 @@ const CONTAINER = width * (cards.length > 1 ? 0.92 : 1)
 const Home = () => {
 
   const SPACE = 5;
-  return (<SafeAreaView>
+  return (<Container>
     <View>
       <Text style={[styles.title, global.initialPadding]}>Buenos dias, Victor</Text>
       <FlatList
@@ -58,7 +58,7 @@ const Home = () => {
         }} />
 
     </View>
-  </SafeAreaView>
+  </Container>
   )
 }
 
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
   cardMainText: {
     fontSize: FONTS.xs,
     fontWeight: 'bold',
-    color: COLORS.white
+    color: COLORS.WHITE
   },
   name: {
     marginTop: 10,

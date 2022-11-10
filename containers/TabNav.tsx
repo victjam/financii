@@ -6,6 +6,7 @@ import Home from './Home';
 import Profile from './Profile';
 import Transactions from './Transactions';
 import { useRef } from 'react';
+import { useSelector } from "react-redux";
 
 
 const styles = StyleSheet.create({
@@ -19,6 +20,7 @@ const styles = StyleSheet.create({
 
 //type this
 const TabButton = (props: any) => {
+  const darkThemeEnabled = useSelector((state: any) => state.theme.preferences.darkThemeEnabled);
   const { item, onPress, accessibilityState } = props;
   const focused = accessibilityState.selected;
   const viewRef: any = useRef(null)
@@ -29,7 +31,7 @@ const TabButton = (props: any) => {
       onPress={onPress}
       activeOpacity={1}
     >
-      <Ionicons name={focused ? item.activeIcon : item.inactiveIcon} color={COLORS.black} size={24} />
+      <Ionicons name={focused ? item.activeIcon : item.inactiveIcon} color={darkThemeEnabled ? COLORS.WHITE : COLORS.BLACK} size={24} />
     </TouchableOpacity>
   )
 }
@@ -46,28 +48,32 @@ const TabArr = [
 ]
 
 const Tab = createBottomTabNavigator()
-const TabNav = () => (
-  <Tab.Navigator
-    screenOptions={{
-      headerShown: false,
-      tabBarStyle: {
-      }
-    }}
-  >
-    {TabArr.map((item: any, index: number) => {
-      return (
-        <Tab.Screen key={index} name={item.route} component={item.component}
-          options={{
-            tabBarShowLabel: false,
-            tabBarLabel: item.label,
-            tabBarIcon: ({ color, focused }) => (
-              <Ionicons name={focused ? item.activeIcon : item.inactiveIcon} color={color} size={24} />
-            ),
-            tabBarButton: (props) => <TabButton {...props} item={item} />
-          }} />
-      )
-    })}
-  </Tab.Navigator>
-)
+const TabNav = () => {
+  const darkThemeEnabled = useSelector((state: any) => state.theme.preferences.darkThemeEnabled);
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+        tabBarStyle: {
+          backgroundColor: darkThemeEnabled ? COLORS.BLACK : COLORS.WHITE,
+        }
+      }}
+    >
+      {TabArr.map((item: any, index: number) => {
+        return (
+          <Tab.Screen key={index} name={item.route} component={item.component}
+            options={{
+              tabBarShowLabel: false,
+              tabBarLabel: item.label,
+              tabBarIcon: ({ focused }) => (
+                <Ionicons name={focused ? item.activeIcon : item.inactiveIcon} color={!darkThemeEnabled ? COLORS.WHITE : COLORS.BLACK} size={24} />
+              ),
+              tabBarButton: (props) => <TabButton {...props} item={item} />
+            }} />
+        )
+      })}
+    </Tab.Navigator>
+  )
+}
 
 export default TabNav

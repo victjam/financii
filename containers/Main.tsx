@@ -24,11 +24,10 @@ const Main = ({ navigation }: any) => {
         <View>
         </View>
         <Div paddingTop="30">
-          <PrimaryButton onPress={() => navigation.navigate('Signup')} >
+          <PrimaryButton onPress={() => dispatch({ type: TOGGLE_DARKTHEME })} >
             <TextButton fontWeight="bold">Crear cuenta</TextButton>
           </PrimaryButton>
         </Div>
-        //
         {/* onPress={() => dispatch({ type: TOGGLE_DARKTHEME })}*/}
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Login')}>
           <Text paddingTop='10' >Ya tienes una cuenta?, inicia
