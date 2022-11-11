@@ -8,7 +8,15 @@ export interface PropsObj {
   source: string;
   align: string;
   color: string;
+  backgroundColor: string;
+  marginTop: string;
+  marginBottom: string;
+  marginRight: string;
+  marginLeft: string;
   paddingTop: string;
+  paddingRight: string;
+  paddingLeft: string;
+  borderRadius: string;
   paddingBottom: string;
   size: string;
   theme: Theme

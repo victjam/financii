@@ -34,6 +34,12 @@ export const global = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 20
   },
+  icon: {
+    width: 50,
+    height: 50,
+    alignItems: 'center',
+    marginBottom: 20
+  },
 
   centerElement: {
     alignItems: 'center',
@@ -141,22 +147,50 @@ import Constants from 'expo-constants';
 export const Container = styled.SafeAreaView<Props>`
     background-color: ${(props) => props.theme.PRIMARY_COLOR};
     flex: 1;
-    align-items: center;
     transition: all .3s ease;
 `;
 
 export const WrappedBox = styled.View<Props>`
-  padding-top: ${Constants.statusBarHeight + 'px'};
-  background-color: ${(props) => props.theme.PRIMARY_COLOR};
+  padding-top: ${(props) => (props.paddingTop || Constants.statusBarHeight) + 'px'};
+  background-color: ${(props) => (props.backgroundColor || props.theme.PRIMARY_COLOR)};
   width: 100%;
   height: 100%;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-left: ${(props) => (props.paddingLeft || '10') + 'px'};;
+  padding-right: ${(props) => (props.paddingRight || '10') + 'px'};
   transition: all .3s ease;
 `
 export const Div = styled.View<Props>`
+  width: ${(props) => ((props.width) || 'auto')};
+  height: ${(props) => ((props.height) || 'auto')};
   padding-top: ${(props) => (props.paddingTop || '0') + 'px'};
+  margin-bottom: ${(props) => (props.marginBottom || '0') + 'px'};
+  margin-right: ${(props) => (props.marginRight || '0') + 'px'};
+  margin-left: ${(props) => (props.marginLeft || '0') + 'px'};
+  margin-top: ${(props) => (props.marginTop || '0') + 'px'};
+  background-color: ${(props) => (props.backgroundColor || props.theme.PRIMARY_COLOR)};
+  padding-left: ${(props) => (props.paddingLeft || '0') + 'px'};
+  padding-bottom: ${(props) => (props.paddingBottom || '0') + 'px'};
+  border-radius: ${(props) => (props.borderRadius || '0') + '%'};
+  padding-top: ${(props) => (props.paddingTop || '0') + 'px'};
+  padding-right: ${(props) => (props.paddingRight || '0') + 'px'};
 `
+export const DivIcon = styled.View<Props>`
+  margin-top: ${(props) => (props.marginTop || '0') + 'px'};
+  margin-bottom: ${(props) => (props.marginBottom || '0') + 'px'};
+  padding-top: ${(props) => (props.paddingTop || '0') + 'px'};
+  align-items: ${(props) => props.align || 'left'};
+  background-color: ${(props) => (props.backgroundColor || props.theme.PRIMARY_COLOR)};
+  padding-left: ${(props) => (props.paddingLeft || '0') + 'px'};
+  border-radius: ${(props) => (props.borderRadius || '0') + '%'};
+  padding-top: ${(props) => (props.paddingTop || '0') + 'px'};
+  padding-right: ${(props) => (props.paddingRight || '0') + 'px'};
+  display: flex;
+  height: 55px
+  width: 55px
+  align-items: center;
+  justify-content: center;
+`
+
 
 
 export const Image = styled.View<Props>`
@@ -214,9 +248,10 @@ export const InputField = styled.TextInput<Props>`
 `
 
 export const PrimaryButton = styled.Pressable<Props>`
-  background: ${(props) => props.theme.BUTTON_COLOR}
-  border-radius: 5px;
-  height: 50px;
+  background: ${(props) => props.backgroundColor || props.theme.BUTTON_COLOR}
+  border-radius:${(props) => (props.borderRadius || '5') + 'px'};
+  height: ${(props) => (props.height || '50')};
+  width: ${(props) => (props.width || 'auto')};
   justify-content: center;
   text-align: center;
   display: flex;
