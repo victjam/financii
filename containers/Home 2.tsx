@@ -3,7 +3,9 @@ import { Dimensions, FlatList, View, Pressable, ScrollView } from 'react-native'
 import { COLORS, Text, Div, WrappedBox, PrimaryButton, DivIcon, TextButton } from '../styles/global';
 import { useSelector } from "react-redux";
 import { Ionicons } from '@expo/vector-icons';
-import Marquee from "../components/Marquee";
+import AutoScroll from "@homielab/react-native-auto-scroll";
+
+
 const cards = [
   { title: "Mastercard" },
   { title: "Visa" },
@@ -50,14 +52,13 @@ const Home = () => {
       date: 'Sept 19, 2023'
     },
     {
-      id: '4',
+      id: '3',
       title: 'Pago a Emma',
       price: '$50000',
       icon: 'wallet-outline',
       date: 'Sept 19, 2023'
-    }
+    },
   ];
-
   const darkThemeEnabled = useSelector((state: any) => state.theme.preferences.darkThemeEnabled);
   const selectedColor = !darkThemeEnabled ? COLORS.WHITE : COLORS.BLACK;
   const selectedColorBg = darkThemeEnabled ? COLORS.WHITE : COLORS.BLACK;
@@ -122,13 +123,34 @@ const Home = () => {
             </Div>
           </View>
           <Div marginTop='40'>
-            <Text fontWeight='500'>Ultimas Transacciones</Text>
-            <Marquee data={transactions} />
-            {/* refactor this */}
-            {/* {transactions.map((item) => (
+            <ScrollView horizontal={true}>
+              <AutoScroll style={{ width: '100%' }}>
+                <Div style={{ display: 'flex', flexDirection: 'row' }}>
+                  {transactions.map((item) => (
+                    <Pressable onPress={() => onPressFunction(item.id)}>
+                      <Div style={{ marginLeft: 20, marginTop: 15, display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <Div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                          <DivIcon backgroundColor={selectedColorBg} borderRadius='50' align='center' paddingLeft='10' paddingRight='10'>
+                            <Ionicons name={item.icon} color={selectedColor} size={20} />
+                          </DivIcon>
+                          <Div marginLeft='20'>
+                            <Text>{item.title}</Text>
+                            <Text color={COLORS.DARKGRAY}>{item.date}</Text>
+                          </Div>
+                        </Div>
 
-            
-            ))} */}
+                        <Div>
+                          <Text fontWeight='500'>-{item.price}</Text>
+                        </Div>
+                      </Div>
+                    </Pressable>
+                  ))}
+                </Div>
+              </AutoScroll>
+            </ScrollView>
+            <Text fontWeight='500'>Ultimas Transacciones</Text>
+            {/* refactor this */}
+
           </Div>
         </WrappedBox>
       </WrappedBox >
