@@ -18,19 +18,19 @@ const Main = ({ navigation }: any) => {
         <SText fontWeight="bold">ALPHA VERSION</SText>
         <LGText fontWeight="bold">Bienvenidos a</LGText>
         <XLGText fontWeight="bold">Financii</XLGText>
-        <Div paddingTop="10">
+        <Div paddingTop={10}>
           <Text>Una app para gestionar tus gatos y metas de la forma mas segura y simple posible.</Text>
         </Div>
         <View>
         </View>
-        <Div paddingTop="30">
+        <Div paddingTop={30}>
           <PrimaryButton onPress={() => dispatch({ type: TOGGLE_DARKTHEME })} >
             <TextButton fontWeight="bold">Crear cuenta</TextButton>
           </PrimaryButton>
         </Div>
         {/* onPress={() => dispatch({ type: TOGGLE_DARKTHEME })}*/}
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Login')}>
-          <Text paddingTop='10' >Ya tienes una cuenta?, inicia
+          <Text paddingTop={10} >Ya tienes una cuenta?, inicia
             <Text fontWeight='bold'> aqui.</Text>
           </Text>
         </TouchableWithoutFeedback>

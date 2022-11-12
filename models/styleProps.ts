@@ -3,22 +3,22 @@ export interface PropsObj {
   src: any;
   width: string;
   height: string;
-  fontSize: string;
+  fontSize: number;
   fontWeight: string;
   source: string;
   align: string;
   color: string;
   backgroundColor: string;
-  marginTop: string;
-  marginBottom: string;
-  marginRight: string;
-  marginLeft: string;
-  paddingTop: string;
-  paddingRight: string;
-  paddingLeft: string;
-  borderRadius: string;
-  paddingBottom: string;
-  size: string;
+  marginTop: number;
+  marginBottom: number;
+  marginRight: number;
+  marginLeft: number;
+  paddingTop: number;
+  paddingRight: number;
+  paddingLeft: number;
+  borderRadius: number;
+  paddingBottom: number;
+  size: number;
   theme: Theme
 }
 

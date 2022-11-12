@@ -1,18 +1,12 @@
 
 import { Dimensions, FlatList, View, Pressable, ScrollView } from 'react-native'
-import { COLORS, Text, Div, WrappedBox, PrimaryButton, DivIcon, TextButton } from '../styles/global';
+import { COLORS, Text, Div, WrappedBox, PrimaryButton, DivIcon, TextButton, GradientDiv } from '../styles/global';
 import { useSelector } from "react-redux";
 import { Ionicons } from '@expo/vector-icons';
 import Marquee from "../components/Marquee";
-const cards = [
-  { title: "Mastercard" },
-  { title: "Visa" },
-  { title: "Amex" },
-  { title: "Ahorros" }
-]
+
 
 const width = Dimensions.get("window").width
-const CONTAINER = width * (cards.length > 1 ? 0.92 : 1)
 const onPressFunction = (id: string) => {
   alert(id)
 }
@@ -65,25 +59,24 @@ const Home = () => {
   const SPACE = 5;
   return (
     <ScrollView>
-
-      <WrappedBox paddingLeft='0' paddingTop='0' paddingRight='0'>
-        <Div backgroundColor={selectedColorBg} paddingTop='90' paddingLeft='10' paddingRight='10'>
-          <DivIcon marginBottom='20' backgroundColor={selectedColor} style={{ borderRadius: 50 }} align='center' paddingLeft='10' paddingRight='10'>
+      <WrappedBox paddingLeft={0.1} paddingTop={0.1} paddingRight={0.1}>
+        <GradientDiv paddingTop={70} paddingLeft={10} paddingRight={10}>
+          <DivIcon marginBottom={20} backgroundColor={selectedColor} style={{ borderRadius: 50 }} align='center' paddingLeft={10} paddingRight={10}>
             <Ionicons name='person-outline' color={selectedColorBg} size={26} />
           </DivIcon>
-          <Text fontSize='25' align="left" fontWeight="bold" color={selectedColor} >Buenos dias, Victor</Text>
-          <Text fontSize='20' paddingTop='10' color={selectedColor}>$65.988.00</Text>
-          <Text paddingTop='10' color={selectedColor}>Tu Balance es +0.8% que es el mes pasado.</Text>
+          <Text fontSize={25} align="left" fontWeight="bold" color={selectedColor} >Buenos dias, Victor</Text>
+          <Text fontSize={20} paddingTop={10} color={selectedColor}>$65.988.00</Text>
+          <Text paddingTop={10} color={selectedColor}>Tu Balance es +0.8% que es el mes pasado.</Text>
           <FlatList
 
             horizontal={true}
             data={icons}
             keyExtractor={item => item.id}
-            renderItem={({ item }) => {
+            renderItem={({ item }: any) => {
               return (
                 <View style={{ marginHorizontal: SPACE, paddingHorizontal: SPACE }}>
                   <Pressable onPress={() => onPressFunction('Login')}>
-                    <DivIcon marginTop='30' marginBottom='20' backgroundColor={selectedColor} style={{ borderRadius: 50 }} align='center' paddingLeft='10' paddingRight='10'>
+                    <DivIcon marginTop={30} marginBottom={20} backgroundColor={selectedColor} style={{ borderRadius: 50 }} align='center' paddingLeft={10} paddingRight={10}>
                       <Ionicons name={item.icon} color={selectedColorBg} size={26} />
                     </DivIcon>
                   </Pressable>
@@ -92,43 +85,38 @@ const Home = () => {
             }}
           />
 
-        </Div>
-        <WrappedBox paddingTop='20'>
+        </GradientDiv>
+        <WrappedBox paddingTop={20}>
           <Text fontWeight='500'>Actividad Reciente</Text>
           {/* refactor this */}
           <View style={{ marginTop: 20, display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
             <View style={{ width: '45%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-              <Div backgroundColor={selectedColorBg} style={{ borderRadius: 5 }} marginBottom='20' width='100%' paddingLeft='10' paddingTop='10' paddingBottom='10' paddingRight='10' >
+              <Div backgroundColor={selectedColorBg} borderRadius={5} marginBottom={20} width='100%' paddingLeft={10} paddingTop={10} paddingBottom={10} paddingRight={10} >
                 <Text color={selectedColor}
                   align='center'
-                  paddingBottom='5'>Tranferencia a Sabrina</Text>
-                <Text color={selectedColor} align='center' fontSize='16' paddingBottom='10'>$4,500</Text>
-                <PrimaryButton backgroundColor={selectedColor} style={{ borderRadius: 50 }} height='35px' width='100%' onPress={() => onPressFunction('Login')}>
+                  paddingBottom={5}>Tranferencia a Sabrina</Text>
+                <Text color={selectedColor} align='center' paddingBottom={10}>$4,500</Text>
+                <PrimaryButton backgroundColor={selectedColor} style={{ borderRadius: 50 }} height="35px" width='100%' onPress={() => onPressFunction('Login')}>
                   <TextButton color={selectedColorBg} fontWeight="bold">Ver detalle</TextButton>
                 </PrimaryButton>
               </Div>
-              <Div backgroundColor={selectedColorBg} style={{ borderRadius: 5 }} marginBottom='20' width='100%' paddingLeft='10' paddingTop='10' paddingBottom='10' paddingRight='10' >
+              <Div backgroundColor={selectedColorBg} border-radius={5} marginBottom={20} width='100%' paddingLeft={10} paddingTop={10} paddingBottom={10} paddingRight={10} >
                 <Text color={selectedColor}
                   align='center'
-                  paddingBottom='5'>Tranferencia a Sabrina</Text>
-                <Text color={selectedColor} align='center' fontSize='16' paddingBottom='10'>$4,500</Text>
-                <PrimaryButton backgroundColor={selectedColor} style={{ borderRadius: 50 }} height='35px' width='100%' onPress={() => onPressFunction('Login')}>
+                  paddingBottom={5}>Tranferencia a Sabrina</Text>
+                <Text color={selectedColor} align='center' fontSize={16} paddingBottom={10}>$4,500</Text>
+                <PrimaryButton backgroundColor={selectedColor} style={{ borderRadius: 50 }} height="35px" width='100%' onPress={() => onPressFunction('Login')}>
                   <TextButton color={selectedColorBg} fontWeight="bold">Ver detalle</TextButton>
                 </PrimaryButton>
               </Div>
             </View>
-            <Div backgroundColor={selectedColorBg} style={{ borderRadius: 5 }} width='50%' paddingLeft='10' paddingTop='10' paddingBottom='10' paddingRight='10'>
+            <Div backgroundColor={selectedColorBg} borderRadius={5} width='50%' paddingLeft={10} paddingTop={10} paddingBottom={10} paddingRight={10}>
               <Text color={selectedColor}>Ultima Factura divida con:</Text>
             </Div>
           </View>
-          <Div marginTop='40'>
+          <Div marginTop={40}>
             <Text fontWeight='500'>Ultimas Transacciones</Text>
             <Marquee data={transactions} />
-            {/* refactor this */}
-            {/* {transactions.map((item) => (
-
-            
-            ))} */}
           </Div>
         </WrappedBox>
       </WrappedBox >

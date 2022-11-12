@@ -88,7 +88,7 @@ const Login = ({ navigation }: any) => {
       <KeyboardAvoidingView behavior="padding">
         <ScrollView>
           <Div>
-            <LGText paddingTop='20' fontWeight="bold">Registrate</LGText>
+            <LGText paddingTop={20} fontWeight="bold">Registrate</LGText>
             <CustomInput
               name="name"
               label="Nombres"
@@ -137,14 +137,14 @@ const Login = ({ navigation }: any) => {
                 validate: (value: any) => value === pwd || 'La contraseña no es la misma.'
               }}
             />
-            <Div paddingTop='20'>
+            <Div paddingTop={20}>
               <TouchableWithoutFeedback onPress={() => navigation.navigate('Login')}>
                 <Text>Ya tienes una cuenta?, inicia sesion
                   <Text fontWeight='bold'> aqui.</Text>
                 </Text>
               </TouchableWithoutFeedback>
             </Div>
-            <Div paddingTop='10'>
+            <Div paddingTop={10}>
               <PrimaryButton onPress={handleSubmit(signup)}>
                 <TextButton fontWeight="bold">Crear cuenta</TextButton>
               </PrimaryButton>
@@ -154,13 +154,13 @@ const Login = ({ navigation }: any) => {
               <Text style={[styles.marginHorizontal, styles.lineText]}>OR</Text>
               <View style={styles.right}></View>
             </Div>
-            <Div paddingTop="30">
+            <Div paddingTop={30}>
               <PrimaryButtonWithIcon style={{ height: 50 }} onPress={handleSubmit(signup)}>
                 <AntDesign style={{ marginRight: 10 }} name="apple1" size={24} color={!darkThemeEnabled ? COLORS.WHITE : COLORS.BLACK} />
                 <TextButton fontWeight="bold">Continua con Apple</TextButton>
               </PrimaryButtonWithIcon>
             </Div>
-            <Div paddingTop="30">
+            <Div paddingTop={30}>
               <PrimaryButtonWithIcon style={{ height: 50 }} onPress={handleSubmit(signup)}>
                 <AntDesign style={{ marginRight: 10 }} name="google" size={24} color={!darkThemeEnabled ? COLORS.WHITE : COLORS.BLACK} />
                 <TextButton fontWeight="bold">Continua con Google</TextButton>

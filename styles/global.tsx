@@ -2,6 +2,7 @@
 import { StyleSheet } from 'react-native'
 import { Dimensions } from 'react-native';
 import { Props } from '../models/styleProps'
+import { LinearGradient } from 'expo-linear-gradient';
 export const windowWidth = Dimensions.get('window').width;
 
 export const REGEX = {
@@ -148,38 +149,51 @@ export const Container = styled.SafeAreaView<Props>`
     transition: all .3s ease;
 `;
 
+
+export const GradientDiv = styled(LinearGradient).attrs({
+  colors: ['#6083FE', '#5964FE', '#8825E6'],
+  start: { x: 0, y: 0 },
+  end: { x: 1, y: 1 }
+}) <Props>`
+  padding-top: ${(props) => props.paddingTop || 0}px;
+  padding-right: ${(props) => props.paddingRight || 0}px;
+  padding-left: ${(props) => props.paddingLeft || 0}px;
+  padding-bottom: ${(props) => props.paddingBottom || 0}px;
+ `;
+
 export const WrappedBox = styled.View<Props>`
-  padding-top: ${(props) => (props.paddingTop || Constants.statusBarHeight) + 'px'};
+  padding-top: ${(props) => (props.paddingTop || Constants.statusBarHeight)}px;
   background-color: ${(props) => (props.backgroundColor || props.theme.PRIMARY_COLOR)};
   width: 100%;
   height: 100%;
-  padding-left: ${(props) => (props.paddingLeft || '10') + 'px'};;
-  padding-right: ${(props) => (props.paddingRight || '10') + 'px'};
+  padding-left: ${(props) => (props.paddingLeft || 10)}px;;
+  padding-right: ${(props) => (props.paddingRight || 10)}px;
   transition: all .3s ease;
 `
 export const Div = styled.View<Props>`
   width: ${(props) => ((props.width) || 'auto')};
   height: ${(props) => ((props.height) || 'auto')};
-  padding-top: ${(props) => (props.paddingTop || '0') + 'px'};
-  margin-bottom: ${(props) => (props.marginBottom || '0') + 'px'};
-  margin-right: ${(props) => (props.marginRight || '0') + 'px'};
-  margin-left: ${(props) => (props.marginLeft || '0') + 'px'};
-  margin-top: ${(props) => (props.marginTop || '0') + 'px'};
+  padding-top: ${(props) => (props.paddingTop || 0)}px;
+  border-radius: ${(props) => (props.borderRadius || 0)}px;
+  margin-bottom: ${(props) => (props.marginBottom || 0)}px;
+  margin-right: ${(props) => (props.marginRight || 0)}px;
+  margin-left: ${(props) => (props.marginLeft || 0)}px;
+  margin-top: ${(props) => (props.marginTop || 0)}px;
   background-color: ${(props) => (props.backgroundColor || props.theme.PRIMARY_COLOR)};
-  padding-left: ${(props) => (props.paddingLeft || '0') + 'px'};
-  padding-bottom: ${(props) => (props.paddingBottom || '0') + 'px'};
-  padding-top: ${(props) => (props.paddingTop || '0') + 'px'};
-  padding-right: ${(props) => (props.paddingRight || '0') + 'px'};
+  padding-left: ${(props) => (props.paddingLeft || 0)}px;
+  padding-bottom: ${(props) => (props.paddingBottom || 0)}px;
+  padding-top: ${(props) => (props.paddingTop || 0)}px;
+  padding-right: ${(props) => (props.paddingRight || 0)}px;
 `
 export const DivIcon = styled.View<Props>`
-  margin-top: ${(props) => (props.marginTop || '0') + 'px'};
-  margin-bottom: ${(props) => (props.marginBottom || '0') + 'px'};
-  padding-top: ${(props) => (props.paddingTop || '0') + 'px'};
+  margin-top: ${(props) => (props.marginTop || 0)}px;
+  margin-bottom: ${(props) => (props.marginBottom || 0)}px;
+  padding-top: ${(props) => (props.paddingTop || 0)}px;
   align-items: ${(props) => props.align || 'left'};
   background-color: ${(props) => (props.backgroundColor || props.theme.PRIMARY_COLOR)};
-  padding-left: ${(props) => (props.paddingLeft || '0') + 'px'};
-  padding-top: ${(props) => (props.paddingTop || '0') + 'px'};
-  padding-right: ${(props) => (props.paddingRight || '0') + 'px'};
+  padding-left: ${(props) => (props.paddingLeft || 0)}px;
+  padding-top: ${(props) => (props.paddingTop || 0)}px;
+  padding-right: ${(props) => (props.paddingRight || 0)}px;
   display: flex;
   height: 55px
   width: 55px
@@ -200,27 +214,27 @@ export const SText = styled.Text<Props>`
   font-size: 10px;
   font-weight: ${(props) => props.fontWeight || 'normal'};
   text-align: ${(props) => props.align || 'left'};
-  padding-top: ${(props) => (props.paddingTop || '0') + 'px'};
+  padding-top: ${(props) => (props.paddingTop || 0)}px;
   color: ${(props) => props.color ? props.color : props.theme.TITLE_COLOR};
 `
 export const Text = styled.Text<Props>`
-  font-size: ${(props) => (props.fontSize || '14') + 'px'};
-  padding-top: ${(props) => (props.paddingTop || '0') + 'px'};
-  padding-bottom: ${(props) => (props.paddingBottom || '0') + 'px'};
+  font-size: ${(props) => (props.fontSize || '16')}px;
+  padding-top: ${(props) => (props.paddingTop || 0)}px;
+  padding-bottom: ${(props) => (props.paddingBottom || 0)}px;
   text-align: ${(props) => props.align || 'left'};
   font-weight: ${(props) => props.fontWeight || 'normal'};
   color: ${(props) => props.color ? props.color : props.theme.TITLE_COLOR};
 `
 export const TextButton = styled.Text<Props>`
-  font-size: ${(props) => (props.fontSize || '14') + 'px'};
-  padding-top: ${(props) => (props.paddingTop || '0') + 'px'};
+  font-size: ${(props) => (props.fontSize || '14')}px;
+  padding-top: ${(props) => (props.paddingTop || 0)}px;
   text-align: ${(props) => props.align || 'left'};
   font-weight: ${(props) => props.fontWeight || 'normal'};
   color: ${(props) => props.color ? props.color : props.theme.BUTTON_TITLE_COLOR};
 `
 export const LGText = styled.Text<Props>`
   font-size: 30px;
-  padding-top: ${(props) => (props.paddingTop || '0') + 'px'};
+  padding-top: ${(props) => (props.paddingTop || 0)}px;
   font-weight: ${(props) => props.fontWeight || 'normal'};
   text-align: ${(props) => props.align || 'left'};
   color: ${(props) => props.color ? props.color : props.theme.TITLE_COLOR};
@@ -228,7 +242,7 @@ export const LGText = styled.Text<Props>`
 export const XLGText = styled.Text<Props>`
   font-size: 50px;
   font-weight: ${(props) => props.fontWeight || 'normal'};
-  padding-top: ${(props) => (props.paddingTop || '0') + 'px'};
+  padding-top: ${(props) => (props.paddingTop || 0)}px;
   text-align: ${(props) => props.align || 'left'};
   color: ${(props) => props.color ? props.color : props.theme.TITLE_COLOR};
 `
@@ -245,7 +259,7 @@ export const InputField = styled.TextInput<Props>`
 
 export const PrimaryButton = styled.Pressable<Props>`
   background: ${(props) => props.backgroundColor || props.theme.BUTTON_COLOR}
-  height: ${(props) => (props.height || '50')};
+  height: ${(props) => (props.height || '50px')};
   width: ${(props) => (props.width || 'auto')};
   justify-content: center;
   text-align: center;

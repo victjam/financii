@@ -62,7 +62,6 @@ const Login = ({ navigation }: any) => {
   });
 
   const signing = (data: any) => {
-    console.log(data)
     navigation.navigate('Home')
   }
   const forgotPassword = () => {
