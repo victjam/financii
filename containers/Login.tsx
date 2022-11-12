@@ -117,13 +117,13 @@ const Login = ({ navigation }: any) => {
           <View style={styles.right}></View>
         </View>
         <Div paddingTop="30">
-          <PrimaryButtonWithIcon onPress={() => navigation.navigate('Home')}>
+          <PrimaryButtonWithIcon style={{ height: 50 }} onPress={() => navigation.navigate('Home')}>
             <AntDesign style={{ marginRight: 10 }} name="apple1" size={24} color={!darkThemeEnabled ? COLORS.WHITE : COLORS.BLACK} />
             <TextButton fontWeight="bold">Continua con Apple</TextButton>
           </PrimaryButtonWithIcon>
         </Div>
         <Div paddingTop="30">
-          <PrimaryButtonWithIcon onPress={() => navigation.navigate('Home')}>
+          <PrimaryButtonWithIcon style={{ height: 50 }} onPress={() => navigation.navigate('Home')}>
             <AntDesign style={{ marginRight: 10 }} name="google" size={24} color={!darkThemeEnabled ? COLORS.WHITE : COLORS.BLACK} />
             <TextButton fontWeight="bold">Continua con Google</TextButton>
           </PrimaryButtonWithIcon>

@@ -68,7 +68,7 @@ const Home = () => {
 
       <WrappedBox paddingLeft='0' paddingTop='0' paddingRight='0'>
         <Div backgroundColor={selectedColorBg} paddingTop='90' paddingLeft='10' paddingRight='10'>
-          <DivIcon marginBottom='20' backgroundColor={selectedColor} borderRadius='50' align='center' paddingLeft='10' paddingRight='10'>
+          <DivIcon marginBottom='20' backgroundColor={selectedColor} style={{ borderRadius: 50 }} align='center' paddingLeft='10' paddingRight='10'>
             <Ionicons name='person-outline' color={selectedColorBg} size={26} />
           </DivIcon>
           <Text fontSize='25' align="left" fontWeight="bold" color={selectedColor} >Buenos dias, Victor</Text>
@@ -83,7 +83,7 @@ const Home = () => {
               return (
                 <View style={{ marginHorizontal: SPACE, paddingHorizontal: SPACE }}>
                   <Pressable onPress={() => onPressFunction('Login')}>
-                    <DivIcon marginTop='30' marginBottom='20' backgroundColor={selectedColor} borderRadius='50' align='center' paddingLeft='10' paddingRight='10'>
+                    <DivIcon marginTop='30' marginBottom='20' backgroundColor={selectedColor} style={{ borderRadius: 50 }} align='center' paddingLeft='10' paddingRight='10'>
                       <Ionicons name={item.icon} color={selectedColorBg} size={26} />
                     </DivIcon>
                   </Pressable>
@@ -98,26 +98,26 @@ const Home = () => {
           {/* refactor this */}
           <View style={{ marginTop: 20, display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
             <View style={{ width: '45%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-              <Div backgroundColor={selectedColorBg} borderRadius='5' marginBottom='20' width='100%' paddingLeft='10' paddingTop='10' paddingBottom='10' paddingRight='10' >
+              <Div backgroundColor={selectedColorBg} style={{ borderRadius: 5 }} marginBottom='20' width='100%' paddingLeft='10' paddingTop='10' paddingBottom='10' paddingRight='10' >
                 <Text color={selectedColor}
                   align='center'
                   paddingBottom='5'>Tranferencia a Sabrina</Text>
                 <Text color={selectedColor} align='center' fontSize='16' paddingBottom='10'>$4,500</Text>
-                <PrimaryButton backgroundColor={selectedColor} borderRadius='50' height='35px' width='100%' onPress={() => onPressFunction('Login')}>
+                <PrimaryButton backgroundColor={selectedColor} style={{ borderRadius: 50 }} height='35px' width='100%' onPress={() => onPressFunction('Login')}>
                   <TextButton color={selectedColorBg} fontWeight="bold">Ver detalle</TextButton>
                 </PrimaryButton>
               </Div>
-              <Div backgroundColor={selectedColorBg} borderRadius='5' marginBottom='20' width='100%' paddingLeft='10' paddingTop='10' paddingBottom='10' paddingRight='10' >
+              <Div backgroundColor={selectedColorBg} style={{ borderRadius: 5 }} marginBottom='20' width='100%' paddingLeft='10' paddingTop='10' paddingBottom='10' paddingRight='10' >
                 <Text color={selectedColor}
                   align='center'
                   paddingBottom='5'>Tranferencia a Sabrina</Text>
                 <Text color={selectedColor} align='center' fontSize='16' paddingBottom='10'>$4,500</Text>
-                <PrimaryButton backgroundColor={selectedColor} borderRadius='50' height='35px' width='100%' onPress={() => onPressFunction('Login')}>
+                <PrimaryButton backgroundColor={selectedColor} style={{ borderRadius: 50 }} height='35px' width='100%' onPress={() => onPressFunction('Login')}>
                   <TextButton color={selectedColorBg} fontWeight="bold">Ver detalle</TextButton>
                 </PrimaryButton>
               </Div>
             </View>
-            <Div backgroundColor={selectedColorBg} borderRadius='5' width='50%' paddingLeft='10' paddingTop='10' paddingBottom='10' paddingRight='10'>
+            <Div backgroundColor={selectedColorBg} style={{ borderRadius: 5 }} width='50%' paddingLeft='10' paddingTop='10' paddingBottom='10' paddingRight='10'>
               <Text color={selectedColor}>Ultima Factura divida con:</Text>
             </Div>
           </View>

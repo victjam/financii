@@ -36,7 +36,6 @@ export const global = StyleSheet.create({
   },
   icon: {
     width: 50,
-    height: 50,
     alignItems: 'center',
     marginBottom: 20
   },
@@ -119,7 +118,6 @@ export const global = StyleSheet.create({
     paddingVertical: 12,
     borderWidth: 3,
     borderColor: COLORS.BLACK,
-    borderRadius: 5,
     fontWeight: 'bold',
     backgroundColor: COLORS.BLACK,
     padding: 10
@@ -170,7 +168,6 @@ export const Div = styled.View<Props>`
   background-color: ${(props) => (props.backgroundColor || props.theme.PRIMARY_COLOR)};
   padding-left: ${(props) => (props.paddingLeft || '0') + 'px'};
   padding-bottom: ${(props) => (props.paddingBottom || '0') + 'px'};
-  border-radius: ${(props) => (props.borderRadius || '0') + '%'};
   padding-top: ${(props) => (props.paddingTop || '0') + 'px'};
   padding-right: ${(props) => (props.paddingRight || '0') + 'px'};
 `
@@ -181,7 +178,6 @@ export const DivIcon = styled.View<Props>`
   align-items: ${(props) => props.align || 'left'};
   background-color: ${(props) => (props.backgroundColor || props.theme.PRIMARY_COLOR)};
   padding-left: ${(props) => (props.paddingLeft || '0') + 'px'};
-  border-radius: ${(props) => (props.borderRadius || '0') + '%'};
   padding-top: ${(props) => (props.paddingTop || '0') + 'px'};
   padding-right: ${(props) => (props.paddingRight || '0') + 'px'};
   display: flex;
@@ -249,7 +245,6 @@ export const InputField = styled.TextInput<Props>`
 
 export const PrimaryButton = styled.Pressable<Props>`
   background: ${(props) => props.backgroundColor || props.theme.BUTTON_COLOR}
-  border-radius:${(props) => (props.borderRadius || '5') + 'px'};
   height: ${(props) => (props.height || '50')};
   width: ${(props) => (props.width || 'auto')};
   justify-content: center;
@@ -261,7 +256,6 @@ export const PrimaryButton = styled.Pressable<Props>`
 export const PrimaryButtonWithIcon = styled.Pressable<Props>`
   background: ${(props) => props.theme.BUTTON_COLOR}
   border-radius: 5px;
-  height: 50px;
   flex-direction: row;
   justify-content: center;
   display: flex;

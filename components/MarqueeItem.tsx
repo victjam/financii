@@ -11,7 +11,7 @@ const MarqueeItem = ({ item }: any) => {
   return (
     <Div style={{ marginLeft: 25, marginTop: 15, display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
       <Div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-        <DivIcon backgroundColor={selectedColorBg} borderRadius='50' align='center' paddingLeft='10' paddingRight='10'>
+        <DivIcon backgroundColor={selectedColorBg} style={{ borderRadius: 50 }} align='center' paddingLeft='10' paddingRight='10'>
           <Ionicons name={item.icon} color={selectedColor} size={20} />
         </DivIcon>
         <Div marginLeft='20'>

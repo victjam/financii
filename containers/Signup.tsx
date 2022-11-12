@@ -155,13 +155,13 @@ const Login = ({ navigation }: any) => {
               <View style={styles.right}></View>
             </Div>
             <Div paddingTop="30">
-              <PrimaryButtonWithIcon onPress={handleSubmit(signup)}>
+              <PrimaryButtonWithIcon style={{ height: 50 }} onPress={handleSubmit(signup)}>
                 <AntDesign style={{ marginRight: 10 }} name="apple1" size={24} color={!darkThemeEnabled ? COLORS.WHITE : COLORS.BLACK} />
                 <TextButton fontWeight="bold">Continua con Apple</TextButton>
               </PrimaryButtonWithIcon>
             </Div>
             <Div paddingTop="30">
-              <PrimaryButtonWithIcon onPress={handleSubmit(signup)}>
+              <PrimaryButtonWithIcon style={{ height: 50 }} onPress={handleSubmit(signup)}>
                 <AntDesign style={{ marginRight: 10 }} name="google" size={24} color={!darkThemeEnabled ? COLORS.WHITE : COLORS.BLACK} />
                 <TextButton fontWeight="bold">Continua con Google</TextButton>
               </PrimaryButtonWithIcon>

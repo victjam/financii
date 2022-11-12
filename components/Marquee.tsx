@@ -50,7 +50,7 @@ const Marquee = ({ data }: any) => {
     }
     if (data.length > 3) {
       const position = currentPosition + 1.5;
-      flatListRef?.current?.scrollToOffset({ offset: position, animated: false });
+      flatListRef?.current?.scrollToOffset({ offset: position, animated: true });
       const maxOffset = data.length * itemWidth;
       if (currentPosition > maxOffset) {
         const offset = currentPosition - maxOffset;
