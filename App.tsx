@@ -9,22 +9,22 @@ import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 
 export default function App() {
-  // const [fontsLoaded] = useFonts({
-  //   'Rounded-Bold': require('./assets/fonts/MPLUSRounded1c-Bold.ttf'),
-  //   'Rounded-Regular': require('./assets/fonts/MPLUSRounded1c-Regular.ttf'),
-  //   'Rounded-Medium': require('./assets/fonts/MPLUSRounded1c-Medium.ttf'),
-  // });
+  const [fontsLoaded] = useFonts({
+    'SF-pro-bold': require('./assets/fonts/SF-Pro-Rounded-Bold.otf'),
+    'SF-pro-semibold': require('./assets/fonts/SF-Pro-Rounded-Semibold.otf'),
+    'SF-pro-medium': require('./assets/fonts/SF-Pro-Rounded-Medium.otf'),
+  });
 
 
-  // const onLayoutRootView = useCallback(async () => {
-  //   // if (fontsLoaded) {
-  //   //   await SplashScreen.hideAsync();
-  //   // }
-  // }, [fontsLoaded]);
+  const onLayoutRootView = useCallback(async () => {
+    // if (fontsLoaded) {
+    //   await SplashScreen.hideAsync();
+    // }
+  }, [fontsLoaded]);
 
-  // if (!fontsLoaded) {
-  //   return null;
-  // }
+  if (!fontsLoaded) {
+    return null;
+  }
 
   return (
     <ReduxProvider store={store} >

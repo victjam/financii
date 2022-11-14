@@ -9,7 +9,6 @@ const TransactionList = ({ transactions }: any) => {
   const darkThemeEnabled = useSelector((state: any) => state.theme.preferences.darkThemeEnabled);
   const selectedColor = darkThemeEnabled ? COLORS.BLACK : COLORS.WHITE;
   const selectedColorBg = darkThemeEnabled ? COLORS.WHITE : COLORS.BLACK;
-  console.log
   return (
     transactions?.map((item: any, i: number) => (
       <Div key={i} style={{ marginTop: 15, display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>

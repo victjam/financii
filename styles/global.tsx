@@ -116,7 +116,6 @@ export const global = StyleSheet.create({
   },
   buttonPrimaryText: {
     fontSize: 15,
-    fontWeight: '600',
     color: COLORS.WHITE,
   },
   buttonPrimary: {
@@ -125,7 +124,6 @@ export const global = StyleSheet.create({
     paddingVertical: 12,
     borderWidth: 3,
     borderColor: COLORS.BLACK,
-    fontWeight: 'bold',
     backgroundColor: COLORS.BLACK,
     padding: 10
   },
@@ -245,13 +243,14 @@ export const Image = styled.View<Props>`
 
 export const SText = styled.Text<Props>`
   font-size: 10px;
-  font-weight: ${(props) => props.fontWeight || 'normal'};
+  font-family: ${(props) => `SF-pro-${props.fontWeight ? props.fontWeight : 'medium'}` || 'SF-pro-medium'};
   text-align: ${(props) => props.align || 'left'};
   padding-top: ${(props) => (props.paddingTop || 0)}px;
   color: ${(props) => props.color ? props.color : props.theme.TITLE_COLOR};
 `
 export const Text = styled.Text<Props>`
-  font-size: ${(props) => (props.fontSize || '16')}px;
+  font-family: ${(props) => `SF-pro-${props.fontWeight ? props.fontWeight : 'medium'}` || 'SF-pro-medium'};
+  font-size: ${(props) => (props.fontSize || '18')}px;
   padding-top: ${(props) => (props.paddingTop || 0)}px;
   padding-bottom: ${(props) => (props.paddingBottom || 0)}px;
   text-align: ${(props) => props.align || 'left'};
@@ -259,21 +258,22 @@ export const Text = styled.Text<Props>`
   color: ${(props) => props.color ? props.color : props.theme.TITLE_COLOR};
 `
 export const TextButton = styled.Text<Props>`
+  font-family: ${(props) => `SF-pro-${props.fontWeight ? props.fontWeight : 'medium'}` || 'SF-pro-medium'};
   font-size: ${(props) => (props.fontSize || '14')}px;
   padding-top: ${(props) => (props.paddingTop || 0)}px;
   text-align: ${(props) => props.align || 'left'};
-  font-weight: ${(props) => props.fontWeight || 'normal'};
   color: ${(props) => props.color ? props.color : props.theme.BUTTON_TITLE_COLOR};
 `
 export const LGText = styled.Text<Props>`
   font-size: 30px;
+  font-family: ${(props) => `SF-pro-${props.fontWeight ? props.fontWeight : 'medium'}` || 'SF-pro-medium'};
   padding-top: ${(props) => (props.paddingTop || 0)}px;
-  font-weight: ${(props) => props.fontWeight || 'normal'};
   text-align: ${(props) => props.align || 'left'};
   color: ${(props) => props.color ? props.color : props.theme.TITLE_COLOR};
 `
 export const XLGText = styled.Text<Props>`
   font-size: 50px;
+  font-family: ${(props) => `SF-pro-${props.fontWeight ? props.fontWeight : 'medium'}` || 'SF-pro-bold'};
   font-weight: ${(props) => props.fontWeight || 'normal'};
   padding-top: ${(props) => (props.paddingTop || 0)}px;
   text-align: ${(props) => props.align || 'left'};

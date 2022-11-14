@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native'
 import TransactionList from '../components/transactions/TransactionList';
-import { Text, FONTS, Container, Div, WrappedBox, LGText, COLORS, selectedColor } from '../styles/global';
+import { Text, FONTS, Container, Div, WrappedBox, LGText, COLORS } from '../styles/global';
 
 
 const transactions = [
@@ -45,7 +45,7 @@ const Transactions = () => (
       <ScrollView>
         <Div>
           <LGText fontWeight='bold'>Transaciones</LGText>
-          <Text color={selectedColor}>Todas tus transacciones en un solo lugar</Text>
+          <Text>Todas tus transacciones en un solo lugar</Text>
         </Div>
         <Div>
           <TransactionList transactions={transactions} />

@@ -1,5 +1,6 @@
 
-import { FlatList, View, Pressable, ScrollView, Platform } from 'react-native'
+import { FlatList, View, Pressable, ScrollView, Platform, Alert, Modal } from 'react-native'
+import { useState } from 'react'
 import { COLORS, Text, Div, WrappedBox, PrimaryButton, DivIcon, TextButton, GradientDiv } from '../styles/global';
 import { useSelector } from "react-redux";
 import { Ionicons } from '@expo/vector-icons';
@@ -7,9 +8,6 @@ import Marquee from "../components/Marquee";
 import Constants from 'expo-constants';
 import TransactionList from '../components/transactions/TransactionList';
 
-const onPressFunction = (id: string) => {
-  alert(id)
-}
 
 
 const Home = () => {
@@ -60,7 +58,6 @@ const Home = () => {
 
 
   const renderTransactionList = (OS: string) => {
-    console.log(OS)
     if (OS === 'ios') {
       return (<Marquee data={transactions} />)
     } else {
@@ -72,6 +69,14 @@ const Home = () => {
   const selectedColorBg = darkThemeEnabled ? COLORS.WHITE : COLORS.BLACK;
 
   const SPACE = 5;
+  const [modalVisible, setModalVisible] = useState(false);
+
+
+  const onPressFunction = (id: string) => {
+    if (id === 'add') {
+      setModalVisible(!modalVisible)
+    }
+  }
   return (
     <ScrollView>
       <WrappedBox paddingLeft={0.1} paddingTop={0.1} paddingRight={0.1}>
@@ -90,7 +95,7 @@ const Home = () => {
             renderItem={({ item }: any) => {
               return (
                 <View style={{ marginHorizontal: SPACE, paddingHorizontal: SPACE }}>
-                  <Pressable onPress={() => onPressFunction('Login')}>
+                  <Pressable onPress={() => onPressFunction('add')}>
                     <DivIcon marginTop={30} marginBottom={20} backgroundColor={selectedColor} style={{ borderRadius: 50 }} align='center' paddingLeft={10} paddingRight={10}>
                       <Ionicons name={item.icon} color={selectedColorBg} size={26} />
                     </DivIcon>
@@ -101,13 +106,16 @@ const Home = () => {
           />
 
         </GradientDiv>
+
+
+
         <WrappedBox paddingTop={20}>
-          <Text fontWeight='500'>Actividad Reciente Compartida</Text>
+          <Text fontWeight='bold'>Actividad Reciente Compartida</Text>
           {/* refactor this */}
           <View style={{ marginTop: 20, display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
             <View style={{ width: '45%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-              <Div elevation={8} shadowOpacity={0.7} shadowColor={COLORS.DANGER} borderRadius={5} backgroundColor={selectedColorBg} marginBottom={20} width='100%'>
-                <GradientDiv color={COLORS.GRADIENT_DANGER} startDirection={{ x: 0, y: 0 }} endDirection={{ x: 1, y: 0 }} paddingLeft={5} paddingRight={5} borderRadius={5} height={110}>
+              <Div height={140} elevation={8} shadowOpacity={0.7} shadowColor={COLORS.DANGER} borderRadius={5} backgroundColor={selectedColorBg} marginBottom={20} width='100%'>
+                <GradientDiv color={COLORS.GRADIENT_DANGER} startDirection={{ x: 0, y: 0 }} endDirection={{ x: 1, y: 0 }} paddingLeft={5} paddingRight={5} borderRadius={5} paddingBottom={10} height={140}>
                   <Text color={COLORS.WHITE}
                     align='center'
                     paddingBottom={5}>Tranferencia a Sabrina</Text>
@@ -117,8 +125,8 @@ const Home = () => {
                   </PrimaryButton>
                 </GradientDiv>
               </Div>
-              <Div elevation={8} shadowOpacity={0.7} shadowColor={COLORS.SUCCESS} borderRadius={5} backgroundColor={selectedColorBg} marginBottom={20} width='100%'>
-                <GradientDiv color={COLORS.GRADIENT_SUCCESS} startDirection={{ x: 0, y: 0 }} endDirection={{ x: 1, y: 0 }} paddingLeft={5} paddingRight={5} borderRadius={5} height={110}>
+              <Div height={140} elevation={8} shadowOpacity={0.7} shadowColor={COLORS.SUCCESS} borderRadius={5} backgroundColor={selectedColorBg} marginBottom={20} width='100%'>
+                <GradientDiv color={COLORS.GRADIENT_SUCCESS} startDirection={{ x: 0, y: 0 }} endDirection={{ x: 1, y: 0 }} paddingLeft={5} paddingRight={5} borderRadius={5} paddingBottom={10} height={140}>
                   <Text color={COLORS.WHITE}
                     align='center'
                     paddingBottom={5}>Ingreso pago a Sabrina</Text>
@@ -134,10 +142,28 @@ const Home = () => {
             </Div>
           </View>
           <Div marginTop={40}>
-            <Text fontWeight='500'>Ultimas Transacciones</Text>
+            <Text fontWeight='bold'>Ultimas Transacciones</Text>
             {renderTransactionList(Platform.OS)}
           </Div>
         </WrappedBox>
+        <View style={{ backgroundColor: 'white', display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end', flexDirection: 'column' }}>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+              Alert.alert("Modal has been closed.");
+              setModalVisible(!modalVisible);
+            }}
+          >
+            <View style={{ backgroundColor: 'white' }}>
+              <View>
+                <Text>Hello World!</Text>
+
+              </View>
+            </View>
+          </Modal>
+        </View>
       </WrappedBox >
     </ScrollView >
   )

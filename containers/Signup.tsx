@@ -73,7 +73,6 @@ const Login = ({ navigation }: any) => {
   const pwd = watch('password')
 
   const signup = (data: any) => {
-    console.log(data)
     navigation.navigate('Home')
   }
   const forgotPassword = () => {
