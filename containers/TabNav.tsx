@@ -37,7 +37,7 @@ const TabButton = (props: any) => {
 }
 const TabArr = [
   {
-    route: 'Home', label: 'Inicio', activeIcon: 'home', inactiveIcon: 'home-outline', component: Home
+    route: 'HomeSpace', label: 'Inicio', activeIcon: 'home', inactiveIcon: 'home-outline', component: Home
   },
   {
     route: 'Transactions', label: 'Transacciones', activeIcon: 'card', inactiveIcon: 'card-outline', component: Transactions

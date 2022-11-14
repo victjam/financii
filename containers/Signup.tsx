@@ -1,6 +1,6 @@
 import React from 'react'
 import { Dimensions, View, ScrollView, StyleSheet, KeyboardAvoidingView, TouchableOpacity, TouchableWithoutFeedback } from 'react-native'
-import { global, COLORS, REGEX, Container, Text, LGText, Div, PrimaryButton, TextButton, PrimaryButtonWithIcon } from '../styles/global';
+import { global, COLORS, REGEX, Container, Text, LGText, Div, PrimaryButton, TextButton, PrimaryButtonWithIcon, WrappedBox } from '../styles/global';
 import { AntDesign } from '@expo/vector-icons';
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
@@ -85,7 +85,7 @@ const Login = ({ navigation }: any) => {
 
   return (
     <Container>
-      <KeyboardAvoidingView behavior="padding">
+      <WrappedBox paddingBottom={20}>
         <ScrollView>
           <Div>
             <LGText paddingTop={20} fontWeight="bold">Registrate</LGText>
@@ -155,20 +155,20 @@ const Login = ({ navigation }: any) => {
               <View style={styles.right}></View>
             </Div>
             <Div paddingTop={30}>
-              <PrimaryButtonWithIcon style={{ height: 50 }} onPress={handleSubmit(signup)}>
+              <PrimaryButtonWithIcon onPress={handleSubmit(signup)}>
                 <AntDesign style={{ marginRight: 10 }} name="apple1" size={24} color={!darkThemeEnabled ? COLORS.WHITE : COLORS.BLACK} />
                 <TextButton fontWeight="bold">Continua con Apple</TextButton>
               </PrimaryButtonWithIcon>
             </Div>
             <Div paddingTop={30}>
-              <PrimaryButtonWithIcon style={{ height: 50 }} onPress={handleSubmit(signup)}>
+              <PrimaryButtonWithIcon onPress={handleSubmit(signup)}>
                 <AntDesign style={{ marginRight: 10 }} name="google" size={24} color={!darkThemeEnabled ? COLORS.WHITE : COLORS.BLACK} />
                 <TextButton fontWeight="bold">Continua con Google</TextButton>
               </PrimaryButtonWithIcon>
             </Div>
           </Div>
         </ScrollView>
-      </KeyboardAvoidingView>
+      </WrappedBox>
     </Container>
   )
 }

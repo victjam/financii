@@ -4,6 +4,8 @@ import { Dimensions } from 'react-native';
 import { Props } from '../models/styleProps'
 import { LinearGradient } from 'expo-linear-gradient';
 export const windowWidth = Dimensions.get('window').width;
+import styled from 'styled-components/native';
+import Constants from 'expo-constants';
 
 export const REGEX = {
   email: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
@@ -141,8 +143,6 @@ export const global = StyleSheet.create({
 });
 
 /// styled 
-import styled from 'styled-components/native';
-import Constants from 'expo-constants';
 export const Container = styled.SafeAreaView<Props>`
     background-color: ${(props) => props.theme.PRIMARY_COLOR};
     flex: 1;
@@ -155,6 +155,9 @@ export const GradientDiv = styled(LinearGradient).attrs({
   start: { x: 0, y: 0 },
   end: { x: 1, y: 1 }
 }) <Props>`
+  height: ${(props) => props.height || '340px'};
+  border-bottom-left-radius:${(props) => (props.borderBottomLeftRadius || 0)}px;
+  border-bottom-right-radius:${(props) => (props.borderBottomRightRadius || 0)}px;
   padding-top: ${(props) => props.paddingTop || 0}px;
   padding-right: ${(props) => props.paddingRight || 0}px;
   padding-left: ${(props) => props.paddingLeft || 0}px;
@@ -166,7 +169,9 @@ export const WrappedBox = styled.View<Props>`
   background-color: ${(props) => (props.backgroundColor || props.theme.PRIMARY_COLOR)};
   width: 100%;
   height: 100%;
-  padding-left: ${(props) => (props.paddingLeft || 10)}px;;
+  padding-left: ${(props) => (props.paddingLeft || 10)}px;
+  padding-bottom: ${(props) => props.paddingBottom || 0}px;
+  margin-bottom: ${(props) => (props.marginBottom || 0)}px;
   padding-right: ${(props) => (props.paddingRight || 10)}px;
   transition: all .3s ease;
 `
@@ -269,6 +274,7 @@ export const PrimaryButton = styled.Pressable<Props>`
 
 export const PrimaryButtonWithIcon = styled.Pressable<Props>`
   background: ${(props) => props.theme.BUTTON_COLOR}
+  height: ${(props) => (props.height || '50px')};
   border-radius: 5px;
   flex-direction: row;
   justify-content: center;

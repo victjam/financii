@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
 const CustomInput = ({ label, name, control, rules = {}, secureTextEntry }: any) => {
   return (
     <View style={styles.inputBox}>
-      <Text paddingBottom='5'>{label}</Text>
+      <Text paddingBottom={5}>{label}</Text>
       <Controller
         name={name}
         rules={rules}

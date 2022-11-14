@@ -1,6 +1,6 @@
-import React, { useState, } from 'react';
+import React from 'react';
 import { useDispatch } from "react-redux";
-import { Dimensions, View, TouchableOpacity, TouchableWithoutFeedback, Image } from 'react-native';
+import { View, TouchableWithoutFeedback, Image } from 'react-native';
 import { TOGGLE_DARKTHEME } from "../store/theme/actions";
 import { Container, Text, Div, PrimaryButton, WrappedBox, SText, LGText, XLGText, TextButton, global } from '../styles/global';
 

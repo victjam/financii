@@ -1,15 +1,16 @@
 
-import { Dimensions, FlatList, View, Pressable, ScrollView } from 'react-native'
+import { FlatList, View, Pressable, ScrollView, Platform } from 'react-native'
 import { COLORS, Text, Div, WrappedBox, PrimaryButton, DivIcon, TextButton, GradientDiv } from '../styles/global';
 import { useSelector } from "react-redux";
 import { Ionicons } from '@expo/vector-icons';
 import Marquee from "../components/Marquee";
+import Constants from 'expo-constants';
 
-
-const width = Dimensions.get("window").width
 const onPressFunction = (id: string) => {
   alert(id)
 }
+
+
 const Home = () => {
   const icons = [
     {
@@ -24,7 +25,7 @@ const Home = () => {
   const transactions = [
     {
       id: '0',
-      title: 'Pago a lizbe',
+      title: 'Arriendo',
       price: '$500',
       icon: 'wallet-outline',
       date: 'Sept 19, 2023'
@@ -52,6 +53,33 @@ const Home = () => {
     }
   ];
 
+
+  const renderTransactionList = (OS: string) => {
+    console.log(OS)
+    if (OS !== 'ios') {
+      return (
+        transactions.map((item, i) => (
+          <Div key={i} style={{ marginTop: 15, display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+            <Div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+              <DivIcon backgroundColor={selectedColorBg} borderRadius={50} align='center' paddingLeft={10} paddingRight={10}>
+                <Ionicons name={item.icon} color={selectedColor} size={20} />
+              </DivIcon>
+              <Div marginLeft={20}>
+                <Text>{item.title}</Text>
+                <Text color={COLORS.DARKGRAY}>{item.date}</Text>
+              </Div>
+            </Div>
+
+            <Div>
+              <Text fontWeight='500'>-{item.price}</Text>
+            </Div>
+          </Div>
+        ))
+      )
+    } else {
+      return (<Marquee data={transactions} />)
+    }
+  }
   const darkThemeEnabled = useSelector((state: any) => state.theme.preferences.darkThemeEnabled);
   const selectedColor = !darkThemeEnabled ? COLORS.WHITE : COLORS.BLACK;
   const selectedColorBg = darkThemeEnabled ? COLORS.WHITE : COLORS.BLACK;
@@ -60,7 +88,7 @@ const Home = () => {
   return (
     <ScrollView>
       <WrappedBox paddingLeft={0.1} paddingTop={0.1} paddingRight={0.1}>
-        <GradientDiv paddingTop={70} paddingLeft={10} paddingRight={10}>
+        <GradientDiv borderBottomLeftRadius={20} borderBottomRightRadius={20} paddingTop={Constants.statusBarHeight + 20} paddingLeft={10} paddingRight={10}>
           <DivIcon marginBottom={20} backgroundColor={selectedColor} style={{ borderRadius: 50 }} align='center' paddingLeft={10} paddingRight={10}>
             <Ionicons name='person-outline' color={selectedColorBg} size={26} />
           </DivIcon>
@@ -116,7 +144,7 @@ const Home = () => {
           </View>
           <Div marginTop={40}>
             <Text fontWeight='500'>Ultimas Transacciones</Text>
-            <Marquee data={transactions} />
+            {renderTransactionList(Platform.OS)}
           </Div>
         </WrappedBox>
       </WrappedBox >

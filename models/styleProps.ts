@@ -9,7 +9,10 @@ export interface PropsObj {
   align: string;
   color: string;
   backgroundColor: string;
+  totalBorderRadius: string;
   marginTop: number;
+  borderBottomLeftRadius: number;
+  borderBottomRightRadius: number;
   marginBottom: number;
   marginRight: number;
   marginLeft: number;

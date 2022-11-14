@@ -74,7 +74,7 @@ const Login = ({ navigation }: any) => {
   return (
     <Container>
       <WrappedBox>
-        <LGText paddingTop='20' fontWeight="bold">Inicia sesion</LGText>
+        <LGText paddingTop={20} fontWeight="bold">Inicia sesion</LGText>
         <CustomInput
           name="email"
           label="Email"
@@ -105,7 +105,7 @@ const Login = ({ navigation }: any) => {
           </TouchableWithoutFeedback>
         </View>
 
-        <Div paddingTop="30">
+        <Div paddingTop={30}>
           <PrimaryButton onPress={handleSubmit(signing)}>
             <TextButton fontWeight="bold">Iniciar sesion</TextButton>
           </PrimaryButton>
@@ -115,13 +115,13 @@ const Login = ({ navigation }: any) => {
           <Text style={[styles.marginHorizontal, styles.lineText]}>OR</Text>
           <View style={styles.right}></View>
         </View>
-        <Div paddingTop="30">
+        <Div paddingTop={30}>
           <PrimaryButtonWithIcon style={{ height: 50 }} onPress={() => navigation.navigate('Home')}>
             <AntDesign style={{ marginRight: 10 }} name="apple1" size={24} color={!darkThemeEnabled ? COLORS.WHITE : COLORS.BLACK} />
             <TextButton fontWeight="bold">Continua con Apple</TextButton>
           </PrimaryButtonWithIcon>
         </Div>
-        <Div paddingTop="30">
+        <Div paddingTop={30}>
           <PrimaryButtonWithIcon style={{ height: 50 }} onPress={() => navigation.navigate('Home')}>
             <AntDesign style={{ marginRight: 10 }} name="google" size={24} color={!darkThemeEnabled ? COLORS.WHITE : COLORS.BLACK} />
             <TextButton fontWeight="bold">Continua con Google</TextButton>
