@@ -14,12 +14,16 @@ export const REGEX = {
 export const COLORS = {
   WHITE: '#fff',
   BLACK: '#121318',
-  DANGER: '#C70039',
+  DANGER: '#EF473A',
+  SUCCESS: '#136A8A',
   GRAY: '#DCDCDD',
   DARKGRAY: '#a3a3a3',
-  GREEN: '#315917',
+  GREEN: '#00BF8F',
   RED: '#C70039',
-  DARKBLUE: '#070f24'
+  DARKBLUE: '#070f24',
+  GRADIENT_DANGER: ['#CB2D3E', '#EF473A'],
+  GRADIENT_SUCCESS: ['#136A8A', '#267871'],
+  GRADIENT_BLUE: ['#000428', '#004E92']
 }
 
 export const FONTS = {
@@ -150,18 +154,22 @@ export const Container = styled.SafeAreaView<Props>`
 `;
 
 
-export const GradientDiv = styled(LinearGradient).attrs({
-  colors: ['#6083FE', '#5964FE', '#8825E6'],
-  start: { x: 0, y: 0 },
-  end: { x: 1, y: 1 }
-}) <Props>`
-  height: ${(props) => props.height || '340px'};
-  border-bottom-left-radius:${(props) => (props.borderBottomLeftRadius || 0)}px;
-  border-bottom-right-radius:${(props) => (props.borderBottomRightRadius || 0)}px;
+export const GradientDiv = styled(LinearGradient).attrs((props: Props) => ({
+  colors: props.color || ['#6083FE', '#5964FE', '#8825E6'],
+  start: props.startDirection || { x: 0, y: 0 },
+  end: props.endDirection || { x: 1, y: 1 },
+})) <Props>`
+  height: ${(props) => props.height || 350}px;
+  border-bottom-left-radius:${(props) => (props.borderBottomLeftRadius || 5)}px;
+  border-bottom-right-radius:${(props) => (props.borderBottomRightRadius || 5)}px;
+  border-radius: ${(props) => (props.borderRadius || 0)}px;
   padding-top: ${(props) => props.paddingTop || 0}px;
   padding-right: ${(props) => props.paddingRight || 0}px;
   padding-left: ${(props) => props.paddingLeft || 0}px;
   padding-bottom: ${(props) => props.paddingBottom || 0}px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
  `;
 
 export const WrappedBox = styled.View<Props>`
@@ -175,7 +183,17 @@ export const WrappedBox = styled.View<Props>`
   padding-right: ${(props) => (props.paddingRight || 10)}px;
   transition: all .3s ease;
 `
-export const Div = styled.View<Props>`
+export const Div = styled.View.attrs((props: Props) => ({
+  shadowColor: props.shadowColor || '#333',
+  shadowOffset: {
+    width: props.shadowWidth || 0,
+    height: props.shadowHeight || 0,
+  },
+  shadowOpacity: props.shadowOpacity || 0,
+  shadowRadius: props.shadowRadius || 4,
+
+  elevation: props.elevation || 0,
+})) <Props>`
   width: ${(props) => ((props.width) || 'auto')};
   height: ${(props) => ((props.height) || 'auto')};
   padding-top: ${(props) => (props.paddingTop || 0)}px;
@@ -190,7 +208,17 @@ export const Div = styled.View<Props>`
   padding-top: ${(props) => (props.paddingTop || 0)}px;
   padding-right: ${(props) => (props.paddingRight || 0)}px;
 `
-export const DivIcon = styled.View<Props>`
+export const DivIcon = styled.View.attrs((props: Props) => ({
+  shadowColor: props.shadowColor || '#333',
+  shadowOffset: {
+    width: props.shadowWidth || 0,
+    height: props.shadowHeight || 0,
+  },
+  shadowOpacity: props.shadowOpacity || 0,
+  shadowRadius: props.shadowRadius || 4,
+
+  elevation: props.elevation || 0,
+})) <Props>`
   margin-top: ${(props) => (props.marginTop || 0)}px;
   margin-bottom: ${(props) => (props.marginBottom || 0)}px;
   padding-top: ${(props) => (props.paddingTop || 0)}px;

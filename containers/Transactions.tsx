@@ -1,14 +1,58 @@
 import React from 'react';
-import { StyleSheet, Text, View, SafeAreaView } from 'react-native'
-import { global, FONTS } from '../styles/global';
+import { StyleSheet, View, ScrollView } from 'react-native'
+import TransactionList from '../components/transactions/TransactionList';
+import { Text, FONTS, Container, Div, WrappedBox, LGText, COLORS, selectedColor } from '../styles/global';
 
+
+const transactions = [
+  {
+    id: '0',
+    title: 'Arriendo',
+    price: '-$500',
+    color: COLORS.DANGER,
+    icon: 'wallet-outline',
+    date: 'Sept 19, 2023'
+  },
+  {
+    id: '1',
+    title: 'Pago a Victor',
+    price: '$100',
+    color: COLORS.GREEN,
+    icon: 'wallet-outline',
+    date: 'Sept 19, 2023'
+  },
+  {
+    id: '2',
+    title: 'Pago a Carlos',
+    price: '$50',
+    color: COLORS.GREEN,
+    icon: 'wallet-outline',
+    date: 'Sept 19, 2023'
+  },
+  {
+    id: '4',
+    title: 'Colegio Emma',
+    price: '-$50000',
+    color: COLORS.DANGER,
+    icon: 'wallet-outline',
+    date: 'Sept 19, 2023'
+  }
+];
 
 const Transactions = () => (
-  <SafeAreaView style={global.safeView}>
-    <View style={[global.initialPadding, styles.paddingTop]}>
-      <Text style={styles.title}>Transactions page</Text>
-    </View>
-  </SafeAreaView>
+  <Container>
+    <WrappedBox>
+      <ScrollView>
+        <Div>
+          <LGText fontWeight='bold'>Transaciones</LGText>
+          <Text color={selectedColor}>Todas tus transacciones en un solo lugar</Text>
+        </Div>
+        <Div>
+          <TransactionList transactions={transactions} />
+        </Div>
+      </ScrollView>
+    </WrappedBox>
+  </Container>
 )
 
 const styles = StyleSheet.create({
