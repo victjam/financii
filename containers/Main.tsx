@@ -1,4 +1,3 @@
-import React from 'react';
 import { Image, TouchableWithoutFeedback, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DARKTHEME } from '../store/theme/actions';
@@ -35,7 +34,7 @@ const Main = ({ navigation }: any) => {
             simple posible.
           </Text>
         </Div>
-        <View></View>
+        <View />
         <Div paddingTop={30}>
           <PrimaryButton onPress={() => dispatch({ type: TOGGLE_DARKTHEME })}>
             <TextButton fontWeight="bold">Crear cuenta</TextButton>

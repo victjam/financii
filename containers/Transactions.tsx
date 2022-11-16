@@ -1,11 +1,9 @@
-import React from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { ScrollView } from 'react-native';
 import TransactionList from '../components/transactions/TransactionList';
 import {
   COLORS,
   Container,
   Div,
-  FONTS,
   LGText,
   Text,
   WrappedBox,
@@ -65,19 +63,5 @@ const Transactions = () => (
     </WrappedBox>
   </Container>
 );
-
-const styles = StyleSheet.create({
-  paddingTop: {
-    paddingTop: 30,
-  },
-  name: {
-    paddingTop: 5,
-    fontSize: FONTS.xs,
-  },
-  title: {
-    fontSize: FONTS.s,
-    fontWeight: '600',
-  },
-});
 
 export default Transactions;

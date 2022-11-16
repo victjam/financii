@@ -1,12 +1,9 @@
-import RouteStack from './routes/RouteStack';
-import { View } from 'react-native';
-import { Provider as ReduxProvider } from 'react-redux';
-import DarkThemeProvider from './provider/DarkThemeProvider';
-import { useEffect, useCallback } from 'react';
-import { persistor, store } from './store/store';
-import { PersistGate } from 'redux-persist/integration/react';
 import { useFonts } from 'expo-font';
-import * as SplashScreen from 'expo-splash-screen';
+import { Provider as ReduxProvider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import DarkThemeProvider from './provider/DarkThemeProvider';
+import RouteStack from './routes/RouteStack';
+import { persistor, store } from './store/store';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -15,11 +12,11 @@ export default function App() {
     'SF-pro-medium': require('./assets/fonts/SF-Pro-Rounded-Medium.otf'),
   });
 
-  const onLayoutRootView = useCallback(async () => {
-    // if (fontsLoaded) {
-    //   await SplashScreen.hideAsync();
-    // }
-  }, [fontsLoaded]);
+  // const onLayoutRootView = useCallback(async () => {
+  // if (fontsLoaded) {
+  //   await SplashScreen.hideAsync();
+  // }
+  // }, [fontsLoaded]);
 
   if (!fontsLoaded) {
     return null;

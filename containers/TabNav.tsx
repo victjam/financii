@@ -1,6 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { useRef } from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { useSelector } from 'react-redux';
 import { COLORS } from '../styles/global';
@@ -24,7 +23,6 @@ const TabButton = (props: any) => {
   );
   const { item, onPress, accessibilityState } = props;
   const focused = accessibilityState.selected;
-  const viewRef: any = useRef(null);
 
   return (
     <TouchableOpacity

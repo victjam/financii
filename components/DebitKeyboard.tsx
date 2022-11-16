@@ -1,6 +1,6 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   FlatList,
   Modal,
@@ -11,11 +11,6 @@ import {
 } from 'react-native';
 import { useSelector } from 'react-redux';
 import { COLORS, Div, PrimaryButton, Text, TextButton } from '../styles/global';
-
-const options = {
-  enableVibrateFallback: true,
-  ignoreAndroidSystemSettings: false,
-};
 
 const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, '', 0, 'DEL'];
 

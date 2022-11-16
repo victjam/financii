@@ -1,5 +1,4 @@
 import { AntDesign } from '@expo/vector-icons';
-import React from 'react';
 import { useForm } from 'react-hook-form';
 import {
   Dimensions,
@@ -89,15 +88,15 @@ const Login = ({ navigation }: any) => {
 
   const pwd = watch('password');
 
-  const signup = (data: any) => {
+  const signup = () => {
     navigation.navigate('Home');
   };
-  const forgotPassword = () => {
-    navigation.navigate('Home');
-  };
-  const goBack = () => {
-    navigation.navigate('Main');
-  };
+  // const forgotPassword = () => {
+  //   navigation.navigate('Home');
+  // };
+  // const goBack = () => {
+  //   navigation.navigate('Main');
+  // };
 
   return (
     <Container>
@@ -183,9 +182,9 @@ const Login = ({ navigation }: any) => {
               </PrimaryButton>
             </Div>
             <Div style={styles.box}>
-              <View style={styles.left}></View>
+              <View style={styles.left} />
               <Text style={[styles.marginHorizontal, styles.lineText]}>OR</Text>
-              <View style={styles.right}></View>
+              <View style={styles.right} />
             </Div>
             <Div paddingTop={30}>
               <PrimaryButtonWithIcon onPress={handleSubmit(signup)}>

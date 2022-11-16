@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Dimensions, FlatList, StyleSheet } from 'react-native';
 import MarqueeItem from './MarqueeItem';
 
@@ -11,12 +11,13 @@ const Marquee = ({ data }: any) => {
   const [activeInterval, setActiveInterval] = useState<any>(null);
   const [momentumScrolling, setMomentumScrolling] = useState(false);
 
-  const renderItem = (item: any, index: number) => {
+  const renderItem = (item: any) => {
     return <MarqueeItem item={item} />;
   };
 
   useEffect(() => {
     startScroll();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPosition]);
 
   const startScroll = () => {
@@ -129,7 +130,7 @@ const Marquee = ({ data }: any) => {
       })}
       showsHorizontalScrollIndicator={false}
       data={dataWrapped}
-      renderItem={({ item, index }) => renderItem(item, index)}
+      renderItem={({ item }) => renderItem(item)}
       horizontal
       style={styles.wrapper}
       keyExtractor={(item, index) => item.title + index}

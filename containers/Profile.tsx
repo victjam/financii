@@ -1,15 +1,13 @@
-import React from 'react';
-import { StyleSheet, ScrollView, View, SafeAreaView } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DARKTHEME } from '../store/theme/actions';
 import {
-  global,
+  Container,
   FONTS,
   PrimaryButton,
-  TextButton,
-  Container,
-  WrappedBox,
   Text,
+  TextButton,
+  WrappedBox,
 } from '../styles/global';
 
 const Profile = () => {
