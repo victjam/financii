@@ -1,15 +1,29 @@
 import React from 'react';
-import { StyleSheet, Text, View, SafeAreaView } from 'react-native'
-import { global, FONTS } from '../styles/global';
+import { StyleSheet, ScrollView, View, SafeAreaView } from 'react-native'
+import { useDispatch } from "react-redux";
+import { TOGGLE_DARKTHEME } from "../store/theme/actions";
+import { global, FONTS, PrimaryButton, TextButton, Container, WrappedBox, Text } from '../styles/global';
 
 
-const Profile = () => (
-  <SafeAreaView style={global.safeView}>
-    <View style={[global.initialPadding, styles.paddingTop]}>
+
+const Profile = () => {
+
+  const dispatch = useDispatch();
+  return (
+    
+  <Container>
+  <WrappedBox>
+    <ScrollView>
       <Text style={styles.title}>Profile page</Text>
-    </View>
-  </SafeAreaView>
-)
+      <PrimaryButton onPress={() => dispatch({ type: TOGGLE_DARKTHEME })} >
+            <TextButton fontWeight="bold">Cambiar color</TextButton>
+          </PrimaryButton>
+          </ScrollView>
+          </WrappedBox>
+          </Container>
+  )
+}
+
 
 const styles = StyleSheet.create({
   paddingTop: {
