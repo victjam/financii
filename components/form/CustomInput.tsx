@@ -1,12 +1,11 @@
-import React from 'react'
-import { View, TextInput, StyleSheet } from 'react-native'
-import { IInput } from '../../models/Input.interface'
-import { FONTS, COLORS, Text, InputField } from '../../styles/global';
-import { Controller } from "react-hook-form";
+import React from 'react';
+import { Controller } from 'react-hook-form';
+import { StyleSheet, View } from 'react-native';
+import { COLORS, FONTS, InputField, Text } from '../../styles/global';
 
 const styles = StyleSheet.create({
   paddingTop: {
-    paddingTop: 100
+    paddingTop: 100,
   },
   inputBox: {
     marginTop: 15,
@@ -14,10 +13,16 @@ const styles = StyleSheet.create({
   error: {
     paddingTop: 1,
     fontWeight: 'bold',
-    fontSize: FONTS.xxxs
-  }
-})
-const CustomInput = ({ label, name, control, rules = {}, secureTextEntry }: any) => {
+    fontSize: FONTS.xxxs,
+  },
+});
+const CustomInput = ({
+  label,
+  name,
+  control,
+  rules = {},
+  secureTextEntry,
+}: any) => {
   return (
     <View style={styles.inputBox}>
       <Text paddingBottom={5}>{label}</Text>
@@ -25,19 +30,32 @@ const CustomInput = ({ label, name, control, rules = {}, secureTextEntry }: any)
         name={name}
         rules={rules}
         control={control}
-        render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
+        render={({
+          field: { onChange, onBlur, value },
+          fieldState: { error },
+        }) => (
           <View>
-            <InputField style={[{ borderColor: error ? COLORS.DANGER : COLORS.GRAY }]}
+            <InputField
+              style={[{ borderColor: error ? COLORS.DANGER : COLORS.GRAY }]}
               onBlur={onBlur}
               secureTextEntry={secureTextEntry}
               onChangeText={onChange}
-              value={value} />
-            {error && <Text style={[styles.error, { color: error ? COLORS.DANGER : COLORS.GRAY }]}>{error.message || 'Error'}</Text>}
+              value={value}
+            />
+            {error && (
+              <Text
+                style={[
+                  styles.error,
+                  { color: error ? COLORS.DANGER : COLORS.GRAY },
+                ]}>
+                {error.message ?? 'Error'}
+              </Text>
+            )}
           </View>
         )}
       />
     </View>
-  )
-}
+  );
+};
 
-export default CustomInput
+export default CustomInput;

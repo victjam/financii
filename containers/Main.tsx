@@ -1,8 +1,19 @@
 import React from 'react';
-import { useDispatch } from "react-redux";
-import { View, TouchableWithoutFeedback, Image } from 'react-native';
-import { TOGGLE_DARKTHEME } from "../store/theme/actions";
-import { Container, Text, Div, PrimaryButton, WrappedBox, SText, LGText, XLGText, TextButton, global } from '../styles/global';
+import { Image, TouchableWithoutFeedback, View } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { TOGGLE_DARKTHEME } from '../store/theme/actions';
+import {
+  Container,
+  Div,
+  global,
+  LGText,
+  PrimaryButton,
+  SText,
+  Text,
+  TextButton,
+  WrappedBox,
+  XLGText,
+} from '../styles/global';
 
 const Main = ({ navigation }: any) => {
   const dispatch = useDispatch();
@@ -19,24 +30,27 @@ const Main = ({ navigation }: any) => {
         <LGText fontWeight="bold">Bienvenidos a</LGText>
         <XLGText fontWeight="bold">Financii</XLGText>
         <Div paddingTop={10}>
-          <Text>Una app para gestionar tus gatos y metas de la forma mas segura y simple posible.</Text>
+          <Text>
+            Una app para gestionar tus gatos y metas de la forma mas segura y
+            simple posible.
+          </Text>
         </Div>
-        <View>
-        </View>
+        <View></View>
         <Div paddingTop={30}>
-          <PrimaryButton onPress={() => dispatch({ type: TOGGLE_DARKTHEME })} >
+          <PrimaryButton onPress={() => dispatch({ type: TOGGLE_DARKTHEME })}>
             <TextButton fontWeight="bold">Crear cuenta</TextButton>
           </PrimaryButton>
         </Div>
         {/* onPress={() => dispatch({ type: TOGGLE_DARKTHEME })}*/}
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Login')}>
-          <Text paddingTop={10} >Ya tienes una cuenta?, inicia
-            <Text fontWeight='bold'> aqui.</Text>
+          <Text paddingTop={10}>
+            Ya tienes una cuenta?, inicia
+            <Text fontWeight="bold"> aqui.</Text>
           </Text>
         </TouchableWithoutFeedback>
       </WrappedBox>
     </Container>
-  )
-}
+  );
+};
 
 export default Main;

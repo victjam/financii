@@ -1,8 +1,15 @@
 import React from 'react';
-import { StyleSheet, View, ScrollView } from 'react-native'
+import { ScrollView, StyleSheet } from 'react-native';
 import TransactionList from '../components/transactions/TransactionList';
-import { Text, FONTS, Container, Div, WrappedBox, LGText, COLORS, XLGText } from '../styles/global';
-
+import {
+  COLORS,
+  Container,
+  Div,
+  FONTS,
+  LGText,
+  Text,
+  WrappedBox,
+} from '../styles/global';
 
 const transactions = [
   {
@@ -11,7 +18,7 @@ const transactions = [
     price: '-$500',
     color: COLORS.DANGER,
     icon: 'wallet-outline',
-    date: 'Sept 19, 2023'
+    date: 'Sept 19, 2023',
   },
   {
     id: '1',
@@ -19,7 +26,7 @@ const transactions = [
     price: '$100',
     color: COLORS.GREEN,
     icon: 'wallet-outline',
-    date: 'Sept 19, 2023'
+    date: 'Sept 19, 2023',
   },
   {
     id: '2',
@@ -27,7 +34,7 @@ const transactions = [
     price: '$50',
     color: COLORS.GREEN,
     icon: 'wallet-outline',
-    date: 'Sept 19, 2023'
+    date: 'Sept 19, 2023',
   },
   {
     id: '4',
@@ -35,8 +42,8 @@ const transactions = [
     price: '-$50000',
     color: COLORS.DANGER,
     icon: 'wallet-outline',
-    date: 'Sept 19, 2023'
-  }
+    date: 'Sept 19, 2023',
+  },
 ];
 
 const Transactions = () => (
@@ -45,10 +52,10 @@ const Transactions = () => (
       <ScrollView>
         <Div>
           <Div marginBottom={40}>
-        <LGText fontWeight='bold'>Saldo:</LGText>
-        <LGText fontWeight='bold'>$300.000</LGText>
+            <LGText fontWeight="bold">Saldo:</LGText>
+            <LGText fontWeight="bold">$300.000</LGText>
           </Div>
-          <LGText fontWeight='bold'>Lista de transaciones</LGText>
+          <LGText fontWeight="bold">Lista de transaciones</LGText>
           <Text>Todas tus transacciones en un solo lugar</Text>
         </Div>
         <Div>
@@ -57,7 +64,7 @@ const Transactions = () => (
       </ScrollView>
     </WrappedBox>
   </Container>
-)
+);
 
 const styles = StyleSheet.create({
   paddingTop: {
@@ -69,10 +76,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: FONTS.s,
-    fontWeight: '600'
-  }
+    fontWeight: '600',
+  },
 });
-
-
 
 export default Transactions;

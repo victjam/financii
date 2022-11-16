@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Dimensions, FlatList, StyleSheet } from 'react-native';
 import MarqueeItem from './MarqueeItem';
 
 const itemWidth = Dimensions.get('window').width / 5;
-
 
 const Marquee = ({ data }: any) => {
   const [currentPosition, setCurrentPosition] = useState(0);
@@ -12,15 +11,9 @@ const Marquee = ({ data }: any) => {
   const [activeInterval, setActiveInterval] = useState<any>(null);
   const [momentumScrolling, setMomentumScrolling] = useState(false);
 
-
   const renderItem = (item: any, index: number) => {
-    return (
-      <MarqueeItem
-        item={item}
-      />
-    );
+    return <MarqueeItem item={item} />;
   };
-
 
   useEffect(() => {
     startScroll();
@@ -28,13 +21,12 @@ const Marquee = ({ data }: any) => {
 
   const startScroll = () => {
     setActiveInterval(setInterval(scrolling, 32));
-  }
-
+  };
 
   useEffect(() => {
     return () => {
-      clearInterval(activeInterval)
-    }
+      clearInterval(activeInterval);
+    };
   }, [activeInterval]);
 
   const clearScrolling = () => {
@@ -42,7 +34,7 @@ const Marquee = ({ data }: any) => {
       clearInterval(activeInterval);
       setActiveInterval(null);
     }
-  }
+  };
 
   const scrolling = () => {
     if (currentPosition < 0) {
@@ -50,7 +42,10 @@ const Marquee = ({ data }: any) => {
     }
     if (data.length > 3) {
       const position = currentPosition + 1.5;
-      flatListRef?.current?.scrollToOffset({ offset: position, animated: true });
+      flatListRef?.current?.scrollToOffset({
+        offset: position,
+        animated: true,
+      });
       const maxOffset = data.length * itemWidth;
       if (currentPosition > maxOffset) {
         const offset = currentPosition - maxOffset;
@@ -66,7 +61,7 @@ const Marquee = ({ data }: any) => {
   };
 
   const onMomentumScrollBegin = () => {
-    setMomentumScrolling(true)
+    setMomentumScrolling(true);
     clearScrolling();
   };
 
@@ -84,7 +79,7 @@ const Marquee = ({ data }: any) => {
   };
 
   const onScrollEnd = (event: any) => {
-    setScrolled(true)
+    setScrolled(true);
     setCurrentPosition(event.nativeEvent.contentOffset.x);
     startScroll();
   };
@@ -115,9 +110,6 @@ const Marquee = ({ data }: any) => {
     return overlappingNo;
   };
 
-
-
-
   const { dataWrapped } = getWrappedData();
   return (
     <FlatList
@@ -142,8 +134,8 @@ const Marquee = ({ data }: any) => {
       style={styles.wrapper}
       keyExtractor={(item, index) => item.title + index}
     />
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   wrapper: {

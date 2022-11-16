@@ -1,5 +1,5 @@
-import * as actions from "./actions";
 import { combineReducers } from '@reduxjs/toolkit';
+import * as actions from './actions';
 
 const preferences = (state = { darkThemeEnabled: false }, action: any) => {
   switch (action.type) {

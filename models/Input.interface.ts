@@ -1,4 +1,4 @@
 export interface IInput {
-    name: string,
-    isPassword: boolean
+  name: string;
+  isPassword: boolean;
 }

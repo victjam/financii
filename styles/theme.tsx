@@ -5,8 +5,8 @@ export const COLORS = {
   DARKGRAY: '#a3a3a3',
   GREEN: '#315917',
   RED: '#C70039',
-  DARKBLUE: '#070f24'
-}
+  DARKBLUE: '#070f24',
+};
 
 export const darkTheme = {
   PRIMARY_COLOR: COLORS.BLACK,

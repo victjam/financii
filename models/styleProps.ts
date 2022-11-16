@@ -33,10 +33,10 @@ export interface PropsObj {
   borderRadius: number;
   paddingBottom: number;
   size: number;
-  theme: Theme
+  theme: Theme;
 }
 
-export type Props = Partial<PropsObj>
+export type Props = Partial<PropsObj>;
 
 export interface Theme {
   PRIMARY_COLOR: string;
