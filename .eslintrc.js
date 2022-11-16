@@ -10,5 +10,6 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   rules: {
     '@typescript-eslint/prefer-nullish-coalescing': 'off',
+    '@typescript-eslint/no-explicit-any': 'warn',
   },
 };
