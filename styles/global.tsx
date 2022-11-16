@@ -1,6 +1,7 @@
 
 import { StyleSheet } from 'react-native'
 import { Dimensions } from 'react-native';
+import {Animated} from 'react-native'
 import { Props } from '../models/styleProps'
 import { LinearGradient } from 'expo-linear-gradient';
 export const windowWidth = Dimensions.get('window').width;
@@ -157,7 +158,7 @@ export const GradientDiv = styled(LinearGradient).attrs((props: Props) => ({
   start: props.startDirection || { x: 0, y: 0 },
   end: props.endDirection || { x: 1, y: 1 },
 })) <Props>`
-  height: ${(props) => props.height || 350}px;
+  height: ${(props) => props.height || '350px'};
   border-bottom-left-radius:${(props) => (props.borderBottomLeftRadius || 5)}px;
   border-bottom-right-radius:${(props) => (props.borderBottomRightRadius || 5)}px;
   border-radius: ${(props) => (props.borderRadius || 0)}px;
@@ -192,6 +193,9 @@ export const Div = styled.View.attrs((props: Props) => ({
 
   elevation: props.elevation || 0,
 })) <Props>`
+  justify-content: ${(props) => ((props.justifyContent) || 'space-between')};
+  align-items: ${(props) => ((props.alignItems) || 'stretch')};
+  flex: ${(props) => ((props.flex) || 'none')};
   width: ${(props) => ((props.width) || 'auto')};
   height: ${(props) => ((props.height) || 'auto')};
   padding-top: ${(props) => (props.paddingTop || 0)}px;
@@ -248,7 +252,7 @@ export const SText = styled.Text<Props>`
   padding-top: ${(props) => (props.paddingTop || 0)}px;
   color: ${(props) => props.color ? props.color : props.theme.TITLE_COLOR};
 `
-export const Text = styled.Text<Props>`
+export const Text = styled(Animated.Text)<Props>`
   font-family: ${(props) => `SF-pro-${props.fontWeight ? props.fontWeight : 'medium'}` || 'SF-pro-medium'};
   font-size: ${(props) => (props.fontSize || '18')}px;
   padding-top: ${(props) => (props.paddingTop || 0)}px;

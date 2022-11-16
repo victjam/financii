@@ -1,5 +1,5 @@
 
-import { FlatList, View, Pressable, ScrollView, Platform, Alert, Modal } from 'react-native'
+import { FlatList, View, Pressable, ScrollView, TouchableOpacity, Platform, Alert, Modal, Animated, Vibration } from 'react-native'
 import { useState } from 'react'
 import { COLORS, Text, Div, WrappedBox, PrimaryButton, DivIcon, TextButton, GradientDiv } from '../styles/global';
 import { useSelector } from "react-redux";
@@ -7,8 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 import Marquee from "../components/Marquee";
 import Constants from 'expo-constants';
 import TransactionList from '../components/transactions/TransactionList';
-
-
+import DebitKeyboard from '../components/DebitKeyboard';
 
 const Home = () => {
   const icons = [
@@ -57,6 +56,8 @@ const Home = () => {
   ];
 
 
+
+
   const renderTransactionList = (OS: string) => {
     if (OS === 'ios') {
       return (<Marquee data={transactions} />)
@@ -72,11 +73,9 @@ const Home = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
 
-  const onPressFunction = (id: string) => {
-    if (id === 'add') {
-      setModalVisible(!modalVisible)
-    }
-  }
+
+
+
   return (
     <ScrollView>
       <WrappedBox paddingLeft={0.1} paddingTop={0.1} paddingRight={0.1}>
@@ -95,7 +94,7 @@ const Home = () => {
             renderItem={({ item }: any) => {
               return (
                 <View style={{ marginHorizontal: SPACE, paddingHorizontal: SPACE }}>
-                  <Pressable onPress={() => onPressFunction('add')}>
+                  <Pressable onPressIn={()=> setModalVisible(true)}>
                     <DivIcon marginTop={30} marginBottom={20} backgroundColor={selectedColor} style={{ borderRadius: 50 }} align='center' paddingLeft={10} paddingRight={10}>
                       <Ionicons name={item.icon} color={selectedColorBg} size={26} />
                     </DivIcon>
@@ -114,24 +113,24 @@ const Home = () => {
           {/* refactor this */}
           <View style={{ marginTop: 20, display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
             <View style={{ width: '45%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-              <Div height={140} elevation={8} shadowOpacity={0.7} shadowColor={COLORS.DANGER} borderRadius={5} backgroundColor={selectedColorBg} marginBottom={20} width='100%'>
-                <GradientDiv color={COLORS.GRADIENT_DANGER} startDirection={{ x: 0, y: 0 }} endDirection={{ x: 1, y: 0 }} paddingLeft={5} paddingRight={5} borderRadius={5} paddingBottom={10} height={140}>
+              <Div height="140px" elevation={8} shadowOpacity={0.7} shadowColor={COLORS.DANGER} borderRadius={5} backgroundColor={selectedColorBg} marginBottom={20} width='100%'>
+                <GradientDiv color={COLORS.GRADIENT_DANGER} startDirection={{ x: 0, y: 0 }} endDirection={{ x: 1, y: 0 }} paddingLeft={5} paddingRight={5} borderRadius={5} paddingBottom={10} height="140px">
                   <Text color={COLORS.WHITE}
                     align='center'
                     paddingBottom={5}>Tranferencia a Sabrina</Text>
                   <Text color={COLORS.RED} align='center' fontWeight='bold' paddingBottom={10}>$-4,500</Text>
-                  <PrimaryButton backgroundColor={selectedColor} style={{ borderRadius: 50 }} height="35px" width='100%' onPress={() => onPressFunction('Login')}>
+                  <PrimaryButton backgroundColor={selectedColor} style={{ borderRadius: 50 }} height="35px" width='100%' onPress={() =>alert('detal')}>
                     <TextButton color={selectedColorBg} fontWeight="bold">Ver detalle</TextButton>
                   </PrimaryButton>
                 </GradientDiv>
               </Div>
-              <Div height={140} elevation={8} shadowOpacity={0.7} shadowColor={COLORS.SUCCESS} borderRadius={5} backgroundColor={selectedColorBg} marginBottom={20} width='100%'>
-                <GradientDiv color={COLORS.GRADIENT_SUCCESS} startDirection={{ x: 0, y: 0 }} endDirection={{ x: 1, y: 0 }} paddingLeft={5} paddingRight={5} borderRadius={5} paddingBottom={10} height={140}>
+              <Div height="140px" elevation={8} shadowOpacity={0.7} shadowColor={COLORS.SUCCESS} borderRadius={5} backgroundColor={selectedColorBg} marginBottom={20} width='100%'>
+                <GradientDiv color={COLORS.GRADIENT_SUCCESS} startDirection={{ x: 0, y: 0 }} endDirection={{ x: 1, y: 0 }} paddingLeft={5} paddingRight={5} borderRadius={5} paddingBottom={10} height="140px">
                   <Text color={COLORS.WHITE}
                     align='center'
                     paddingBottom={5}>Ingreso pago a Sabrina</Text>
                   <Text color={COLORS.GREEN} align='center' fontWeight='bold' paddingBottom={10}>$+2,500</Text>
-                  <PrimaryButton backgroundColor={selectedColor} style={{ borderRadius: 50 }} height="35px" width='100%' onPress={() => onPressFunction('Login')}>
+                  <PrimaryButton backgroundColor={selectedColor} style={{ borderRadius: 50 }} height="35px" width='100%' onPress={() => alert('detal')}>
                     <TextButton color={selectedColorBg} fontWeight="bold">Ver detalle</TextButton>
                   </PrimaryButton>
                 </GradientDiv>
@@ -146,29 +145,13 @@ const Home = () => {
             {renderTransactionList(Platform.OS)}
           </Div>
         </WrappedBox>
-        <View style={{ backgroundColor: 'white', display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end', flexDirection: 'column' }}>
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={modalVisible}
-            onRequestClose={() => {
-              Alert.alert("Modal has been closed.");
-              setModalVisible(!modalVisible);
-            }}
-          >
-            <View style={{ backgroundColor: 'white' }}>
-              <View>
-                <Text>Hello World!</Text>
-
-              </View>
-            </View>
-          </Modal>
-        </View>
       </WrappedBox >
+      <DebitKeyboard modalVisible={modalVisible} handleModal={() => setModalVisible(false)}/>
+      
     </ScrollView >
+    
   )
 }
-
 
 
 export default Home;

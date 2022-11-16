@@ -6,6 +6,9 @@ export interface PropsObj {
   fontSize: number;
   fontWeight: string;
   source: string;
+  flex: string;
+  alignItems: string;
+  justifyContent: string;
   align: string;
   color: any;
   startDirection: any;
