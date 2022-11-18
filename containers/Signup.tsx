@@ -84,8 +84,8 @@ const Login = ({ navigation }: any) => {
     defaultValues: {
       email: '',
       name: '',
-      lastname: '',
-      passwordRepeat: '',
+      lastName: '',
+      confirmPassword: '',
       password: '',
     },
   });
@@ -105,7 +105,7 @@ const Login = ({ navigation }: any) => {
     const user = userCredential.user;
     const userDoc = await createUserDocument(user, {
       name: watch('name'),
-      lastname: watch('lastname'),
+      lastName: watch('lastName'),
     });
     try {
       await AsyncStorage.setItem('user', JSON.stringify(userDoc));
@@ -142,7 +142,7 @@ const Login = ({ navigation }: any) => {
               }}
             />
             <CustomInput
-              name="lastname"
+              name="lastName"
               label="Apellidos"
               control={control}
               rules={{
@@ -176,7 +176,7 @@ const Login = ({ navigation }: any) => {
               }}
             />
             <CustomInput
-              name="passwordRepeat"
+              name="confirmPassword"
               label="Confirma contraseña"
               secureTextEntry
               control={control}
