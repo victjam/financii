@@ -1,5 +1,8 @@
 import { AntDesign } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useForm } from 'react-hook-form';
+
 import {
   Dimensions,
   ScrollView,
@@ -9,6 +12,7 @@ import {
 } from 'react-native';
 import { useSelector } from 'react-redux';
 import CustomInput from '../components/form/CustomInput';
+import { auth, createUserDocument } from '../firebase';
 import {
   COLORS,
   Container,
@@ -89,7 +93,26 @@ const Login = ({ navigation }: any) => {
   const pwd = watch('password');
 
   const signup = () => {
-    navigation.navigate('Home');
+    handleCreateAccount();
+  };
+
+  const handleCreateAccount = async () => {
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      watch('email'),
+      watch('password'),
+    );
+    const user = userCredential.user;
+    const userDoc = await createUserDocument(user, {
+      name: watch('name'),
+      lastname: watch('lastname'),
+    });
+    try {
+      await AsyncStorage.setItem('user', JSON.stringify(userDoc));
+      navigation.navigate('Home');
+    } catch (error) {
+      console.log(error);
+    }
   };
   // const forgotPassword = () => {
   //   navigation.navigate('Home');

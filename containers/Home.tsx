@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Constants from 'expo-constants';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FlatList, Platform, Pressable, ScrollView, View } from 'react-native';
 import { useSelector } from 'react-redux';
 import DebitKeyboard from '../components/DebitKeyboard';
@@ -18,6 +19,8 @@ import {
 } from '../styles/global';
 
 const Home = () => {
+  const [user, setUser] = useState(null);
+
   const icons = [
     {
       id: '0',
@@ -63,6 +66,22 @@ const Home = () => {
     },
   ];
 
+  const getUserFromStorage = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('user');
+      return jsonValue != null ? JSON.parse(jsonValue) : null;
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setUser(await getUserFromStorage());
+    };
+    fetchData().catch(console.error);
+  }, [user]);
+
   const renderTransactionList = (OS: string) => {
     if (OS === 'ios') {
       return <Marquee data={transactions} />;
@@ -103,11 +122,12 @@ const Home = () => {
             align="left"
             fontWeight="bold"
             color={COLORS.WHITE}>
-            Buenos dias, Victor
+            Buenos dias, {user?.name}
           </Text>
           <Text fontSize={20} paddingTop={10} color={COLORS.WHITE}>
             $65.988.00
           </Text>
+
           <Text paddingTop={10} color={COLORS.WHITE}>
             Tu Balance es{' '}
             <Text color={COLORS.GREEN} fontWeight="bold">
