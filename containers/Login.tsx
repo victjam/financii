@@ -1,4 +1,7 @@
 import { AntDesign } from '@expo/vector-icons';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import LottieView from 'lottie-react-native';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import {
   Dimensions,
@@ -8,6 +11,7 @@ import {
 } from 'react-native';
 import { useSelector } from 'react-redux';
 import CustomInput from '../components/form/CustomInput';
+import { auth } from '../firebase';
 import {
   COLORS,
   Container,
@@ -21,7 +25,6 @@ import {
   TextButton,
   WrappedBox,
 } from '../styles/global';
-
 export const windowWidth = Dimensions.get('window').width;
 const styles = StyleSheet.create({
   paddingTop: {
@@ -68,12 +71,47 @@ const styles = StyleSheet.create({
 });
 
 const Login = ({ navigation }: any) => {
+  const [loading, setLoading] = useState(false);
+  const activeLoader = () => {
+    if (loading) {
+      if (darkThemeEnabled) {
+        return (
+          <View
+            style={{
+              height: '110%',
+              width: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              position: 'absolute',
+              zIndex: 99,
+              backgroundColor: darkThemeEnabled ? COLORS.BLACK : COLORS.WHITE,
+            }}>
+            <LottieView
+              source={require('../assets/loader_volumen_white.json')}
+              style={{ height: 100, width: 100 }}
+              autoPlay
+            />
+          </View>
+        );
+      }
+      return (
+        <LottieView
+          source={require('../assets/loader_volumen_black.json')}
+          style={{ height: 100, width: 100 }}
+          autoPlay
+        />
+      );
+    }
+  };
+
   const darkThemeEnabled = useSelector(
     (state: any) => state.theme.preferences.darkThemeEnabled,
   );
   const {
     control,
     handleSubmit,
+    watch,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     formState: { errors },
   } = useForm({
@@ -83,8 +121,14 @@ const Login = ({ navigation }: any) => {
     },
   });
 
-  const signing = () => {
-    navigation.navigate('Home');
+  const signing = async () => {
+    setLoading(true);
+    try {
+      await signInWithEmailAndPassword(auth, watch('email'), watch('password'));
+    } catch (error) {
+      console.log(error);
+    }
+    // navigation.navigate('Home');
   };
   // const forgotPassword = () => {
   //   navigation.navigate('Home');
@@ -95,6 +139,7 @@ const Login = ({ navigation }: any) => {
 
   return (
     <Container>
+      {activeLoader()}
       <WrappedBox>
         <LGText paddingTop={20} fontWeight="bold">
           Inicia sesion

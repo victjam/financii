@@ -1,7 +1,11 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { onAuthStateChanged } from 'firebase/auth';
+import LottieView from 'lottie-react-native';
+import { useEffect, useState } from 'react';
 import { Image, TouchableWithoutFeedback, View } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { TOGGLE_DARKTHEME } from '../store/theme/actions';
+import { auth, getUserDocument } from '../firebase';
 import {
+  COLORS,
   Container,
   Div,
   global,
@@ -14,10 +18,71 @@ import {
   XLGText,
 } from '../styles/global';
 
+import { useSelector } from 'react-redux';
 const Main = ({ navigation }: any) => {
-  const dispatch = useDispatch();
+  const darkThemeEnabled = useSelector(
+    (state: any) => state.theme.preferences.darkThemeEnabled,
+  );
+  const [loading, setLoading] = useState(false);
+  const activeLoader = () => {
+    if (loading) {
+      if (darkThemeEnabled) {
+        return (
+          <View
+            style={{
+              height: '110%',
+              width: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              position: 'absolute',
+              zIndex: 99,
+              backgroundColor: darkThemeEnabled ? COLORS.BLACK : COLORS.WHITE,
+            }}>
+            <LottieView
+              source={require('../assets/loader_volumen_white.json')}
+              style={{ height: 100, width: 100 }}
+              autoPlay
+            />
+          </View>
+        );
+      }
+      return (
+        <LottieView
+          source={require('../assets/loader_volumen_black.json')}
+          style={{ height: 100, width: 100 }}
+          autoPlay
+        />
+      );
+    }
+  };
+
+  useEffect(() => {
+    const unSubscribeAuth = onAuthStateChanged(auth, user => {
+      if (user) {
+        const saveUserInformation = async () => {
+          setLoading(true);
+          const userFinancii = await getUserDocument(user.uid);
+          await AsyncStorage.setItem('user', JSON.stringify(userFinancii));
+          navigation.navigate('Home');
+          setLoading(false);
+        };
+        saveUserInformation();
+      } else {
+        const removeUserInformation = async () => {
+          setLoading(true);
+          await AsyncStorage.removeItem('user');
+          setLoading(false);
+        };
+        removeUserInformation();
+        navigation.navigate('Main');
+      }
+    });
+    return unSubscribeAuth;
+  }, [navigation]);
   return (
     <Container>
+      {activeLoader()}
       <WrappedBox>
         <View style={global.centerElement}>
           <Image
@@ -36,7 +101,7 @@ const Main = ({ navigation }: any) => {
         </Div>
         <View />
         <Div paddingTop={30}>
-          <PrimaryButton onPress={() => dispatch({ type: TOGGLE_DARKTHEME })}>
+          <PrimaryButton onPress={() => navigation.navigate('Signup')}>
             <TextButton fontWeight="bold">Crear cuenta</TextButton>
           </PrimaryButton>
         </Div>

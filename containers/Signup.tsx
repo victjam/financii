@@ -1,6 +1,8 @@
 import { AntDesign } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import LottieView from 'lottie-react-native';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import {
@@ -76,7 +78,8 @@ const styles = StyleSheet.create({
   },
 });
 
-const Login = ({ navigation }: any) => {
+const Signup = ({ navigation }: any) => {
+  const [loading, setLoading] = useState(false);
   const darkThemeEnabled = useSelector(
     (state: any) => state.theme.preferences.darkThemeEnabled,
   );
@@ -97,6 +100,7 @@ const Login = ({ navigation }: any) => {
   };
 
   const handleCreateAccount = async () => {
+    setLoading(true);
     const userCredential = await createUserWithEmailAndPassword(
       auth,
       watch('email'),
@@ -109,9 +113,12 @@ const Login = ({ navigation }: any) => {
     });
     try {
       await AsyncStorage.setItem('user', JSON.stringify(userDoc));
+      console.log('user saved in storage');
+      setLoading(false);
       navigation.navigate('Home');
     } catch (error) {
       console.log(error);
+      setLoading(false);
     }
   };
   // const forgotPassword = () => {
@@ -120,9 +127,42 @@ const Login = ({ navigation }: any) => {
   // const goBack = () => {
   //   navigation.navigate('Main');
   // };
+  const activeLoader = () => {
+    if (loading) {
+      if (darkThemeEnabled) {
+        return (
+          <View
+            style={{
+              height: '110%',
+              width: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              position: 'absolute',
+              zIndex: 99,
+              backgroundColor: darkThemeEnabled ? COLORS.BLACK : COLORS.WHITE,
+            }}>
+            <LottieView
+              source={require('../assets/loader_volumen_white.json')}
+              style={{ height: 100, width: 100 }}
+              autoPlay
+            />
+          </View>
+        );
+      }
+      return (
+        <LottieView
+          source={require('../assets/loader_volumen_black.json')}
+          style={{ height: 100, width: 100 }}
+          autoPlay
+        />
+      );
+    }
+  };
 
   return (
     <Container>
+      {activeLoader()}
       <WrappedBox paddingBottom={20}>
         <ScrollView>
           <Div>
@@ -238,4 +278,4 @@ const Login = ({ navigation }: any) => {
   );
 };
 
-export default Login;
+export default Signup;

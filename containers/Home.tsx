@@ -66,16 +66,15 @@ const Home = () => {
     },
   ];
 
-  const getUserFromStorage = async () => {
-    try {
-      const jsonValue = await AsyncStorage.getItem('user');
-      return jsonValue != null ? JSON.parse(jsonValue) : null;
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
   useEffect(() => {
+    const getUserFromStorage = async () => {
+      try {
+        const jsonValue = await AsyncStorage.getItem('user');
+        return jsonValue != null ? JSON.parse(jsonValue) : null;
+      } catch (e) {
+        console.log(e);
+      }
+    };
     const fetchData = async () => {
       setUser(await getUserFromStorage());
     };
