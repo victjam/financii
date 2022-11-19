@@ -1,10 +1,6 @@
 import { AntDesign } from '@expo/vector-icons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import LottieView from 'lottie-react-native';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-
 import {
   Dimensions,
   ScrollView,
@@ -12,8 +8,9 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import CustomInput from '../components/form/CustomInput';
+import { createUser } from '../features/user/userSlice';
 import { auth, createUserDocument } from '../firebase';
 import {
   COLORS,
@@ -79,9 +76,9 @@ const styles = StyleSheet.create({
 });
 
 const Signup = ({ navigation }: any) => {
-  const [loading, setLoading] = useState(false);
-  const darkThemeEnabled = useSelector(
-    (state: any) => state.theme.preferences.darkThemeEnabled,
+  const dispatch = useDispatch();
+  const isDarkThemeEnable = useSelector(
+    (state: any) => state.theme.darkThemeEnabled,
   );
   const { control, handleSubmit, watch } = useForm({
     defaultValues: {
@@ -100,25 +97,20 @@ const Signup = ({ navigation }: any) => {
   };
 
   const handleCreateAccount = async () => {
-    setLoading(true);
-    const userCredential = await createUserWithEmailAndPassword(
-      auth,
-      watch('email'),
-      watch('password'),
-    );
-    const user = userCredential.user;
-    const userDoc = await createUserDocument(user, {
-      name: watch('name'),
-      lastName: watch('lastName'),
-    });
     try {
-      await AsyncStorage.setItem('user', JSON.stringify(userDoc));
-      console.log('user saved in storage');
-      setLoading(false);
-      navigation.navigate('Home');
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        watch('email'),
+        watch('password'),
+      );
+      const user = userCredential.user;
+      const userDoc = await createUserDocument(user, {
+        name: watch('name'),
+        lastName: watch('lastName'),
+      });
+      dispatch(createUser(userDoc));
     } catch (error) {
       console.log(error);
-      setLoading(false);
     }
   };
   // const forgotPassword = () => {
@@ -127,42 +119,10 @@ const Signup = ({ navigation }: any) => {
   // const goBack = () => {
   //   navigation.navigate('Main');
   // };
-  const activeLoader = () => {
-    if (loading) {
-      if (darkThemeEnabled) {
-        return (
-          <View
-            style={{
-              height: '110%',
-              width: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              position: 'absolute',
-              zIndex: 99,
-              backgroundColor: darkThemeEnabled ? COLORS.BLACK : COLORS.WHITE,
-            }}>
-            <LottieView
-              source={require('../assets/loader_volumen_white.json')}
-              style={{ height: 100, width: 100 }}
-              autoPlay
-            />
-          </View>
-        );
-      }
-      return (
-        <LottieView
-          source={require('../assets/loader_volumen_black.json')}
-          style={{ height: 100, width: 100 }}
-          autoPlay
-        />
-      );
-    }
-  };
 
   return (
     <Container>
-      {activeLoader()}
+      {/* {activeLoader()} */}
       <WrappedBox paddingBottom={20}>
         <ScrollView>
           <Div>
@@ -255,7 +215,7 @@ const Signup = ({ navigation }: any) => {
                   style={{ marginRight: 10 }}
                   name="apple1"
                   size={24}
-                  color={!darkThemeEnabled ? COLORS.WHITE : COLORS.BLACK}
+                  color={!isDarkThemeEnable ? COLORS.WHITE : COLORS.BLACK}
                 />
                 <TextButton fontWeight="bold">Continua con Apple</TextButton>
               </PrimaryButtonWithIcon>
@@ -266,7 +226,7 @@ const Signup = ({ navigation }: any) => {
                   style={{ marginRight: 10 }}
                   name="google"
                   size={24}
-                  color={!darkThemeEnabled ? COLORS.WHITE : COLORS.BLACK}
+                  color={!isDarkThemeEnable ? COLORS.WHITE : COLORS.BLACK}
                 />
                 <TextButton fontWeight="bold">Continua con Google</TextButton>
               </PrimaryButtonWithIcon>

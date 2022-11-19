@@ -3,7 +3,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import DarkThemeProvider from './provider/DarkThemeProvider';
 import RouteStack from './routes/RouteStack';
-import { persistor, store } from './store/store';
+import { persistor, store } from './store';
 
 export default function App() {
   const [fontsLoaded] = useFonts({

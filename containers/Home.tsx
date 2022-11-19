@@ -1,7 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import Constants from 'expo-constants';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FlatList, Platform, Pressable, ScrollView, View } from 'react-native';
 import { useSelector } from 'react-redux';
 import DebitKeyboard from '../components/DebitKeyboard';
@@ -19,8 +18,6 @@ import {
 } from '../styles/global';
 
 const Home = () => {
-  const [user, setUser] = useState(null);
-
   const icons = [
     {
       id: '0',
@@ -66,20 +63,20 @@ const Home = () => {
     },
   ];
 
-  useEffect(() => {
-    const getUserFromStorage = async () => {
-      try {
-        const jsonValue = await AsyncStorage.getItem('user');
-        return jsonValue != null ? JSON.parse(jsonValue) : null;
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    const fetchData = async () => {
-      setUser(await getUserFromStorage());
-    };
-    fetchData().catch(console.error);
-  }, [user]);
+  // useEffect(() => {
+  //   const getUserFromStorage = async () => {
+  //     try {
+  //       const jsonValue = await AsyncStorage.getItem('user');
+  //       return jsonValue != null ? JSON.parse(jsonValue) : null;
+  //     } catch (e) {
+  //       console.log(e);
+  //     }
+  //   };
+  //   const fetchData = async () => {
+  //     setUser(await getUserFromStorage());
+  //   };
+  //   fetchData().catch(console.error);
+  // }, [user]);
 
   const renderTransactionList = (OS: string) => {
     if (OS === 'ios') {
@@ -88,11 +85,12 @@ const Home = () => {
       return <TransactionList transactions={transactions} />;
     }
   };
-  const darkThemeEnabled = useSelector(
-    (state: any) => state.theme.preferences.darkThemeEnabled,
+  const isDarkThemeEnable = useSelector(
+    (state: any) => state.theme.darkThemeEnabled,
   );
-  const selectedColor = !darkThemeEnabled ? COLORS.WHITE : COLORS.BLACK;
-  const selectedColorBg = darkThemeEnabled ? COLORS.WHITE : COLORS.BLACK;
+  const user = useSelector((state: any) => state.user.user);
+  const selectedColor = !isDarkThemeEnable ? COLORS.WHITE : COLORS.BLACK;
+  const selectedColorBg = isDarkThemeEnable ? COLORS.WHITE : COLORS.BLACK;
 
   const SPACE = 5;
   const [modalVisible, setModalVisible] = useState(false);

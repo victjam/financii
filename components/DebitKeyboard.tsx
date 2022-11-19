@@ -18,10 +18,10 @@ const DebitKeyboard = ({ modalVisible, handleModal }: any) => {
   const [total, setTotal] = useState('0');
   const [isEnabled, setIsEnabled] = useState(false);
 
-  const darkThemeEnabled = useSelector(
-    (state: any) => state.theme.preferences.darkThemeEnabled,
+  const isDarkThemeEnable = useSelector(
+    (state: any) => state.theme.darkThemeEnabled,
   );
-  const selectedColor = darkThemeEnabled ? COLORS.WHITE : COLORS.BLACK;
+  const selectedColor = isDarkThemeEnable ? COLORS.WHITE : COLORS.BLACK;
 
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 

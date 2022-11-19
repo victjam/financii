@@ -3,11 +3,11 @@ import { useSelector } from 'react-redux';
 import { COLORS, Div, DivIcon, Text } from '../styles/global';
 
 const MarqueeItem = ({ item }: any) => {
-  const darkThemeEnabled = useSelector(
-    (state: any) => state.theme.preferences.darkThemeEnabled,
+  const isDarkThemeEnable = useSelector(
+    (state: any) => state.theme.darkThemeEnabled,
   );
-  const selectedColor = !darkThemeEnabled ? COLORS.WHITE : COLORS.BLACK;
-  const selectedColorBg = darkThemeEnabled ? COLORS.WHITE : COLORS.BLACK;
+  const selectedColor = !isDarkThemeEnable ? COLORS.WHITE : COLORS.BLACK;
+  const selectedColorBg = isDarkThemeEnable ? COLORS.WHITE : COLORS.BLACK;
   return (
     <Div
       style={{

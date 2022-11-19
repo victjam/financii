@@ -4,11 +4,11 @@ import { COLORS, Div, DivIcon, Text } from '../../styles/global';
 
 // refactor transaccion type
 const TransactionList = ({ transactions }: any) => {
-  const darkThemeEnabled = useSelector(
-    (state: any) => state.theme.preferences.darkThemeEnabled,
+  const isDarkThemeEnable = useSelector(
+    (state: any) => state.theme.darkThemeEnabled,
   );
-  const selectedColor = darkThemeEnabled ? COLORS.BLACK : COLORS.WHITE;
-  const selectedColorBg = darkThemeEnabled ? COLORS.WHITE : COLORS.BLACK;
+  const selectedColor = isDarkThemeEnable ? COLORS.BLACK : COLORS.WHITE;
+  const selectedColorBg = isDarkThemeEnable ? COLORS.WHITE : COLORS.BLACK;
   return transactions?.map((item: any, i: number) => (
     <Div
       key={i}

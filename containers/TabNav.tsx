@@ -18,9 +18,10 @@ const styles = StyleSheet.create({
 
 //type this
 const TabButton = (props: any) => {
-  const darkThemeEnabled = useSelector(
-    (state: any) => state.theme.preferences.darkThemeEnabled,
+  const isDarkThemeEnable = useSelector(
+    (state: any) => state.theme.darkThemeEnabled,
   );
+
   const { item, onPress, accessibilityState } = props;
   const focused = accessibilityState.selected;
 
@@ -31,7 +32,7 @@ const TabButton = (props: any) => {
       activeOpacity={1}>
       <Ionicons
         name={focused ? item.activeIcon : item.inactiveIcon}
-        color={darkThemeEnabled ? COLORS.WHITE : COLORS.BLACK}
+        color={isDarkThemeEnable ? COLORS.WHITE : COLORS.BLACK}
         size={24}
       />
     </TouchableOpacity>
@@ -63,15 +64,15 @@ const TabArr = [
 
 const Tab = createBottomTabNavigator();
 const TabNav = () => {
-  const darkThemeEnabled = useSelector(
-    (state: any) => state.theme.preferences.darkThemeEnabled,
+  const isDarkThemeEnable = useSelector(
+    (state: any) => state.theme.darkThemeEnabled,
   );
   return (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: darkThemeEnabled ? COLORS.BLACK : COLORS.WHITE,
+          backgroundColor: isDarkThemeEnable ? COLORS.BLACK : COLORS.WHITE,
         },
       }}>
       {TabArr.map((item: any, index: number) => {
@@ -86,7 +87,7 @@ const TabNav = () => {
               tabBarIcon: ({ focused }) => (
                 <Ionicons
                   name={focused ? item.activeIcon : item.inactiveIcon}
-                  color={!darkThemeEnabled ? COLORS.WHITE : COLORS.BLACK}
+                  color={!isDarkThemeEnable ? COLORS.WHITE : COLORS.BLACK}
                   size={24}
                 />
               ),

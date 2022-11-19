@@ -1,8 +1,9 @@
 import { signOut } from 'firebase/auth';
 import { ScrollView, StyleSheet } from 'react-native';
 import { useDispatch } from 'react-redux';
+import { toggleDarkTheme } from '../features/theme/themeSlice';
+import { deleteUser } from '../features/user/userSlice';
 import { auth } from '../firebase';
-import { TOGGLE_DARKTHEME } from '../store/theme/actions';
 import {
   Container,
   FONTS,
@@ -17,6 +18,7 @@ const Profile = () => {
 
   const signOutUser = async () => {
     await signOut(auth);
+    dispatch(deleteUser());
   };
 
   return (
@@ -24,7 +26,7 @@ const Profile = () => {
       <WrappedBox>
         <ScrollView>
           <Text style={styles.title}>Profile page</Text>
-          <PrimaryButton onPress={() => dispatch({ type: TOGGLE_DARKTHEME })}>
+          <PrimaryButton onPress={() => dispatch(toggleDarkTheme())}>
             <TextButton fontWeight="bold">Cambiar color</TextButton>
           </PrimaryButton>
           <PrimaryButton onPress={() => signOutUser()}>

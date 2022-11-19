@@ -1,7 +1,5 @@
 import { AntDesign } from '@expo/vector-icons';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import LottieView from 'lottie-react-native';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import {
   Dimensions,
@@ -9,9 +7,10 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import CustomInput from '../components/form/CustomInput';
-import { auth } from '../firebase';
+import { createUser } from '../features/user/userSlice';
+import { auth, getUserDocument } from '../firebase';
 import {
   COLORS,
   Container,
@@ -71,42 +70,9 @@ const styles = StyleSheet.create({
 });
 
 const Login = ({ navigation }: any) => {
-  const [loading, setLoading] = useState(false);
-  const activeLoader = () => {
-    if (loading) {
-      if (darkThemeEnabled) {
-        return (
-          <View
-            style={{
-              height: '110%',
-              width: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              position: 'absolute',
-              zIndex: 99,
-              backgroundColor: darkThemeEnabled ? COLORS.BLACK : COLORS.WHITE,
-            }}>
-            <LottieView
-              source={require('../assets/loader_volumen_white.json')}
-              style={{ height: 100, width: 100 }}
-              autoPlay
-            />
-          </View>
-        );
-      }
-      return (
-        <LottieView
-          source={require('../assets/loader_volumen_black.json')}
-          style={{ height: 100, width: 100 }}
-          autoPlay
-        />
-      );
-    }
-  };
-
-  const darkThemeEnabled = useSelector(
-    (state: any) => state.theme.preferences.darkThemeEnabled,
+  const dispatch = useDispatch();
+  const isDarkThemeEnable = useSelector(
+    (state: any) => state.theme.darkThemeEnabled,
   );
   const {
     control,
@@ -122,24 +88,22 @@ const Login = ({ navigation }: any) => {
   });
 
   const signing = async () => {
-    setLoading(true);
     try {
-      await signInWithEmailAndPassword(auth, watch('email'), watch('password'));
+      const user = await signInWithEmailAndPassword(
+        auth,
+        watch('email'),
+        watch('password'),
+      );
+      const userDoc = await getUserDocument(user.user.uid);
+      dispatch(createUser(userDoc));
     } catch (error) {
       console.log(error);
     }
-    // navigation.navigate('Home');
   };
-  // const forgotPassword = () => {
-  //   navigation.navigate('Home');
-  // };
-  // const goBack = () => {
-  //   navigation.navigate('Main');
-  // };
 
   return (
     <Container>
-      {activeLoader()}
+      {/* {activeLoader()} */}
       <WrappedBox>
         <LGText paddingTop={20} fontWeight="bold">
           Inicia sesion
@@ -198,7 +162,7 @@ const Login = ({ navigation }: any) => {
               style={{ marginRight: 10 }}
               name="apple1"
               size={24}
-              color={!darkThemeEnabled ? COLORS.WHITE : COLORS.BLACK}
+              color={!isDarkThemeEnable ? COLORS.WHITE : COLORS.BLACK}
             />
             <TextButton fontWeight="bold">Continua con Apple</TextButton>
           </PrimaryButtonWithIcon>
@@ -211,7 +175,7 @@ const Login = ({ navigation }: any) => {
               style={{ marginRight: 10 }}
               name="google"
               size={24}
-              color={!darkThemeEnabled ? COLORS.WHITE : COLORS.BLACK}
+              color={!isDarkThemeEnable ? COLORS.WHITE : COLORS.BLACK}
             />
             <TextButton fontWeight="bold">Continua con Google</TextButton>
           </PrimaryButtonWithIcon>

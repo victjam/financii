@@ -1,11 +1,6 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { onAuthStateChanged } from 'firebase/auth';
-import LottieView from 'lottie-react-native';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Image, TouchableWithoutFeedback, View } from 'react-native';
-import { auth, getUserDocument } from '../firebase';
 import {
-  COLORS,
   Container,
   Div,
   global,
@@ -20,69 +15,54 @@ import {
 
 import { useSelector } from 'react-redux';
 const Main = ({ navigation }: any) => {
-  const darkThemeEnabled = useSelector(
-    (state: any) => state.theme.preferences.darkThemeEnabled,
-  );
-  const [loading, setLoading] = useState(false);
-  const activeLoader = () => {
-    if (loading) {
-      if (darkThemeEnabled) {
-        return (
-          <View
-            style={{
-              height: '110%',
-              width: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              position: 'absolute',
-              zIndex: 99,
-              backgroundColor: darkThemeEnabled ? COLORS.BLACK : COLORS.WHITE,
-            }}>
-            <LottieView
-              source={require('../assets/loader_volumen_white.json')}
-              style={{ height: 100, width: 100 }}
-              autoPlay
-            />
-          </View>
-        );
-      }
-      return (
-        <LottieView
-          source={require('../assets/loader_volumen_black.json')}
-          style={{ height: 100, width: 100 }}
-          autoPlay
-        />
-      );
-    }
-  };
+  // const isDarkThemeEnable = useSelector(
+  //   (state: any) => state.theme.darkThemeEnabled,
+  // );
+  const user = useSelector((state: any) => state.user.user);
+  // const [loading, setLoading] = useState(false);
+  // const activeLoader = () => {
+  //   if (loading) {
+  //     if (isDarkThemeEnable) {
+  //       return (
+  //         <View
+  //           style={{
+  //             height: '110%',
+  //             width: '100%',
+  //             display: 'flex',
+  //             alignItems: 'center',
+  //             justifyContent: 'center',
+  //             position: 'absolute',
+  //             zIndex: 99,
+  //             backgroundColor: isDarkThemeEnable ? COLORS.BLACK : COLORS.WHITE,
+  //           }}>
+  //           <LottieView
+  //             source={require('../assets/loader_volumen_white.json')}
+  //             style={{ height: 100, width: 100 }}
+  //             autoPlay
+  //           />
+  //         </View>
+  //       );
+  //     }
+  //     return (
+  //       <LottieView
+  //         source={require('../assets/loader_volumen_black.json')}
+  //         style={{ height: 100, width: 100 }}
+  //         autoPlay
+  //       />
+  //     );
+  //   }
+  // };
 
   useEffect(() => {
-    const unSubscribeAuth = onAuthStateChanged(auth, user => {
-      if (user) {
-        const saveUserInformation = async () => {
-          setLoading(true);
-          const userFinancii = await getUserDocument(user.uid);
-          await AsyncStorage.setItem('user', JSON.stringify(userFinancii));
-          navigation.navigate('Home');
-          setLoading(false);
-        };
-        saveUserInformation();
-      } else {
-        const removeUserInformation = async () => {
-          setLoading(true);
-          await AsyncStorage.removeItem('user');
-          setLoading(false);
-        };
-        removeUserInformation();
-        navigation.navigate('Main');
-      }
-    });
-    return unSubscribeAuth;
-  }, [navigation]);
+    if (user) {
+      navigation.navigate('Home');
+    } else {
+      navigation.navigate('Main');
+    }
+  }, [user, navigation]);
   return (
     <Container>
-      {activeLoader()}
+      {/* {activeLoader()} */}
       <WrappedBox>
         <View style={global.centerElement}>
           <Image
