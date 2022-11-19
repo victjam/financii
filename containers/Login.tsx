@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomInput from '../components/form/CustomInput';
+import { toggleLoader } from '../features/loader/loaderSlice';
 import { createUser } from '../features/user/userSlice';
 import { auth, getUserDocument } from '../firebase';
 import {
@@ -89,6 +90,7 @@ const Login = ({ navigation }: any) => {
 
   const signing = async () => {
     try {
+      dispatch(toggleLoader());
       const user = await signInWithEmailAndPassword(
         auth,
         watch('email'),
@@ -96,14 +98,15 @@ const Login = ({ navigation }: any) => {
       );
       const userDoc = await getUserDocument(user.user.uid);
       dispatch(createUser(userDoc));
+      dispatch(toggleLoader());
     } catch (error) {
       console.log(error);
+      dispatch(toggleLoader());
     }
   };
 
   return (
     <Container>
-      {/* {activeLoader()} */}
       <WrappedBox>
         <LGText paddingTop={20} fontWeight="bold">
           Inicia sesion

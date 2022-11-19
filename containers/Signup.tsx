@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomInput from '../components/form/CustomInput';
+import { toggleLoader } from '../features/loader/loaderSlice';
 import { createUser } from '../features/user/userSlice';
 import { auth, createUserDocument } from '../firebase';
 import {
@@ -97,6 +98,7 @@ const Signup = ({ navigation }: any) => {
   };
 
   const handleCreateAccount = async () => {
+    dispatch(toggleLoader());
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -109,7 +111,9 @@ const Signup = ({ navigation }: any) => {
         lastName: watch('lastName'),
       });
       dispatch(createUser(userDoc));
+      dispatch(toggleLoader());
     } catch (error) {
+      dispatch(toggleLoader());
       console.log(error);
     }
   };
@@ -122,7 +126,6 @@ const Signup = ({ navigation }: any) => {
 
   return (
     <Container>
-      {/* {activeLoader()} */}
       <WrappedBox paddingBottom={20}>
         <ScrollView>
           <Div>

@@ -15,43 +15,7 @@ import {
 
 import { useSelector } from 'react-redux';
 const Main = ({ navigation }: any) => {
-  // const isDarkThemeEnable = useSelector(
-  //   (state: any) => state.theme.darkThemeEnabled,
-  // );
   const user = useSelector((state: any) => state.user.user);
-  // const [loading, setLoading] = useState(false);
-  // const activeLoader = () => {
-  //   if (loading) {
-  //     if (isDarkThemeEnable) {
-  //       return (
-  //         <View
-  //           style={{
-  //             height: '110%',
-  //             width: '100%',
-  //             display: 'flex',
-  //             alignItems: 'center',
-  //             justifyContent: 'center',
-  //             position: 'absolute',
-  //             zIndex: 99,
-  //             backgroundColor: isDarkThemeEnable ? COLORS.BLACK : COLORS.WHITE,
-  //           }}>
-  //           <LottieView
-  //             source={require('../assets/loader_volumen_white.json')}
-  //             style={{ height: 100, width: 100 }}
-  //             autoPlay
-  //           />
-  //         </View>
-  //       );
-  //     }
-  //     return (
-  //       <LottieView
-  //         source={require('../assets/loader_volumen_black.json')}
-  //         style={{ height: 100, width: 100 }}
-  //         autoPlay
-  //       />
-  //     );
-  //   }
-  // };
 
   useEffect(() => {
     if (user) {
@@ -62,7 +26,6 @@ const Main = ({ navigation }: any) => {
   }, [user, navigation]);
   return (
     <Container>
-      {/* {activeLoader()} */}
       <WrappedBox>
         <View style={global.centerElement}>
           <Image
