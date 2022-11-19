@@ -257,6 +257,8 @@ export const Text = styled(Animated.Text)<Props>`
     'SF-pro-medium'};
   font-size: ${props => props.fontSize || '18'}px;
   padding-top: ${props => props.paddingTop || 0}px;
+  padding-left: ${props => props.paddingLeft || 0}px;
+  padding-right: ${props => props.paddingRight || 0}px;
   padding-bottom: ${props => props.paddingBottom || 0}px;
   text-align: ${props => props.align || 'left'};
   font-weight: ${props => props.fontWeight || 'normal'};

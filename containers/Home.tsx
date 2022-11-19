@@ -63,21 +63,6 @@ const Home = () => {
     },
   ];
 
-  // useEffect(() => {
-  //   const getUserFromStorage = async () => {
-  //     try {
-  //       const jsonValue = await AsyncStorage.getItem('user');
-  //       return jsonValue != null ? JSON.parse(jsonValue) : null;
-  //     } catch (e) {
-  //       console.log(e);
-  //     }
-  //   };
-  //   const fetchData = async () => {
-  //     setUser(await getUserFromStorage());
-  //   };
-  //   fetchData().catch(console.error);
-  // }, [user]);
-
   const renderTransactionList = (OS: string) => {
     if (OS === 'ios') {
       return <Marquee data={transactions} />;

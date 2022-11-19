@@ -1,20 +1,27 @@
+import { Ionicons } from '@expo/vector-icons';
 import { signOut } from 'firebase/auth';
-import { ScrollView, StyleSheet } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import ShadowButton from '../components/form/ShadowButton';
 import { toggleDarkTheme } from '../features/theme/themeSlice';
 import { deleteUser } from '../features/user/userSlice';
 import { auth } from '../firebase';
 import {
+  COLORS,
   Container,
-  FONTS,
-  PrimaryButton,
+  Div,
+  DivIcon,
+  LGText,
   Text,
-  TextButton,
-  WrappedBox,
 } from '../styles/global';
 
 const Profile = () => {
   const dispatch = useDispatch();
+  const isDarkThemeEnable = useSelector(
+    (state: any) => state.theme.darkThemeEnabled,
+  );
+  const user = useSelector((state: any) => state.user.user);
+  const selectedColor = !isDarkThemeEnable ? COLORS.WHITE : COLORS.BLACK;
+  const selectedColorBg = isDarkThemeEnable ? COLORS.WHITE : COLORS.BLACK;
 
   const signOutUser = async () => {
     await signOut(auth);
@@ -23,33 +30,58 @@ const Profile = () => {
 
   return (
     <Container>
-      <WrappedBox>
-        <ScrollView>
-          <Text style={styles.title}>Profile page</Text>
-          <PrimaryButton onPress={() => dispatch(toggleDarkTheme())}>
-            <TextButton fontWeight="bold">Cambiar color</TextButton>
-          </PrimaryButton>
-          <PrimaryButton onPress={() => signOutUser()}>
-            <TextButton fontWeight="bold">Log out</TextButton>
-          </PrimaryButton>
-        </ScrollView>
-      </WrappedBox>
+      <Div
+        height="100%"
+        styles={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+        }}>
+        <Div>
+          <Div
+            paddingLeft={10}
+            paddingRight={10}
+            marginTop={40}
+            marginBottom={30}
+            display="flex"
+            alignItems="center"
+            justifyContent="center">
+            <DivIcon
+              marginBottom={5}
+              backgroundColor={selectedColorBg}
+              style={{ borderRadius: 50 }}
+              align="center"
+              paddingLeft={10}
+              paddingRight={10}>
+              <Ionicons name="person-outline" color={selectedColor} size={26} />
+            </DivIcon>
+            <Text>
+              {user?.name} {user?.lastName}
+            </Text>
+          </Div>
+          <Div paddingLeft={10} paddingRight={10} marginBottom={20}>
+            <LGText>Balance Total</LGText>
+            <Text>$200.000</Text>
+          </Div>
+          <ShadowButton
+            icon="person-outline"
+            text="Personal"
+            handleTouch={() => alert('touch')}
+          />
+          <ShadowButton
+            icon="md-swap-horizontal"
+            text="Cambiar tema"
+            handleTouch={() => dispatch(toggleDarkTheme())}
+          />
+        </Div>
+        <ShadowButton
+          icon="exit-outline"
+          text="Cerrar sesion"
+          handleTouch={() => signOutUser()}
+        />
+      </Div>
     </Container>
   );
 };
-
-const styles = StyleSheet.create({
-  paddingTop: {
-    paddingTop: 30,
-  },
-  name: {
-    paddingTop: 5,
-    fontSize: FONTS.xs,
-  },
-  title: {
-    fontSize: FONTS.s,
-    fontWeight: '600',
-  },
-});
 
 export default Profile;
