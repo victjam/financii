@@ -1,9 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import Constants from 'expo-constants';
-import { useState } from 'react';
 import { FlatList, Platform, Pressable, ScrollView, View } from 'react-native';
 import { useSelector } from 'react-redux';
-import DebitKeyboard from '../components/DebitKeyboard';
 import Marquee from '../components/Marquee';
 import TransactionList from '../components/transactions/TransactionList';
 import {
@@ -17,7 +15,7 @@ import {
   WrappedBox,
 } from '../styles/global';
 
-const Home = () => {
+const Home = ({ navigation }: any) => {
   const icons = [
     {
       id: '0',
@@ -78,7 +76,6 @@ const Home = () => {
   const selectedColorBg = isDarkThemeEnable ? COLORS.WHITE : COLORS.BLACK;
 
   const SPACE = 5;
-  const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <ScrollView>
@@ -125,7 +122,8 @@ const Home = () => {
               return (
                 <View
                   style={{ marginHorizontal: SPACE, paddingHorizontal: SPACE }}>
-                  <Pressable onPressIn={() => setModalVisible(true)}>
+                  <Pressable
+                    onPressIn={() => navigation.navigate('AddTransaction')}>
                     <DivIcon
                       marginTop={30}
                       marginBottom={20}
@@ -262,10 +260,6 @@ const Home = () => {
           </Div>
         </WrappedBox>
       </WrappedBox>
-      <DebitKeyboard
-        modalVisible={modalVisible}
-        handleModal={() => setModalVisible(false)}
-      />
     </ScrollView>
   );
 };

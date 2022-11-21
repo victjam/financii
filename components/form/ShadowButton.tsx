@@ -2,7 +2,12 @@ import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { Pressable } from 'react-native';
 import { useSelector } from 'react-redux';
 import { COLORS, Div, Text } from '../../styles/global';
-const ShadowButton = ({ icon, text, handleTouch }: any) => {
+const ShadowButton = ({
+  icon,
+  text,
+  handleTouch,
+  ArrowEnabled = true,
+}: any) => {
   const isDarkThemeEnable = useSelector(
     (state: any) => state.theme.darkThemeEnabled,
   );
@@ -40,11 +45,13 @@ const ShadowButton = ({ icon, text, handleTouch }: any) => {
             {text}
           </Text>
         </Div>
-        <MaterialIcons
-          name="keyboard-arrow-right"
-          size={30}
-          color={selectedColorBg}
-        />
+        {ArrowEnabled && (
+          <MaterialIcons
+            name="keyboard-arrow-right"
+            size={30}
+            color={selectedColorBg}
+          />
+        )}
       </Div>
     </Pressable>
   );
