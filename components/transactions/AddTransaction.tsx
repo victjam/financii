@@ -1,4 +1,5 @@
 import { MaterialIcons } from '@expo/vector-icons';
+import { useRoute } from '@react-navigation/native';
 import * as Haptics from 'expo-haptics';
 import { useState } from 'react';
 import { FlatList, Pressable, ScrollView, Switch, View } from 'react-native';
@@ -19,6 +20,8 @@ const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, '', 0, 'DEL'];
 const AddTransaction = ({ navigation }: any) => {
   const [total, setTotal] = useState('0');
   const [isEnabled, setIsEnabled] = useState(false);
+  const route = useRoute();
+  const categoryName = route?.params?.categoryName ?? undefined;
 
   const isDarkThemeEnable = useSelector(
     (state: any) => state.theme.darkThemeEnabled,
@@ -26,6 +29,7 @@ const AddTransaction = ({ navigation }: any) => {
   const selectedColor = isDarkThemeEnable ? COLORS.WHITE : COLORS.BLACK;
 
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+  const user = useSelector((state: any) => state.user.user);
 
   const formatStringToPrice = (string: string) => {
     const price = string
@@ -45,6 +49,19 @@ const AddTransaction = ({ navigation }: any) => {
         setTotal(parseInt(screenNumber + value).toString());
       }
     }
+  };
+
+  const onAddTransaction = () => {
+    const transaction = {
+      id: 'asdsdsad',
+      amount: total,
+      categoryId: '63712683',
+      description: '',
+      type: isEnabled ? 'expense' : 'income',
+      userUid: user.uid,
+      createdAt: new Date(),
+    };
+    console.log(transaction);
   };
 
   return (
@@ -126,17 +143,22 @@ const AddTransaction = ({ navigation }: any) => {
             </ScrollView>
             <Div width="100%">
               <ShadowButton
-                text="Agregar categoria"
+                text={
+                  categoryName
+                    ? categoryName + ' - Cambiar categoria'
+                    : 'Selecciona una categoria'
+                }
                 ArrowEnabled={false}
-                handleTouch={() => navigation.navigate('Categories')}
+                handleTouch={() => navigation.navigate('CategoryList')}
               />
             </Div>
             <PrimaryButton
+              disabled={total === '0' || categoryName === undefined}
               backgroundColor={isEnabled ? COLORS.DANGER : COLORS.SUCCESS}
               width="95%"
               borderRadius={5}
               marginBottom={50}
-              onPressIn={() => alert('hola')}>
+              onPressIn={() => onAddTransaction()}>
               <TextButton fontWeight="bold">
                 Agregar {isEnabled ? 'Deuda' : 'Saldo'}
               </TextButton>

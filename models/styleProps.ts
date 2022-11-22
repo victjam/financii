@@ -11,6 +11,7 @@ export interface PropsObj {
   justifyContent: string;
   align: string;
   color: any;
+  disabled: any;
   startDirection: any;
   endDirection: any;
   backgroundColor: string;

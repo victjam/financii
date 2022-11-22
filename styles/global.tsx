@@ -305,11 +305,14 @@ export const InputField = styled.TextInput<Props>`
     props.color ? props.color : props.theme.TITLE_COLOR};
 `;
 
-export const PrimaryButton = styled.Pressable<Props>`
+export const PrimaryButton = styled.Pressable.attrs((props: Props) => ({
+  disabled: props.disabled || false,
+}))<Props>`
   background: ${props => props.backgroundColor || props.theme.BUTTON_COLOR}
   height: ${props => props.height || '50px'};
   width: ${props => props.width || 'auto'};
   justify-content: center;
+  opacity: ${props => (props.disabled ? 0.5 : 1)};
   text-align: center;
   display: flex;
   align-items: center;

@@ -4,6 +4,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Pressable } from 'react-native';
 import { useSelector } from 'react-redux';
 import { ThemeProvider } from 'styled-components/native';
+import AddCategory from '../components/categories/AddCategory';
+import CategoryList from '../components/categories/CategoryList';
 import AddTransaction from '../components/transactions/AddTransaction';
 import Login from '../containers/Login';
 import Main from '../containers/Main';
@@ -50,6 +52,62 @@ const RouteStack = () => {
               headerRight: () => {
                 return (
                   <Pressable onPressIn={() => navigation.navigate('Home')}>
+                    <MaterialIcons
+                      name="close"
+                      size={30}
+                      color={selectedColor}
+                    />
+                  </Pressable>
+                );
+              },
+            })}
+          />
+          <Stack.Screen
+            name="CategoryList"
+            component={CategoryList}
+            options={({ navigation }) => ({
+              headerShown: true,
+              presentation: 'modal',
+              headerBackVisible: false,
+              animationTypeForReplace: 'push',
+              headerTitle: '',
+              headerShadowVisible: false,
+              headerBackTitleVisible: false,
+              headerStyle: {
+                backgroundColor: backgroundColor,
+              },
+              headerRight: () => {
+                return (
+                  <Pressable
+                    onPressIn={() => navigation.navigate('AddTransaction')}>
+                    <MaterialIcons
+                      name="close"
+                      size={30}
+                      color={selectedColor}
+                    />
+                  </Pressable>
+                );
+              },
+            })}
+          />
+          <Stack.Screen
+            name="AddCategory"
+            component={AddCategory}
+            options={({ navigation }) => ({
+              headerShown: true,
+              presentation: 'modal',
+              headerBackVisible: false,
+              animationTypeForReplace: 'push',
+              headerTitle: '',
+              headerShadowVisible: false,
+              headerBackTitleVisible: false,
+              headerStyle: {
+                backgroundColor: backgroundColor,
+              },
+              headerRight: () => {
+                return (
+                  <Pressable
+                    onPressIn={() => navigation.navigate('CategoryList')}>
                     <MaterialIcons
                       name="close"
                       size={30}
