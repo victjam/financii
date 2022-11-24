@@ -1,10 +1,10 @@
 import { Ionicons } from '@expo/vector-icons';
-import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FlatList, Pressable } from 'react-native';
 import { useSelector } from 'react-redux';
-import { firestore } from '../../firebase';
+import { Category } from '../../models/Category';
+import { getCategories } from '../../services/categories';
 
 import {
   Container,
@@ -51,32 +51,33 @@ const CategoryList = ({ navigation }: any) => {
   }, [watch, globalCategories]);
 
   useEffect(() => {
-    const collectionRef = collection(firestore, 'categories');
-    const q = query(collectionRef, orderBy('title', 'asc'));
-    const unsubscribe = onSnapshot(q, snapshot => {
-      const categoriesData: any = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
+    const filterByUser = (categories: Category[]) => {
+      const privateCat = categories.filter(
+        (category: Category) =>
+          category.userId === user.uid && category.private,
+      );
+      const publicCat = categories.filter(
+        (category: Category) => category.private === false,
+      );
+      return [...privateCat, ...publicCat];
+    };
 
-      const filterByUser = (categories: any) => {
-        const privateCat = categories.filter(
-          (category: any) => category.userId === user.uid && category.private,
-        );
-        const publicCat = categories.filter(
-          (category: any) => category.private === false,
-        );
-        return [...privateCat, ...publicCat];
-      };
-
-      setGlobalCategories(filterByUser(categoriesData));
-      setCategories(filterByUser(categoriesData));
-    });
-    return () => unsubscribe();
+    const getCategoriesData = async () => {
+      const categoriesDataObj: any = await getCategories();
+      if (categoriesDataObj) {
+        setGlobalCategories(filterByUser(categoriesDataObj));
+        setCategories(filterByUser(categoriesDataObj));
+      }
+    };
+    getCategoriesData();
   }, [user]);
 
-  const selectCategory = (categoryName: string) => {
-    navigation.navigate('AddTransaction', { categoryName });
+  const selectCategory = (category: Category) => {
+    navigation.navigate('AddTransaction', {
+      id: category.id,
+      title: category.title,
+      icon: category.icon,
+    });
   };
 
   const upperCaseFirstLetter = (string: string) => {
@@ -97,7 +98,7 @@ const CategoryList = ({ navigation }: any) => {
           data={categories}
           keyExtractor={item => item.id}
           renderItem={({ item }: any) => (
-            <Pressable onPress={() => selectCategory(item.title)}>
+            <Pressable onPress={() => selectCategory(item)}>
               <Div paddingLeft={10} paddingRight={10}>
                 <Div
                   marginTop={30}

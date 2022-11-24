@@ -1,9 +1,10 @@
 export interface Transaction {
-  uid?: string;
+  title: string | any;
+  id?: string;
+  icon?: string;
   amount: string | number;
   categoryId: string;
-  description: string;
   type: string;
-  userUid: string;
-  createdAt: Date;
+  userId: string;
+  createdAt: string;
 }

@@ -2,8 +2,10 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { useRoute } from '@react-navigation/native';
 import * as Haptics from 'expo-haptics';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { FlatList, Pressable, ScrollView, Switch, View } from 'react-native';
 import { useSelector } from 'react-redux';
+import { Transaction } from '../../models/Transactions';
 import { createTransactionDocument } from '../../services/transactions';
 import {
   COLORS,
@@ -14,15 +16,23 @@ import {
   TextButton,
   WrappedBox,
 } from '../../styles/global';
+import { formatStringToPrice } from '../../util/util';
+import CustomInput from '../form/CustomInput';
 import ShadowButton from '../form/ShadowButton';
-
 const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, '', 0, 'DEL'];
 
 const AddTransaction = ({ navigation }: any) => {
+  const { control, watch } = useForm({
+    defaultValues: {
+      search: '',
+    },
+  });
   const [total, setTotal] = useState('0');
   const [isEnabled, setIsEnabled] = useState(false);
   const route = useRoute();
-  const categoryName = route?.params?.categoryName ?? undefined;
+  const categoryId = route?.params?.id ?? undefined;
+  const categoryTitle = route?.params?.title ?? undefined;
+  const categoryIcon = route?.params?.icon ?? undefined;
 
   const isDarkThemeEnable = useSelector(
     (state: any) => state.theme.darkThemeEnabled,
@@ -32,14 +42,6 @@ const AddTransaction = ({ navigation }: any) => {
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   const user = useSelector((state: any) => state.user.user);
 
-  const formatStringToPrice = (string: string) => {
-    const price = string
-      .split('')
-      .reverse()
-      .join('')
-      .replace(/(?=\d*\.?)(\d{3})/g, '$1,');
-    return price.split('').reverse().join('').replace(/^[,]/, '');
-  };
   const totalNumbers = (value: any) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     const screenNumber = total;
@@ -53,13 +55,14 @@ const AddTransaction = ({ navigation }: any) => {
   };
 
   const onAddTransaction = async () => {
-    const transaction = {
-      amount: total,
-      categoryId: '63712683',
-      description: '',
+    const transaction: Transaction = {
+      amount: parseInt(total),
+      categoryId: categoryId,
+      icon: categoryIcon,
+      title: watch('title'),
       type: isEnabled ? 'expense' : 'income',
-      userUid: user.uid,
-      createdAt: new Date(),
+      userId: user.uid,
+      createdAt: new Date().toUTCString(),
     };
     await createTransactionDocument(transaction);
     navigation.navigate('Home');
@@ -68,104 +71,107 @@ const AddTransaction = ({ navigation }: any) => {
   return (
     <Container>
       <WrappedBox>
-        <Div
-          backgroundColor="transparent"
-          justifyContent="flex-end"
-          alignItems="center"
-          flex={1}>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <Div
-            width="100%"
-            borderRadius={20}
+            backgroundColor="transparent"
+            justifyContent="flex-end"
             alignItems="center"
-            paddingTop={60}>
-            <View
-              style={{
-                display: 'flex',
-                marginBottom: 40,
-                alignItems: 'flex-end',
-                width: '100%',
-                paddingRight: 30,
-              }}
-            />
-            <Div marginBottom={40}>
-              <Switch
-                style={{ transform: [{ scaleX: 1.2 }, { scaleY: 1.2 }] }}
-                trackColor={{ false: COLORS.SUCCESS, true: COLORS.GRAY }}
-                thumbColor={isEnabled ? COLORS.DANGER : COLORS.SUCCESS}
-                ios_backgroundColor={COLORS.GRAY}
-                onValueChange={toggleSwitch}
-                value={isEnabled}
+            flex={1}>
+            <Div width="100%" borderRadius={20} alignItems="center">
+              <View
+                style={{
+                  display: 'flex',
+                  marginBottom: 40,
+                  alignItems: 'flex-end',
+                  width: '100%',
+                  paddingRight: 30,
+                }}
               />
-            </Div>
-            <Div marginBottom={40}>
-              <Text fontSize={70} fontWeight="bold">
-                {total ? `$${formatStringToPrice(total)}` : '$0'}
-              </Text>
-            </Div>
-            <ScrollView
-              horizontal
-              showsVerticalScrollIndicator={false}
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={{
-                flexDirection: 'row',
-              }}>
-              <FlatList
-                data={numbers}
-                renderItem={({ item }) => (
-                  <Pressable
-                    onPressIn={() => {
-                      totalNumbers(item);
-                    }}>
-                    <View
-                      style={{
-                        marginLeft: 50,
-                        marginRight: 50,
-                        height: 90,
-                        width: 30,
+              <Div marginBottom={40}>
+                <Switch
+                  style={{ transform: [{ scaleX: 1.2 }, { scaleY: 1.2 }] }}
+                  trackColor={{ false: COLORS.SUCCESS, true: COLORS.GRAY }}
+                  thumbColor={isEnabled ? COLORS.DANGER : COLORS.SUCCESS}
+                  ios_backgroundColor={COLORS.GRAY}
+                  onValueChange={toggleSwitch}
+                  value={isEnabled}
+                />
+              </Div>
+              <Div
+                marginBottom={20}
+                width="100%"
+                paddingLeft={10}
+                paddingRight={10}>
+                <CustomInput
+                  name="title"
+                  label="Descripcion"
+                  control={control}
+                />
+              </Div>
+              <Div marginBottom={30}>
+                <Text fontSize={70} fontWeight="bold">
+                  {total ? `${formatStringToPrice(total)}` : '$0'}
+                </Text>
+              </Div>
+              <Div flexDirection="row">
+                <FlatList
+                  data={numbers}
+                  renderItem={({ item }) => (
+                    <Pressable
+                      onPress={() => {
+                        totalNumbers(item);
                       }}>
-                      {item !== 'DEL' ? (
-                        <Text fontSize={25} fontWeight="bold">
-                          {item}
-                        </Text>
-                      ) : (
-                        <MaterialIcons
-                          name="keyboard-arrow-left"
-                          size={30}
-                          color={selectedColor}
-                        />
-                      )}
-                    </View>
-                  </Pressable>
-                )}
-                keyExtractor={item => `${item}`}
-                showsHorizontalScrollIndicator={false}
-                numColumns={numbers.length / 4}
-              />
-            </ScrollView>
-            <Div width="100%">
-              <ShadowButton
-                text={
-                  categoryName
-                    ? categoryName + ' - Cambiar categoria'
-                    : 'Selecciona una categoria'
-                }
-                ArrowEnabled={false}
-                handleTouch={() => navigation.navigate('CategoryList')}
-              />
+                      <View
+                        style={{
+                          marginLeft: 50,
+                          marginRight: 50,
+                          height: 90,
+                          width: 50,
+                        }}>
+                        {item !== 'DEL' ? (
+                          <Text fontSize={25} fontWeight="bold">
+                            {item}
+                          </Text>
+                        ) : (
+                          <MaterialIcons
+                            name="keyboard-arrow-left"
+                            size={30}
+                            color={selectedColor}
+                          />
+                        )}
+                      </View>
+                    </Pressable>
+                  )}
+                  keyExtractor={item => `${item}`}
+                  showsHorizontalScrollIndicator={false}
+                  numColumns={numbers.length / 4}
+                />
+              </Div>
+              <Div width="100%">
+                <ShadowButton
+                  text={
+                    categoryTitle
+                      ? categoryTitle + ' - Cambiar categoria'
+                      : 'Selecciona una categoria'
+                  }
+                  ArrowEnabled={false}
+                  handleTouch={() => navigation.navigate('CategoryList')}
+                />
+              </Div>
+              <PrimaryButton
+                disabled={total === '0' || categoryTitle === undefined}
+                backgroundColor={isEnabled ? COLORS.DANGER : COLORS.SUCCESS}
+                width="95%"
+                borderRadius={5}
+                marginBottom={50}
+                onPress={() => onAddTransaction()}>
+                <TextButton fontWeight="bold">
+                  Agregar {isEnabled ? 'Deuda' : 'Saldo'}
+                </TextButton>
+              </PrimaryButton>
             </Div>
-            <PrimaryButton
-              disabled={total === '0' || categoryName === undefined}
-              backgroundColor={isEnabled ? COLORS.DANGER : COLORS.SUCCESS}
-              width="95%"
-              borderRadius={5}
-              marginBottom={50}
-              onPressIn={() => onAddTransaction()}>
-              <TextButton fontWeight="bold">
-                Agregar {isEnabled ? 'Deuda' : 'Saldo'}
-              </TextButton>
-            </PrimaryButton>
           </Div>
-        </Div>
+        </ScrollView>
       </WrappedBox>
     </Container>
   );

@@ -1,5 +1,9 @@
+import { useFocusEffect } from '@react-navigation/native';
+import React, { useState } from 'react';
 import { ScrollView } from 'react-native';
+import { useSelector } from 'react-redux';
 import TransactionList from '../components/transactions/TransactionList';
+import { getTransactionsByUserId } from '../services/transactions';
 import {
   COLORS,
   Container,
@@ -8,60 +12,63 @@ import {
   Text,
   WrappedBox,
 } from '../styles/global';
+import { formatStringToPrice } from '../util/util';
 
-const transactions = [
-  {
-    id: '0',
-    title: 'Arriendo',
-    price: '-$500',
-    color: COLORS.DANGER,
-    icon: 'wallet-outline',
-    date: 'Sept 19, 2023',
-  },
-  {
-    id: '1',
-    title: 'Pago a Victor',
-    price: '$100',
-    color: COLORS.GREEN,
-    icon: 'wallet-outline',
-    date: 'Sept 19, 2023',
-  },
-  {
-    id: '2',
-    title: 'Pago a Carlos',
-    price: '$50',
-    color: COLORS.GREEN,
-    icon: 'wallet-outline',
-    date: 'Sept 19, 2023',
-  },
-  {
-    id: '4',
-    title: 'Colegio Emma',
-    price: '-$50000',
-    color: COLORS.DANGER,
-    icon: 'wallet-outline',
-    date: 'Sept 19, 2023',
-  },
-];
+const Transactions = () => {
+  const [transactionsList, setTransactionsList] = useState([]);
+  const user = useSelector((state: any) => state.user.user);
+  useFocusEffect(
+    React.useCallback(() => {
+      const getTransactionsData = async () => {
+        const transactionsData: any = await getTransactionsByUserId(user.uid);
+        if (transactionsData) {
+          setTransactionsList(transactionsData);
+        }
+      };
+      getTransactionsData();
+    }, [user]),
+  );
 
-const Transactions = () => (
-  <Container>
-    <WrappedBox>
-      <ScrollView>
-        <Div>
-          <Div marginBottom={40}>
-            <LGText fontWeight="bold">Saldo:</LGText>
-            <LGText fontWeight="bold">$300.000</LGText>
+  const total = () => {
+    const totalAmount = transactionsList.reduce(
+      (acc: number, transaction: any) => {
+        if (transaction.type === 'income') {
+          return acc + transaction.amount;
+        } else {
+          return acc - transaction.amount;
+        }
+      },
+      0,
+    );
+    return {
+      totalAmount: totalAmount,
+      totalAmountString: formatStringToPrice(totalAmount.toString()),
+    };
+  };
+
+  return (
+    <Container>
+      <WrappedBox>
+        <ScrollView>
+          <Div>
+            <Div marginBottom={40}>
+              <LGText fontWeight="bold">Saldo:</LGText>
+              <LGText
+                color={total().totalAmount > 0 ? COLORS.GREEN : COLORS.RED}
+                fontWeight="bold">
+                {total().totalAmountString}
+              </LGText>
+            </Div>
+            <LGText fontWeight="bold">Lista de transaciones</LGText>
+            <Text>Todas tus transacciones en un solo lugar</Text>
           </Div>
-          <LGText fontWeight="bold">Lista de transaciones</LGText>
-          <Text>Todas tus transacciones en un solo lugar</Text>
-        </Div>
-        <Div>
-          <TransactionList transactions={transactions} />
-        </Div>
-      </ScrollView>
-    </WrappedBox>
-  </Container>
-);
+          <Div>
+            <TransactionList transactions={transactionsList} />
+          </Div>
+        </ScrollView>
+      </WrappedBox>
+    </Container>
+  );
+};
 
 export default Transactions;
