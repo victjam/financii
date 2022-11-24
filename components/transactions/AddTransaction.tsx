@@ -4,6 +4,7 @@ import * as Haptics from 'expo-haptics';
 import { useState } from 'react';
 import { FlatList, Pressable, ScrollView, Switch, View } from 'react-native';
 import { useSelector } from 'react-redux';
+import { createTransactionDocument } from '../../services/transactions';
 import {
   COLORS,
   Container,
@@ -51,9 +52,8 @@ const AddTransaction = ({ navigation }: any) => {
     }
   };
 
-  const onAddTransaction = () => {
+  const onAddTransaction = async () => {
     const transaction = {
-      id: 'asdsdsad',
       amount: total,
       categoryId: '63712683',
       description: '',
@@ -61,7 +61,8 @@ const AddTransaction = ({ navigation }: any) => {
       userUid: user.uid,
       createdAt: new Date(),
     };
-    console.log(transaction);
+    await createTransactionDocument(transaction);
+    navigation.navigate('Home');
   };
 
   return (

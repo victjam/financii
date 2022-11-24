@@ -12,7 +12,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import CustomInput from '../components/form/CustomInput';
 import { toggleLoader } from '../features/loader/loaderSlice';
 import { createUser } from '../features/user/userSlice';
-import { auth, createUserDocument } from '../firebase';
+import { auth } from '../firebase';
+import { createUserDocument } from '../services/user';
 import {
   COLORS,
   Container,

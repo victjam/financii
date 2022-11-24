@@ -1,7 +1,7 @@
 export interface Transaction {
-  id: string;
-  amount: number;
-  category: string;
+  uid?: string;
+  amount: string | number;
+  categoryId: string;
   description: string;
   type: string;
   userUid: string;

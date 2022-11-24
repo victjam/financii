@@ -1,7 +1,11 @@
 import { Ionicons } from '@expo/vector-icons';
+import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FlatList, Pressable } from 'react-native';
+import { useSelector } from 'react-redux';
+import { firestore } from '../../firebase';
+
 import {
   Container,
   Div,
@@ -12,71 +16,10 @@ import {
 } from '../../styles/global';
 import CustomInput from '../form/CustomInput';
 
-const CATEGORIES = [
-  {
-    id: '1',
-    title: 'Compras',
-    icon: 'cart',
-    color: '#4C4CB0',
-  },
-  {
-    id: '2',
-    title: 'Comida',
-    icon: 'fast-food',
-    color: '#884399',
-  },
-  {
-    id: '3',
-    title: 'Transporte',
-    icon: 'car',
-    color: '#b04c59',
-  },
-  {
-    id: '4',
-    title: 'Salud',
-    icon: 'medkit',
-    color: '#4fb04c',
-  },
-  {
-    id: '5',
-    title: 'Ropa',
-    icon: 'shirt',
-    color: '#b0714c',
-  },
-  {
-    id: '6',
-    title: 'Hogar',
-    icon: 'home',
-    color: '#4cb0a4',
-  },
-  {
-    id: '7',
-    title: 'Entretenimiento',
-    icon: 'game-controller',
-    color: '#744cb0',
-  },
-  {
-    id: '8',
-    title: 'Educación',
-    icon: 'school',
-    color: '#b04c74',
-  },
-  {
-    id: '9',
-    title: 'Otros',
-    icon: 'help',
-    color: '#F2A900',
-  },
-];
-
 const CategoryList = ({ navigation }: any) => {
-  const [categories, setCategories] = useState(CATEGORIES);
-  const searchIfInclude = (title: string | any) => {
-    const result = CATEGORIES.filter(category =>
-      category.title.includes(title),
-    );
-    return result;
-  };
+  const user = useSelector((state: any) => state.user.user);
+  const [globalCategories, setGlobalCategories] = useState<any>([]);
+  const [categories, setCategories] = useState<any>([]);
 
   const {
     control,
@@ -90,18 +33,54 @@ const CategoryList = ({ navigation }: any) => {
   });
 
   useEffect(() => {
+    const searchIfInclude = (title: string | any) => {
+      const result = globalCategories.filter((category: any) =>
+        category.title.includes(title.toLowerCase()),
+      );
+      return result;
+    };
+
     const subscription = watch((value: any) => {
       if (value?.search.length > 0) {
         setCategories(searchIfInclude(value.search));
       } else {
-        setCategories(CATEGORIES);
+        setCategories(globalCategories);
       }
     });
     return () => subscription.unsubscribe();
-  }, [watch]);
+  }, [watch, globalCategories]);
+
+  useEffect(() => {
+    const collectionRef = collection(firestore, 'categories');
+    const q = query(collectionRef, orderBy('title', 'asc'));
+    const unsubscribe = onSnapshot(q, snapshot => {
+      const categoriesData: any = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+      const filterByUser = (categories: any) => {
+        const privateCat = categories.filter(
+          (category: any) => category.userId === user.uid && category.private,
+        );
+        const publicCat = categories.filter(
+          (category: any) => category.private === false,
+        );
+        return [...privateCat, ...publicCat];
+      };
+
+      setGlobalCategories(filterByUser(categoriesData));
+      setCategories(filterByUser(categoriesData));
+    });
+    return () => unsubscribe();
+  }, [user]);
 
   const selectCategory = (categoryName: string) => {
     navigation.navigate('AddTransaction', { categoryName });
+  };
+
+  const upperCaseFirstLetter = (string: string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
   };
 
   const redirectToAddCategory = () => {
@@ -140,8 +119,8 @@ const CategoryList = ({ navigation }: any) => {
                   alignItems="center"
                   justifyContent="space-between"
                   borderRadius={5}>
-                  <Text fontSize={28} fontWeight="bold">
-                    {item.title}
+                  <Text fontSize={28} fontWeight="bold" color="white">
+                    {upperCaseFirstLetter(item.title)}
                   </Text>
                   <Ionicons name={item.icon} size={50} color="white" />
                 </Div>

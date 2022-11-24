@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { ThemeProvider } from 'styled-components/native';
 import AddCategory from '../components/categories/AddCategory';
 import CategoryList from '../components/categories/CategoryList';
+import IconList from '../components/categories/IconList';
 import AddTransaction from '../components/transactions/AddTransaction';
 import Login from '../containers/Login';
 import Main from '../containers/Main';
@@ -80,6 +81,34 @@ const RouteStack = () => {
                 return (
                   <Pressable
                     onPressIn={() => navigation.navigate('AddTransaction')}>
+                    <MaterialIcons
+                      name="close"
+                      size={30}
+                      color={selectedColor}
+                    />
+                  </Pressable>
+                );
+              },
+            })}
+          />
+          <Stack.Screen
+            name="IconList"
+            component={IconList}
+            options={({ navigation }) => ({
+              headerShown: true,
+              presentation: 'modal',
+              headerBackVisible: false,
+              animationTypeForReplace: 'push',
+              headerTitle: '',
+              headerShadowVisible: false,
+              headerBackTitleVisible: false,
+              headerStyle: {
+                backgroundColor: backgroundColor,
+              },
+              headerRight: () => {
+                return (
+                  <Pressable
+                    onPressIn={() => navigation.navigate('CategoryList')}>
                     <MaterialIcons
                       name="close"
                       size={30}
