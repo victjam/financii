@@ -12,10 +12,11 @@ import {
   Text,
   WrappedBox,
 } from '../styles/global';
-import { formatStringToPrice } from '../util/util';
+import { formatToPrice } from '../util/util';
 
 const Transactions = () => {
   const [transactionsList, setTransactionsList] = useState([]);
+  const totalAmount = useSelector((state: any) => state.transactions.total);
   const user = useSelector((state: any) => state.user.user);
   useFocusEffect(
     React.useCallback(() => {
@@ -29,23 +30,6 @@ const Transactions = () => {
     }, [user]),
   );
 
-  const total = () => {
-    const totalAmount = transactionsList.reduce(
-      (acc: number, transaction: any) => {
-        if (transaction.type === 'income') {
-          return acc + transaction.amount;
-        } else {
-          return acc - transaction.amount;
-        }
-      },
-      0,
-    );
-    return {
-      totalAmount: totalAmount,
-      totalAmountString: formatStringToPrice(totalAmount.toString()),
-    };
-  };
-
   return (
     <Container>
       <WrappedBox>
@@ -54,9 +38,9 @@ const Transactions = () => {
             <Div marginBottom={40}>
               <LGText fontWeight="bold">Saldo:</LGText>
               <LGText
-                color={total().totalAmount > 0 ? COLORS.GREEN : COLORS.RED}
+                color={totalAmount > 0 ? COLORS.GREEN : COLORS.RED}
                 fontWeight="bold">
-                {total().totalAmountString}
+                {formatToPrice(totalAmount)}
               </LGText>
             </Div>
             <LGText fontWeight="bold">Lista de transaciones</LGText>

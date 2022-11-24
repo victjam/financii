@@ -2,7 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useSelector } from 'react-redux';
 import { Transaction } from '../../models/Transactions';
 import { COLORS, Div, DivIcon, Text } from '../../styles/global';
-import { formatStringToPrice } from '../../util/util';
+import { formatToPrice } from '../../util/util';
 
 // refactor transaccion type
 const TransactionList = ({ transactions }: any) => {
@@ -54,7 +54,7 @@ const TransactionList = ({ transactions }: any) => {
               <Text
                 fontWeight="bold"
                 color={category.type === 'income' ? COLORS.GREEN : COLORS.RED}>
-                {formatStringToPrice(category.amount)}
+                {formatToPrice(category.amount)}
               </Text>
               <Text color={COLORS.DARKGRAY}>
                 {formatUTCDate(category.createdAt)}

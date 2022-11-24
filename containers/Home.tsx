@@ -1,9 +1,10 @@
 import { Ionicons } from '@expo/vector-icons';
 import Constants from 'expo-constants';
-import { FlatList, Platform, Pressable, ScrollView, View } from 'react-native';
+import { useEffect, useState } from 'react';
+import { FlatList, Pressable, ScrollView, View } from 'react-native';
 import { useSelector } from 'react-redux';
-import Marquee from '../components/Marquee';
 import TransactionList from '../components/transactions/TransactionList';
+import { get5TransactionsByUserId } from '../services/transactions';
 import {
   COLORS,
   Div,
@@ -14,8 +15,20 @@ import {
   TextButton,
   WrappedBox,
 } from '../styles/global';
+import { formatToPrice } from '../util/util';
 
 const Home = ({ navigation }: any) => {
+  const [transactionsList, setTransactionsList] = useState([]);
+  const isDarkThemeEnable = useSelector(
+    (state: any) => state.theme.darkThemeEnabled,
+  );
+  const user = useSelector((state: any) => state.user.user);
+  const totalTransactions = useSelector(
+    (state: any = 0) => state.transactions.total,
+  );
+  const selectedColor = !isDarkThemeEnable ? COLORS.WHITE : COLORS.BLACK;
+  const selectedColorBg = isDarkThemeEnable ? COLORS.WHITE : COLORS.BLACK;
+
   const icons = [
     {
       id: '0',
@@ -26,55 +39,20 @@ const Home = ({ navigation }: any) => {
       icon: 'send-outline',
     },
   ];
-  const transactions = [
-    {
-      id: '0',
-      title: 'Arriendo',
-      price: '-$500',
-      color: COLORS.DANGER,
-      icon: 'wallet-outline',
-      date: 'Sept 19, 2023',
-    },
-    {
-      id: '1',
-      title: 'Pago a Victor',
-      price: '$100',
-      color: COLORS.GREEN,
-      icon: 'wallet-outline',
-      date: 'Sept 19, 2023',
-    },
-    {
-      id: '2',
-      title: 'Pago a Carlos',
-      price: '$50',
-      color: COLORS.GREEN,
-      icon: 'wallet-outline',
-      date: 'Sept 19, 2023',
-    },
-    {
-      id: '4',
-      title: 'Colegio Emma',
-      price: '-$50000',
-      color: COLORS.DANGER,
-      icon: 'wallet-outline',
-      date: 'Sept 19, 2023',
-    },
-  ];
 
-  const renderTransactionList = (OS: string) => {
-    if (OS === 'ios') {
-      return <Marquee data={transactions} />;
-    } else {
-      return <TransactionList transactions={transactions} />;
-    }
+  useEffect(() => {
+    const getTransactionsData = async () => {
+      const transactionsData: any = await get5TransactionsByUserId(user.uid);
+      if (transactionsData) {
+        setTransactionsList(transactionsData);
+      }
+    };
+    getTransactionsData();
+  }, [user]);
+
+  const renderTransactionList = () => {
+    return <TransactionList transactions={transactionsList} />;
   };
-  const isDarkThemeEnable = useSelector(
-    (state: any) => state.theme.darkThemeEnabled,
-  );
-  const user = useSelector((state: any) => state.user.user);
-  const selectedColor = !isDarkThemeEnable ? COLORS.WHITE : COLORS.BLACK;
-  const selectedColorBg = isDarkThemeEnable ? COLORS.WHITE : COLORS.BLACK;
-
   const SPACE = 5;
 
   return (
@@ -103,8 +81,12 @@ const Home = ({ navigation }: any) => {
             color={COLORS.WHITE}>
             Buenos dias, {user?.name}
           </Text>
-          <Text fontSize={20} paddingTop={10} color={COLORS.WHITE}>
-            $65.988.00
+          <Text
+            fontWeight="bold"
+            fontSize={20}
+            paddingTop={10}
+            color={totalTransactions > 0 ? COLORS.GREEN : COLORS.RED}>
+            {formatToPrice(totalTransactions)}
           </Text>
 
           <Text paddingTop={10} color={COLORS.WHITE}>
@@ -256,7 +238,7 @@ const Home = ({ navigation }: any) => {
           </View>
           <Div marginTop={40}>
             <Text fontWeight="bold">Ultimas Transacciones</Text>
-            {renderTransactionList(Platform.OS)}
+            {renderTransactionList()}
           </Div>
         </WrappedBox>
       </WrappedBox>

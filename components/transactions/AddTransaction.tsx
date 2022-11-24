@@ -4,9 +4,10 @@ import * as Haptics from 'expo-haptics';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FlatList, Pressable, ScrollView, Switch, View } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { saveTotalTransactionAmount } from '../../features/transactions/transactionsSlice';
 import { Transaction } from '../../models/Transactions';
-import { createTransactionDocument } from '../../services/transactions';
+import { createAndGetTransactionsAmount } from '../../services/transactions';
 import {
   COLORS,
   Container,
@@ -16,7 +17,7 @@ import {
   TextButton,
   WrappedBox,
 } from '../../styles/global';
-import { formatStringToPrice } from '../../util/util';
+import { formatToPrice } from '../../util/util';
 import CustomInput from '../form/CustomInput';
 import ShadowButton from '../form/ShadowButton';
 const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, '', 0, 'DEL'];
@@ -30,6 +31,7 @@ const AddTransaction = ({ navigation }: any) => {
   const [total, setTotal] = useState('0');
   const [isEnabled, setIsEnabled] = useState(false);
   const route = useRoute();
+  const dispatch = useDispatch();
   const categoryId = route?.params?.id ?? undefined;
   const categoryTitle = route?.params?.title ?? undefined;
   const categoryIcon = route?.params?.icon ?? undefined;
@@ -64,7 +66,8 @@ const AddTransaction = ({ navigation }: any) => {
       userId: user.uid,
       createdAt: new Date().toUTCString(),
     };
-    await createTransactionDocument(transaction);
+    const amount = await createAndGetTransactionsAmount(transaction);
+    dispatch(saveTotalTransactionAmount(amount));
     navigation.navigate('Home');
   };
 
@@ -110,7 +113,7 @@ const AddTransaction = ({ navigation }: any) => {
               </Div>
               <Div marginBottom={30}>
                 <Text fontSize={70} fontWeight="bold">
-                  {total ? `${formatStringToPrice(total)}` : '$0'}
+                  {total ? `${formatToPrice(total)}` : '$0'}
                 </Text>
               </Div>
               <Div flexDirection="row">

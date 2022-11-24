@@ -2,9 +2,32 @@ import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
 import { firestore } from '../firebase';
 import { Transaction } from '../models/Transactions';
 
+export const createAndGetTransactionsAmount = async (
+  transaction: Transaction,
+) => {
+  await addDoc(collection(firestore, 'transactions'), transaction);
+  const q = query(
+    collection(firestore, 'transactions'),
+    where('userId', '==', transaction.userId),
+  );
+  const querySnapshot = await getDocs(q);
+  const total = querySnapshot.docs.reduce(
+    (acc, doc) =>
+      doc.data().type === 'income'
+        ? acc + doc.data().amount
+        : acc - doc.data().amount,
+    0,
+  );
+  return total;
+};
+
 export const createTransactionDocument = async (transaction: Transaction) => {
   try {
-    await addDoc(collection(firestore, 'transactions'), transaction);
+    const tra = await addDoc(
+      collection(firestore, 'transactions'),
+      transaction,
+    );
+    console.log(tra);
   } catch (error: any) {
     console.log('Error fetching transactions', error.message);
   }

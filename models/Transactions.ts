@@ -2,7 +2,7 @@ export interface Transaction {
   title: string | any;
   id?: string;
   icon?: string;
-  amount: string | number;
+  amount: number;
   categoryId: string;
   type: string;
   userId: string;
