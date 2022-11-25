@@ -1,9 +1,7 @@
-import { useFocusEffect } from '@react-navigation/native';
-import React, { useState } from 'react';
+import React from 'react';
 import { ScrollView } from 'react-native';
 import { useSelector } from 'react-redux';
 import TransactionList from '../components/transactions/TransactionList';
-import { getTransactionsByUserId } from '../services/transactions';
 import {
   COLORS,
   Container,
@@ -15,19 +13,10 @@ import {
 import { formatToPrice } from '../util/util';
 
 const Transactions = () => {
-  const [transactionsList, setTransactionsList] = useState([]);
-  const totalAmount = useSelector((state: any) => state.transactions.total);
-  const user = useSelector((state: any) => state.user.user);
-  useFocusEffect(
-    React.useCallback(() => {
-      const getTransactionsData = async () => {
-        const transactionsData: any = await getTransactionsByUserId(user.uid);
-        if (transactionsData) {
-          setTransactionsList(transactionsData);
-        }
-      };
-      getTransactionsData();
-    }, [user]),
+  const totalAmount =
+    useSelector((state: any) => state.transactions.total) ?? 0;
+  const transactions = useSelector(
+    (state: any) => state.transactions.transactions,
   );
 
   return (
@@ -47,7 +36,7 @@ const Transactions = () => {
             <Text>Todas tus transacciones en un solo lugar</Text>
           </Div>
           <Div>
-            <TransactionList transactions={transactionsList} />
+            <TransactionList transactions={transactions} />
           </Div>
         </ScrollView>
       </WrappedBox>

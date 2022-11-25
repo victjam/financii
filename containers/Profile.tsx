@@ -3,6 +3,10 @@ import { signOut } from 'firebase/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import ShadowButton from '../components/form/ShadowButton';
 import { toggleDarkTheme } from '../features/theme/themeSlice';
+import {
+  createTransactions,
+  saveTotalTransactionAmount,
+} from '../features/transactions/transactionsSlice';
 import { deleteUser } from '../features/user/userSlice';
 import { auth } from '../firebase';
 import {
@@ -26,6 +30,8 @@ const Profile = () => {
   const signOutUser = async () => {
     await signOut(auth);
     dispatch(deleteUser());
+    dispatch(createTransactions(null));
+    dispatch(saveTotalTransactionAmount(0));
   };
 
   return (

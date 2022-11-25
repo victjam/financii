@@ -1,10 +1,8 @@
 import { Ionicons } from '@expo/vector-icons';
 import Constants from 'expo-constants';
-import { useEffect, useState } from 'react';
 import { FlatList, Pressable, ScrollView, View } from 'react-native';
 import { useSelector } from 'react-redux';
 import TransactionList from '../components/transactions/TransactionList';
-import { get5TransactionsByUserId } from '../services/transactions';
 import {
   COLORS,
   Div,
@@ -18,13 +16,14 @@ import {
 import { formatToPrice } from '../util/util';
 
 const Home = ({ navigation }: any) => {
-  const [transactionsList, setTransactionsList] = useState([]);
   const isDarkThemeEnable = useSelector(
     (state: any) => state.theme.darkThemeEnabled,
   );
   const user = useSelector((state: any) => state.user.user);
-  const totalTransactions = useSelector(
-    (state: any = 0) => state.transactions.total,
+  const totalTransactions =
+    useSelector((state: any = 0) => state.transactions.total) ?? 0;
+  const transactions = useSelector(
+    (state: any) => state.transactions.transactions,
   );
   const selectedColor = !isDarkThemeEnable ? COLORS.WHITE : COLORS.BLACK;
   const selectedColorBg = isDarkThemeEnable ? COLORS.WHITE : COLORS.BLACK;
@@ -40,18 +39,8 @@ const Home = ({ navigation }: any) => {
     },
   ];
 
-  useEffect(() => {
-    const getTransactionsData = async () => {
-      const transactionsData: any = await get5TransactionsByUserId(user.uid);
-      if (transactionsData) {
-        setTransactionsList(transactionsData);
-      }
-    };
-    getTransactionsData();
-  }, [user]);
-
   const renderTransactionList = () => {
-    return <TransactionList transactions={transactionsList} />;
+    return <TransactionList transactions={transactions} />;
   };
   const SPACE = 5;
 
@@ -81,6 +70,7 @@ const Home = ({ navigation }: any) => {
             color={COLORS.WHITE}>
             Buenos dias, {user?.name}
           </Text>
+
           <Text
             fontWeight="bold"
             fontSize={20}

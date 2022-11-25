@@ -11,8 +11,13 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import CustomInput from '../components/form/CustomInput';
 import { toggleLoader } from '../features/loader/loaderSlice';
+import {
+  createTransactions,
+  saveTotalTransactionAmount,
+} from '../features/transactions/transactionsSlice';
 import { createUser } from '../features/user/userSlice';
 import { auth } from '../firebase';
+import { getTransactionsByUserId } from '../services/transactions';
 import { createUserDocument } from '../services/user';
 import {
   COLORS,
@@ -111,6 +116,11 @@ const Signup = ({ navigation }: any) => {
         name: watch('name'),
         lastName: watch('lastName'),
       });
+      const { totalAmount, transactionsData } = await getTransactionsByUserId(
+        user.uid,
+      );
+      dispatch(createTransactions(transactionsData));
+      dispatch(saveTotalTransactionAmount(totalAmount));
       dispatch(createUser(userDoc));
       dispatch(toggleLoader());
     } catch (error) {

@@ -107,8 +107,7 @@ const RouteStack = () => {
               },
               headerRight: () => {
                 return (
-                  <Pressable
-                    onPressIn={() => navigation.navigate('CategoryList')}>
+                  <Pressable onPressIn={() => navigation.navigate('IconList')}>
                     <MaterialIcons
                       name="close"
                       size={30}

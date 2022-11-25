@@ -10,7 +10,7 @@ type InitialState = {
 const initialState: InitialState = {
   transactions: null,
   transaction: null,
-  total: null,
+  total: 0,
 };
 
 export const userSlice = createSlice({
@@ -21,6 +21,7 @@ export const userSlice = createSlice({
       state.transactions = action.payload;
     },
     saveTotalTransactionAmount: (state, action) => {
+      console.log(action);
       state.total = action.payload;
     },
   },

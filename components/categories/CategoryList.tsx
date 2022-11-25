@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
+import { useRoute } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FlatList, Pressable } from 'react-native';
@@ -18,6 +19,8 @@ import CustomInput from '../form/CustomInput';
 
 const CategoryList = ({ navigation }: any) => {
   const user = useSelector((state: any) => state.user.user);
+  const route = useRoute();
+  const onReload = route?.params?.reload ?? undefined;
   const [globalCategories, setGlobalCategories] = useState<any>([]);
   const [categories, setCategories] = useState<any>([]);
 
@@ -61,7 +64,6 @@ const CategoryList = ({ navigation }: any) => {
       );
       return [...privateCat, ...publicCat];
     };
-
     const getCategoriesData = async () => {
       const categoriesDataObj: any = await getCategories();
       if (categoriesDataObj) {
@@ -70,7 +72,7 @@ const CategoryList = ({ navigation }: any) => {
       }
     };
     getCategoriesData();
-  }, [user]);
+  }, [user, onReload]);
 
   const selectCategory = (category: Category) => {
     navigation.navigate('AddTransaction', {
@@ -92,6 +94,16 @@ const CategoryList = ({ navigation }: any) => {
     <Container>
       <Div paddingLeft={10} paddingRight={10}>
         <CustomInput name="search" label="Buscar categoria" control={control} />
+        {categories.length > 0 ? (
+          <PrimaryButton
+            marginTop={20}
+            width="100%"
+            borderRadius={5}
+            marginBottom={20}
+            onPressIn={() => redirectToAddCategory()}>
+            <TextButton fontWeight="bold">Agregar Categoria</TextButton>
+          </PrimaryButton>
+        ) : null}
       </Div>
       {categories.length !== 0 ? (
         <FlatList

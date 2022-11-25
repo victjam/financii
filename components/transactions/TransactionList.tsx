@@ -19,7 +19,7 @@ const TransactionList = ({ transactions }: any) => {
   );
 
   const renderTransactionsIfExist = () => {
-    if (transactions.length > 0) {
+    if (transactions && transactions.length !== 0) {
       return transactions?.map((category: Transaction, i: number) => (
         <Div
           key={i}
@@ -73,7 +73,7 @@ const TransactionList = ({ transactions }: any) => {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Text color={COLORS.DARKGRAY}>No transactions</Text>
+          <Text color={COLORS.DARKGRAY}>No tienes transacciones</Text>
         </Div>
       );
     }

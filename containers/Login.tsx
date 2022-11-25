@@ -10,8 +10,13 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import CustomInput from '../components/form/CustomInput';
 import { toggleLoader } from '../features/loader/loaderSlice';
+import {
+  createTransactions,
+  saveTotalTransactionAmount,
+} from '../features/transactions/transactionsSlice';
 import { createUser } from '../features/user/userSlice';
 import { auth } from '../firebase';
+import { getTransactionsByUserId } from '../services/transactions';
 import { getUserDocument } from '../services/user';
 import {
   COLORS,
@@ -98,6 +103,11 @@ const Login = ({ navigation }: any) => {
         watch('password'),
       );
       const userDoc = await getUserDocument(user.user.uid);
+      const { totalAmount, transactionsData } = await getTransactionsByUserId(
+        user.user.uid,
+      );
+      dispatch(createTransactions(transactionsData));
+      dispatch(saveTotalTransactionAmount(totalAmount));
       dispatch(createUser(userDoc));
       dispatch(toggleLoader());
     } catch (error) {

@@ -5,7 +5,10 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FlatList, Pressable, ScrollView, Switch, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { saveTotalTransactionAmount } from '../../features/transactions/transactionsSlice';
+import {
+  createTransactions,
+  saveTotalTransactionAmount,
+} from '../../features/transactions/transactionsSlice';
 import { Transaction } from '../../models/Transactions';
 import { createAndGetTransactionsAmount } from '../../services/transactions';
 import {
@@ -59,15 +62,17 @@ const AddTransaction = ({ navigation }: any) => {
   const onAddTransaction = async () => {
     const transaction: Transaction = {
       amount: parseInt(total),
-      categoryId: categoryId,
-      icon: categoryIcon,
+      categoryId: isEnabled ? categoryId : 'uURJYMOPOd3nPrmtSmX8',
+      icon: isEnabled ? categoryIcon : 'cash',
       title: watch('title'),
       type: isEnabled ? 'expense' : 'income',
       userId: user.uid,
       createdAt: new Date().toUTCString(),
     };
-    const amount = await createAndGetTransactionsAmount(transaction);
-    dispatch(saveTotalTransactionAmount(amount));
+    const { totalAmount, transactionsData } =
+      await createAndGetTransactionsAmount(transaction);
+    dispatch(createTransactions(transactionsData));
+    dispatch(saveTotalTransactionAmount(totalAmount));
     navigation.navigate('Home');
   };
 
@@ -112,7 +117,7 @@ const AddTransaction = ({ navigation }: any) => {
                 />
               </Div>
               <Div marginBottom={30}>
-                <Text fontSize={70} fontWeight="bold">
+                <Text fontSize={60} fontWeight="bold">
                   {total ? `${formatToPrice(total)}` : '$0'}
                 </Text>
               </Div>
@@ -151,18 +156,22 @@ const AddTransaction = ({ navigation }: any) => {
                 />
               </Div>
               <Div width="100%">
-                <ShadowButton
-                  text={
-                    categoryTitle
-                      ? categoryTitle + ' - Cambiar categoria'
-                      : 'Selecciona una categoria'
-                  }
-                  ArrowEnabled={false}
-                  handleTouch={() => navigation.navigate('CategoryList')}
-                />
+                {isEnabled ? (
+                  <ShadowButton
+                    text={
+                      categoryTitle
+                        ? categoryTitle + ' - Cambiar categoria'
+                        : 'Selecciona una categoria'
+                    }
+                    ArrowEnabled={false}
+                    handleTouch={() => navigation.navigate('CategoryList')}
+                  />
+                ) : null}
               </Div>
               <PrimaryButton
-                disabled={total === '0' || categoryTitle === undefined}
+                disabled={
+                  total === '0' || (isEnabled && categoryTitle === undefined)
+                }
                 backgroundColor={isEnabled ? COLORS.DANGER : COLORS.SUCCESS}
                 width="95%"
                 borderRadius={5}
