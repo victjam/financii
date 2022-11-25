@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FlatList, Pressable, ScrollView, Switch, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import { toggleLoader } from '../../features/loader/loaderSlice';
 import {
   createTransactions,
   saveTotalTransactionAmount,
@@ -60,20 +61,29 @@ const AddTransaction = ({ navigation }: any) => {
   };
 
   const onAddTransaction = async () => {
-    const transaction: Transaction = {
-      amount: parseInt(total),
-      categoryId: isEnabled ? categoryId : 'uURJYMOPOd3nPrmtSmX8',
-      icon: isEnabled ? categoryIcon : 'cash',
-      title: watch('title'),
-      type: isEnabled ? 'expense' : 'income',
-      userId: user.uid,
-      createdAt: new Date().toUTCString(),
-    };
-    const { totalAmount, transactionsData } =
-      await createAndGetTransactionsAmount(transaction);
-    dispatch(createTransactions(transactionsData));
-    dispatch(saveTotalTransactionAmount(totalAmount));
-    navigation.navigate('Home');
+    try {
+      dispatch(toggleLoader());
+      const transaction: Transaction = {
+        amount: parseInt(total),
+        categoryId: isEnabled ? categoryId : 'uURJYMOPOd3nPrmtSmX8',
+        icon: isEnabled ? categoryIcon : 'cash',
+        title: watch('title'),
+        type: isEnabled ? 'expense' : 'income',
+        userId: user.uid,
+        createdAt: new Date().toUTCString(),
+      };
+      const { totalAmount, transactionsData } =
+        await createAndGetTransactionsAmount(transaction);
+      console.log(transactionsData);
+      dispatch(createTransactions(transactionsData));
+      dispatch(saveTotalTransactionAmount(totalAmount));
+      navigation.navigate('Home');
+
+      dispatch(toggleLoader());
+    } catch (e) {
+      dispatch(toggleLoader());
+      console.log(e);
+    }
   };
 
   return (

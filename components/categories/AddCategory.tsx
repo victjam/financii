@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ColorPicker } from 'react-native-color-picker';
 import { useDispatch, useSelector } from 'react-redux';
+import { toggleLoader } from '../../features/loader/loaderSlice';
 import { addCategory } from '../../services/categories';
 import {
   COLORS,
@@ -46,15 +47,22 @@ const AddCategory = ({ navigation }: any) => {
   });
 
   const submitCategory = async () => {
-    const category = {
-      title: watch('Name').toLocaleLowerCase(),
-      icon: icon,
-      color: color ?? generateRamdonHexColor(),
-      private: true,
-      userId: user.uid,
-    };
-    await addCategory(category);
-    navigation.navigate('CategoryList', { reload: true });
+    try {
+      dispatch(toggleLoader());
+      const category = {
+        title: watch('Name').toLocaleLowerCase(),
+        icon: icon,
+        color: color ?? generateRamdonHexColor(),
+        private: true,
+        userId: user.uid,
+      };
+      await addCategory(category);
+      navigation.navigate('CategoryList', { reload: true });
+      dispatch(toggleLoader());
+    } catch (error) {
+      console.log(error);
+      dispatch(toggleLoader());
+    }
   };
   // watch(data);
 

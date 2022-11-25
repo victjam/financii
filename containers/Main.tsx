@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { Image, TouchableWithoutFeedback, View } from 'react-native';
 import {
   Container,
@@ -13,17 +12,7 @@ import {
   XLGText,
 } from '../styles/global';
 
-import { useSelector } from 'react-redux';
 const Main = ({ navigation }: any) => {
-  const user = useSelector((state: any) => state.user.user);
-
-  useEffect(() => {
-    if (user) {
-      navigation.navigate('Home');
-    } else {
-      navigation.navigate('Main');
-    }
-  }, [user, navigation]);
   return (
     <Container>
       <WrappedBox>

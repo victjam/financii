@@ -21,7 +21,6 @@ export const userSlice = createSlice({
       state.transactions = action.payload;
     },
     saveTotalTransactionAmount: (state, action) => {
-      console.log(action);
       state.total = action.payload;
     },
   },

@@ -20,7 +20,7 @@ const RouteStack = () => {
   const isDarkThemeEnable = useSelector(
     (state: any) => state.theme.darkThemeEnabled,
   );
-
+  const user = useSelector((state: any) => state.user.user);
   const selectedColor = isDarkThemeEnable ? COLORS.WHITE : COLORS.BLACK;
   const backgroundColor = !isDarkThemeEnable ? COLORS.WHITE : COLORS.BLACK;
 
@@ -32,8 +32,10 @@ const RouteStack = () => {
           screenOptions={{
             headerShown: false,
           }}>
-          <Stack.Screen name="Main" component={Main} />
-          <Stack.Screen name="Home" component={TabNav} />
+          <Stack.Screen
+            name={user ? 'Home' : 'Main'}
+            component={user ? TabNav : Main}
+          />
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Signup" component={Signup} />
           <Stack.Screen

@@ -27,8 +27,9 @@ export const createAndGetTransactionsAmount = async (
     0,
   );
   const transactionsData = querySnapshot.forEach(doc => {
-    transactions.push({ id: doc.id, ...doc.data() } as Transaction);
+    return transactions.push({ id: doc.id, ...doc.data() } as Transaction);
   });
+  console.log(transactionsData);
   return { totalAmount, transactionsData };
 };
 
