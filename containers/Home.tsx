@@ -28,6 +28,13 @@ const Home = ({ navigation }: any) => {
   const selectedColor = !isDarkThemeEnable ? COLORS.WHITE : COLORS.BLACK;
   const selectedColorBg = isDarkThemeEnable ? COLORS.WHITE : COLORS.BLACK;
 
+  const getFirst5Transactions = () => {
+    if (transactions.length > 5) {
+      return transactions.slice(0, 5);
+    }
+    return transactions;
+  };
+
   const icons = [
     {
       id: '0',
@@ -40,7 +47,7 @@ const Home = ({ navigation }: any) => {
   ];
 
   const renderTransactionList = () => {
-    return <TransactionList transactions={transactions} />;
+    return <TransactionList transactions={getFirst5Transactions()} />;
   };
   const SPACE = 5;
 

@@ -17,6 +17,7 @@ import {
   LGText,
   Text,
 } from '../styles/global';
+import { formatToPrice } from '../util/util';
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -24,6 +25,8 @@ const Profile = () => {
     (state: any) => state.theme.darkThemeEnabled,
   );
   const user = useSelector((state: any) => state.user.user);
+  const totalAmount =
+    useSelector((state: any) => state.transactions.total) ?? 0;
   const selectedColor = !isDarkThemeEnable ? COLORS.WHITE : COLORS.BLACK;
   const selectedColorBg = isDarkThemeEnable ? COLORS.WHITE : COLORS.BLACK;
 
@@ -65,9 +68,13 @@ const Profile = () => {
               {user?.name} {user?.lastName}
             </Text>
           </Div>
-          <Div paddingLeft={10} paddingRight={10} marginBottom={20}>
-            <LGText>Balance Total</LGText>
-            <Text>$200.000</Text>
+          <Div paddingLeft={10} paddingRight={10} marginBottom={40}>
+            <LGText fontWeight="bold">Balance:</LGText>
+            <LGText
+              color={totalAmount > 0 ? COLORS.GREEN : COLORS.RED}
+              fontWeight="bold">
+              {formatToPrice(totalAmount)}
+            </LGText>
           </Div>
           <ShadowButton
             icon="person-outline"

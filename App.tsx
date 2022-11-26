@@ -25,13 +25,13 @@ export default function App() {
 
   return (
     <ReduxProvider store={store}>
-      <Loader>
-        <PersistGate loading={null} persistor={persistor}>
+      <PersistGate loading={null} persistor={persistor}>
+        <Loader>
           <DarkThemeProvider>
             <RouteStack />
           </DarkThemeProvider>
-        </PersistGate>
-      </Loader>
+        </Loader>
+      </PersistGate>
     </ReduxProvider>
   );
 }

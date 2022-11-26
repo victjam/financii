@@ -1,7 +1,8 @@
 {
   "expo": {
-    "name": "financii",
+    "name": "Financii",
     "slug": "financii",
+    "privacy": "unlisted",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -19,7 +20,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "financii"
+      "bundleIdentifier": "com.finance.financii"
     },
     "android": {
       "adaptiveIcon": {
@@ -29,6 +30,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "604da9a2-d30a-4be1-9cd9-bc7e26a0c3de"
+      }
     }
   }
 }
