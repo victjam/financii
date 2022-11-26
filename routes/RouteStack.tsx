@@ -8,9 +8,9 @@ import AddCategory from '../components/categories/AddCategory';
 import CategoryList from '../components/categories/CategoryList';
 import IconList from '../components/categories/IconList';
 import AddTransaction from '../components/transactions/AddTransaction';
+import TransactionDetail from '../components/transactions/TransactionDetail';
 import Login from '../containers/Login';
 import Main from '../containers/Main';
-import Signup from '../containers/Signup';
 import TabNav from '../containers/TabNav';
 import { COLORS } from '../styles/global';
 import { darkTheme, lightTheme } from '../styles/theme';
@@ -21,7 +21,6 @@ const RouteStack = () => {
     (state: any) => state.theme.darkThemeEnabled,
   );
   const user = useSelector((state: any) => state.user.user);
-  console.log(user);
   const selectedColor = isDarkThemeEnable ? COLORS.WHITE : COLORS.BLACK;
   const backgroundColor = !isDarkThemeEnable ? COLORS.WHITE : COLORS.BLACK;
 
@@ -38,7 +37,10 @@ const RouteStack = () => {
             component={user ? TabNav : Main}
           />
           <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="Signup" component={Signup} />
+          <Stack.Screen
+            name="TransactionDetail"
+            component={TransactionDetail}
+          />
           <Stack.Screen
             name="AddTransaction"
             component={AddTransaction}

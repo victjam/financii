@@ -20,7 +20,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.finance.financii"
+      "bundleIdentifier": "financii"
     },
     "android": {
       "adaptiveIcon": {

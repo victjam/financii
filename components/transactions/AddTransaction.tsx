@@ -74,7 +74,6 @@ const AddTransaction = ({ navigation }: any) => {
       };
       const { totalAmount, transactionsData } =
         await createAndGetTransactionsAmount(transaction);
-      console.log(transactionsData);
       dispatch(createTransactions(transactionsData));
       dispatch(saveTotalTransactionAmount(totalAmount));
       navigation.navigate('Home');

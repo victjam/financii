@@ -1,4 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import { Pressable } from 'react-native';
 import { useSelector } from 'react-redux';
 import { Transaction } from '../../models/Transactions';
 import { COLORS, Div, DivIcon, Text } from '../../styles/global';
@@ -6,6 +8,7 @@ import { formatToPrice } from '../../util/util';
 
 // refactor transaccion type
 const TransactionList = ({ transactions }: any) => {
+  const navigation = useNavigation();
   const formatUTCDate = (date: any) => {
     const newDate = new Date(date);
     const day = newDate.getDate();
@@ -30,37 +33,48 @@ const TransactionList = ({ transactions }: any) => {
             justifyContent: 'space-between',
             alignItems: 'center',
           }}>
-          <Div
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}>
-            <DivIcon
-              elevation={8}
-              shadowOpacity={0.5}
-              shadowColor={
-                category.type === 'income' ? COLORS.GREEN : COLORS.RED
-              }
-              backgroundColor={selectedColorBg}
-              borderRadius={50}
-              align="center"
-              paddingLeft={10}
-              paddingRight={10}>
-              <Ionicons name={category.icon} color={selectedColor} size={20} />
-            </DivIcon>
-            <Div marginLeft={20}>
-              <Text>{category.title}</Text>
-              <Text
-                fontWeight="bold"
-                color={category.type === 'income' ? COLORS.GREEN : COLORS.RED}>
-                {formatToPrice(category.amount)}
-              </Text>
-              <Text color={COLORS.DARKGRAY}>
-                {formatUTCDate(category.createdAt)}
-              </Text>
+          <Pressable
+            onPress={() =>
+              navigation.navigate('TransactionDetail', { id: category.id })
+            }>
+            <Div
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}>
+              <DivIcon
+                elevation={8}
+                shadowOpacity={0.5}
+                shadowColor={
+                  category.type === 'income' ? COLORS.GREEN : COLORS.RED
+                }
+                backgroundColor={selectedColorBg}
+                borderRadius={50}
+                align="center"
+                paddingLeft={10}
+                paddingRight={10}>
+                <Ionicons
+                  name={category.icon}
+                  color={selectedColor}
+                  size={20}
+                />
+              </DivIcon>
+              <Div marginLeft={20}>
+                <Text>{category.title}</Text>
+                <Text
+                  fontWeight="bold"
+                  color={
+                    category.type === 'income' ? COLORS.GREEN : COLORS.RED
+                  }>
+                  {formatToPrice(category.amount)}
+                </Text>
+                <Text color={COLORS.DARKGRAY}>
+                  {formatUTCDate(category.createdAt)}
+                </Text>
+              </Div>
             </Div>
-          </Div>
+          </Pressable>
         </Div>
       ));
     } else {
