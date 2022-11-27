@@ -6,6 +6,7 @@ import { FlatList, Pressable } from 'react-native';
 import { useSelector } from 'react-redux';
 import { Category } from '../../models/Category';
 import { getCategories } from '../../services/categories';
+import { upperCaseFirstLetter } from '../../util/util';
 
 import {
   Container,
@@ -76,14 +77,8 @@ const CategoryList = ({ navigation }: any) => {
 
   const selectCategory = (category: Category) => {
     navigation.navigate('AddTransaction', {
-      id: category.id,
-      title: category.title,
-      icon: category.icon,
+      category: category,
     });
-  };
-
-  const upperCaseFirstLetter = (string: string) => {
-    return string.charAt(0).toUpperCase() + string.slice(1);
   };
 
   const redirectToAddCategory = () => {

@@ -1,9 +1,12 @@
 import {
   addDoc,
   collection,
+  deleteDoc,
+  doc,
   getDocs,
   orderBy,
   query,
+  updateDoc,
 } from 'firebase/firestore';
 import { firestore } from '../firebase';
 import { Transaction } from '../models/Transactions';
@@ -12,22 +15,39 @@ export const createAndGetTransactionsAmount = async (
   transaction: Transaction,
 ) => {
   await addDoc(collection(firestore, 'transactions'), transaction);
-  const transactions: Transaction[] = [];
-  const q = query(
-    collection(firestore, 'transactions'),
-    orderBy('createdAt', 'desc'),
-  );
-  const querySnapshot = await getDocs(q);
-  querySnapshot.forEach(doc =>
-    transactions.push({ id: doc.id, ...doc.data() } as Transaction),
-  );
-
-  const transactionsData = getTransactionsByUser(
+  const { transactionsData, totalAmount } = await getTransactionsByUserId(
     transaction.userId,
-    transactions,
   );
+  return {
+    transactionsData,
+    totalAmount,
+  };
+};
 
-  return { totalAmount: totalAmount(transactionsData), transactionsData };
+export const deleteTransaction = async (id: string, userId: string) => {
+  const docRef = doc(firestore, 'transactions', id);
+  await deleteDoc(docRef);
+  const { transactionsData, totalAmount } = await getTransactionsByUserId(
+    userId,
+  );
+  return {
+    transactionsData,
+    totalAmount,
+  };
+};
+
+export const updateTransaction = async (transaction: Transaction) => {
+  await updateDoc(
+    doc(firestore, 'transactions', transaction.id ?? '1'),
+    transaction,
+  );
+  const { transactionsData, totalAmount } = await getTransactionsByUserId(
+    transaction.userId,
+  );
+  return {
+    transactionsData,
+    totalAmount,
+  };
 };
 
 export const getTransactionsByUserId = async (userId: string) => {

@@ -4,18 +4,11 @@ import { Pressable } from 'react-native';
 import { useSelector } from 'react-redux';
 import { Transaction } from '../../models/Transactions';
 import { COLORS, Div, DivIcon, Text } from '../../styles/global';
-import { formatToPrice } from '../../util/util';
+import { formatDate, formatToPrice } from '../../util/util';
 
 // refactor transaccion type
 const TransactionList = ({ transactions }: any) => {
   const navigation = useNavigation();
-  const formatUTCDate = (date: any) => {
-    const newDate = new Date(date);
-    const day = newDate.getDate();
-    const month = newDate.getMonth() + 1;
-    const year = newDate.getFullYear();
-    return `${day}/${month}/${year}`;
-  };
 
   const isDarkThemeEnable = useSelector(
     (state: any) => state.theme.darkThemeEnabled,
@@ -23,7 +16,7 @@ const TransactionList = ({ transactions }: any) => {
 
   const renderTransactionsIfExist = () => {
     if (transactions && transactions.length !== 0) {
-      return transactions?.map((category: Transaction, i: number) => (
+      return transactions?.map((transaction: Transaction, i: number) => (
         <Div
           key={i}
           style={{
@@ -35,7 +28,7 @@ const TransactionList = ({ transactions }: any) => {
           }}>
           <Pressable
             onPress={() =>
-              navigation.navigate('TransactionDetail', { id: category.id })
+              navigation.navigate('TransactionDetail', { id: transaction.id })
             }>
             <Div
               style={{
@@ -47,7 +40,7 @@ const TransactionList = ({ transactions }: any) => {
                 elevation={8}
                 shadowOpacity={0.5}
                 shadowColor={
-                  category.type === 'income' ? COLORS.GREEN : COLORS.RED
+                  transaction.type === 'income' ? COLORS.GREEN : COLORS.RED
                 }
                 backgroundColor={selectedColorBg}
                 borderRadius={50}
@@ -55,22 +48,22 @@ const TransactionList = ({ transactions }: any) => {
                 paddingLeft={10}
                 paddingRight={10}>
                 <Ionicons
-                  name={category.icon}
+                  name={transaction?.category?.icon}
                   color={selectedColor}
                   size={20}
                 />
               </DivIcon>
               <Div marginLeft={20}>
-                <Text>{category.title}</Text>
+                <Text>{transaction.title}</Text>
                 <Text
                   fontWeight="bold"
                   color={
-                    category.type === 'income' ? COLORS.GREEN : COLORS.RED
+                    transaction.type === 'income' ? COLORS.GREEN : COLORS.RED
                   }>
-                  {formatToPrice(category.amount)}
+                  {formatToPrice(transaction.amount)}
                 </Text>
                 <Text color={COLORS.DARKGRAY}>
-                  {formatUTCDate(category.createdAt)}
+                  {formatDate(transaction.createdAt)}
                 </Text>
               </Div>
             </Div>

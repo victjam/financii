@@ -3,8 +3,15 @@ export interface Transaction {
   id?: string;
   icon?: string;
   amount: number;
-  categoryId: string;
+  category: CategoryTransaction;
   type: string;
   userId: string;
-  createdAt: string;
+  createdAt?: string;
+  modifiedAt?: string;
+}
+
+export interface CategoryTransaction {
+  id: string;
+  title: string;
+  icon: string;
 }

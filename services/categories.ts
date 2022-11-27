@@ -1,6 +1,17 @@
-import { addDoc, collection, getDocs } from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc, getDocs } from 'firebase/firestore';
 import { firestore } from '../firebase';
 import { Category } from '../models/Category';
+
+export const getCategory = async (id: string) => {
+  try {
+    const document = await getDoc(doc(firestore, 'categories', id));
+    if (document.exists()) {
+      return { id: document.id, ...document.data() } as Category;
+    }
+  } catch (error: any) {
+    console.log('Error fetching category', error.message);
+  }
+};
 
 export const addCategory = async (category: Category) => {
   try {

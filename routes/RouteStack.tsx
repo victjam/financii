@@ -57,7 +57,7 @@ const RouteStack = () => {
               },
               headerRight: () => {
                 return (
-                  <Pressable onPressIn={() => navigation.navigate('Home')}>
+                  <Pressable onPressIn={() => navigation.goBack()}>
                     <MaterialIcons
                       name="close"
                       size={30}
@@ -84,8 +84,7 @@ const RouteStack = () => {
               },
               headerRight: () => {
                 return (
-                  <Pressable
-                    onPressIn={() => navigation.navigate('AddTransaction')}>
+                  <Pressable onPressIn={() => navigation.goBack()}>
                     <MaterialIcons
                       name="close"
                       size={30}
@@ -112,7 +111,7 @@ const RouteStack = () => {
               },
               headerRight: () => {
                 return (
-                  <Pressable onPressIn={() => navigation.navigate('IconList')}>
+                  <Pressable onPressIn={() => navigation.goBack()}>
                     <MaterialIcons
                       name="close"
                       size={30}
@@ -139,8 +138,7 @@ const RouteStack = () => {
               },
               headerRight: () => {
                 return (
-                  <Pressable
-                    onPressIn={() => navigation.navigate('CategoryList')}>
+                  <Pressable onPressIn={() => navigation.goBack()}>
                     <MaterialIcons
                       name="close"
                       size={30}
