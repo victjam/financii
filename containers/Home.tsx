@@ -29,7 +29,7 @@ const Home = ({ navigation }: any) => {
   const selectedColorBg = isDarkThemeEnable ? COLORS.WHITE : COLORS.BLACK;
 
   const getFirst5Transactions = () => {
-    if (transactions.length > 5) {
+    if (transactions?.length > 5) {
       return transactions.slice(0, 5);
     }
     return transactions;

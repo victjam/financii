@@ -99,6 +99,10 @@ const AddTransaction = ({ navigation }: any) => {
       dispatch(createTransactions(transactionsData));
       dispatch(saveTotalTransactionAmount(totalAmount));
       dispatch(toggleLoader());
+      navigation.goBack();
+      setTimeout(() => {
+        dispatch(toggleLoader());
+      }, 500);
     } catch (e) {
       dispatch(toggleLoader());
       console.log(e);
@@ -126,7 +130,9 @@ const AddTransaction = ({ navigation }: any) => {
       );
       dispatch(createTransactions(transactionsData));
       dispatch(saveTotalTransactionAmount(totalAmount));
-      dispatch(toggleLoader());
+      setTimeout(() => {
+        dispatch(toggleLoader());
+      }, 500);
       navigation.goBack();
     } catch (e) {
       dispatch(toggleLoader());

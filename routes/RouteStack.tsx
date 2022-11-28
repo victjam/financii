@@ -38,15 +38,10 @@ const RouteStack = () => {
           />
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen
-            name="TransactionDetail"
-            component={TransactionDetail}
-          />
-          <Stack.Screen
             name="AddTransaction"
             component={AddTransaction}
             options={({ navigation }) => ({
               headerShown: true,
-              presentation: 'modal',
               headerBackVisible: false,
               animationTypeForReplace: 'push',
               headerTitle: '',
@@ -95,12 +90,38 @@ const RouteStack = () => {
               },
             })}
           />
+
+          <Stack.Screen
+            name="TransactionDetail"
+            component={TransactionDetail}
+            options={({ navigation }) => ({
+              headerShown: true,
+              headerBackVisible: false,
+              animationTypeForReplace: 'push',
+              headerTitle: '',
+              headerShadowVisible: false,
+              headerBackTitleVisible: false,
+              headerStyle: {
+                backgroundColor: backgroundColor,
+              },
+              headerRight: () => {
+                return (
+                  <Pressable onPressIn={() => navigation.goBack()}>
+                    <MaterialIcons
+                      name="close"
+                      size={30}
+                      color={selectedColor}
+                    />
+                  </Pressable>
+                );
+              },
+            })}
+          />
           <Stack.Screen
             name="IconList"
             component={IconList}
             options={({ navigation }) => ({
               headerShown: true,
-              presentation: 'modal',
               headerBackVisible: false,
               animationTypeForReplace: 'push',
               headerTitle: '',
@@ -127,7 +148,6 @@ const RouteStack = () => {
             component={AddCategory}
             options={({ navigation }) => ({
               headerShown: true,
-              presentation: 'modal',
               headerBackVisible: false,
               animationTypeForReplace: 'push',
               headerTitle: '',

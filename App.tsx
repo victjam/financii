@@ -26,11 +26,10 @@ export default function App() {
   return (
     <ReduxProvider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <Loader>
-          <DarkThemeProvider>
-            <RouteStack />
-          </DarkThemeProvider>
-        </Loader>
+        <DarkThemeProvider>
+          <Loader />
+          <RouteStack />
+        </DarkThemeProvider>
       </PersistGate>
     </ReduxProvider>
   );

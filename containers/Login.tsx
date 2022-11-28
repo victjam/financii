@@ -109,7 +109,10 @@ const Login = ({ navigation }: any) => {
       dispatch(createTransactions(transactionsData));
       dispatch(saveTotalTransactionAmount(totalAmount));
       dispatch(createUser(userDoc));
-      dispatch(toggleLoader());
+      navigation.navigate('Home');
+      setTimeout(() => {
+        dispatch(toggleLoader());
+      }, 500);
     } catch (error) {
       console.log(error);
       dispatch(toggleLoader());

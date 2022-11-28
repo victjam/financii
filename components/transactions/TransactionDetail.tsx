@@ -54,7 +54,9 @@ const TransactionDetail = () => {
       );
       dispatch(createTransactions(transactionsData));
       dispatch(saveTotalTransactionAmount(totalAmount));
-      dispatch(toggleLoader());
+      setTimeout(() => {
+        dispatch(toggleLoader());
+      }, 500);
       navigation.goBack();
     } catch (error) {
       console.log(error);

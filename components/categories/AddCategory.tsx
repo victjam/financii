@@ -58,7 +58,9 @@ const AddCategory = ({ navigation }: any) => {
       };
       await addCategory(category);
       navigation.navigate('CategoryList', { reload: true });
-      dispatch(toggleLoader());
+      setTimeout(() => {
+        dispatch(toggleLoader());
+      }, 500);
     } catch (error) {
       console.log(error);
       dispatch(toggleLoader());
