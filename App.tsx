@@ -1,4 +1,5 @@
 import { useFonts } from 'expo-font';
+import { getAuth } from 'firebase/auth';
 import { Provider as ReduxProvider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import Loader from './components/Loader';
@@ -13,11 +14,13 @@ export default function App() {
     'SF-pro-medium': require('./assets/fonts/SF-Pro-Rounded-Medium.otf'),
   });
 
-  // const onLayoutRootView = useCallback(async () => {
-  // if (fontsLoaded) {
-  //   await SplashScreen.hideAsync();
-  // }
-  // }, [fontsLoaded]);
+  const auth = getAuth();
+  const user = auth.currentUser;
+  if (user !== null) {
+    console.log(user);
+  } else {
+    // alert('logout');
+  }
 
   if (!fontsLoaded) {
     return null;

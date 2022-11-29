@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 import { signOut } from 'firebase/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import ShadowButton from '../components/form/ShadowButton';
@@ -20,6 +21,7 @@ import {
 import { formatToPrice } from '../util/util';
 
 const Profile = () => {
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const isDarkThemeEnable = useSelector(
     (state: any) => state.theme.darkThemeEnabled,
@@ -79,7 +81,7 @@ const Profile = () => {
           <ShadowButton
             icon="person-outline"
             text="Personal"
-            handleTouch={() => alert('touch')}
+            handleTouch={() => navigation.navigate('UpdateUser')}
           />
           <ShadowButton
             icon="md-swap-horizontal"

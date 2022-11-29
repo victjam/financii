@@ -2,9 +2,9 @@ export interface User {
   name: string;
   lastName: string;
   email: string;
-  password: string;
+  password?: string;
   confirmPassword?: string;
   emoji?: string;
-  uid: string;
-  createdAt: Date;
+  uid?: string;
+  createdAt?: Date;
 }
