@@ -98,7 +98,6 @@ const AddTransaction = ({ navigation }: any) => {
         await createAndGetTransactionsAmount(transaction);
       dispatch(createTransactions(transactionsData));
       dispatch(saveTotalTransactionAmount(totalAmount));
-      dispatch(toggleLoader());
       navigation.goBack();
       setTimeout(() => {
         dispatch(toggleLoader());

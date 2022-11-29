@@ -5,6 +5,7 @@ import { Pressable } from 'react-native';
 import { useSelector } from 'react-redux';
 import { ThemeProvider } from 'styled-components/native';
 import AddCategory from '../components/categories/AddCategory';
+import CategoriesByUser from '../components/categories/CategoriesByUser';
 import CategoryList from '../components/categories/CategoryList';
 import IconList from '../components/categories/IconList';
 import AddTransaction from '../components/transactions/AddTransaction';
@@ -39,6 +40,7 @@ const RouteStack = () => {
           />
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="UpdateUser" component={UpdateUser} />
+
           <Stack.Screen
             name="AddTransaction"
             component={AddTransaction}
@@ -70,7 +72,6 @@ const RouteStack = () => {
             component={CategoryList}
             options={({ navigation }) => ({
               headerShown: true,
-              presentation: 'modal',
               headerBackVisible: false,
               animationTypeForReplace: 'push',
               headerTitle: '',
@@ -92,7 +93,32 @@ const RouteStack = () => {
               },
             })}
           />
-
+          <Stack.Screen
+            name="AddCategory"
+            component={AddCategory}
+            options={({ navigation }) => ({
+              headerShown: true,
+              headerBackVisible: false,
+              animationTypeForReplace: 'push',
+              headerTitle: '',
+              headerShadowVisible: false,
+              headerBackTitleVisible: false,
+              headerStyle: {
+                backgroundColor: backgroundColor,
+              },
+              headerRight: () => {
+                return (
+                  <Pressable onPressIn={() => navigation.goBack()}>
+                    <MaterialIcons
+                      name="close"
+                      size={30}
+                      color={selectedColor}
+                    />
+                  </Pressable>
+                );
+              },
+            })}
+          />
           <Stack.Screen
             name="TransactionDetail"
             component={TransactionDetail}
@@ -119,35 +145,10 @@ const RouteStack = () => {
               },
             })}
           />
+          <Stack.Screen name="CategoriesByUser" component={CategoriesByUser} />
           <Stack.Screen
             name="IconList"
             component={IconList}
-            options={({ navigation }) => ({
-              headerShown: true,
-              headerBackVisible: false,
-              animationTypeForReplace: 'push',
-              headerTitle: '',
-              headerShadowVisible: false,
-              headerBackTitleVisible: false,
-              headerStyle: {
-                backgroundColor: backgroundColor,
-              },
-              headerRight: () => {
-                return (
-                  <Pressable onPressIn={() => navigation.goBack()}>
-                    <MaterialIcons
-                      name="close"
-                      size={30}
-                      color={selectedColor}
-                    />
-                  </Pressable>
-                );
-              },
-            })}
-          />
-          <Stack.Screen
-            name="AddCategory"
-            component={AddCategory}
             options={({ navigation }) => ({
               headerShown: true,
               headerBackVisible: false,

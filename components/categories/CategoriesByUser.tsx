@@ -8,6 +8,7 @@ import { Category } from '../../models/Category';
 import { getCategories } from '../../services/categories';
 import { upperCaseFirstLetter } from '../../util/util';
 
+import { useDispatch } from 'react-redux';
 import {
   Container,
   Div,
@@ -18,7 +19,7 @@ import {
 } from '../../styles/global';
 import CustomInput from '../form/CustomInput';
 
-const CategoryList = ({ navigation }: any) => {
+const CategoriesByUser = ({ navigation }: any) => {
   const user = useSelector((state: any) => state.user.user);
   const isFocused = useIsFocused();
   const [globalCategories, setGlobalCategories] = useState<any>([]);
@@ -34,6 +35,7 @@ const CategoryList = ({ navigation }: any) => {
       search: '',
     },
   });
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const searchIfInclude = (title: string | any) => {
@@ -59,10 +61,7 @@ const CategoryList = ({ navigation }: any) => {
         (category: Category) =>
           category.userId === user.uid && category.private,
       );
-      const publicCat = categories.filter(
-        (category: Category) => category.private === false,
-      );
-      return [...privateCat, ...publicCat];
+      return privateCat;
     };
     const getCategoriesData = async () => {
       const categoriesDataObj: any = await getCategories();
@@ -72,11 +71,12 @@ const CategoryList = ({ navigation }: any) => {
       }
     };
     getCategoriesData();
-  }, [user, isFocused]);
+  }, [user, isFocused, dispatch]);
 
   const selectCategory = (category: Category) => {
-    navigation.navigate('AddTransaction', {
+    navigation.navigate('AddCategory', {
       category: category,
+      updated: true,
     });
   };
 
@@ -138,7 +138,7 @@ const CategoryList = ({ navigation }: any) => {
       ) : (
         <WrappedBox paddingBottom={200}>
           <Text fontWeight="bold" fontSize={25}>
-            Ups, parece que no tenemos esa categoria en nuestro sistema,
+            Ups, parece que no tienes esa categoria en nuestro sistema,
           </Text>
           <Text marginTop={10} fontWeight="bold" fontSize={25}>
             ¿Deseas agregarla?
@@ -157,4 +157,4 @@ const CategoryList = ({ navigation }: any) => {
   );
 };
 
-export default CategoryList;
+export default CategoriesByUser;

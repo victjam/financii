@@ -1,4 +1,11 @@
-import { addDoc, collection, doc, getDoc, getDocs } from 'firebase/firestore';
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  updateDoc,
+} from 'firebase/firestore';
 import { firestore } from '../firebase';
 import { Category } from '../models/Category';
 
@@ -10,6 +17,14 @@ export const getCategory = async (id: string) => {
     }
   } catch (error: any) {
     console.log('Error fetching category', error.message);
+  }
+};
+
+export const updateCategory = async (id: string, category: Category) => {
+  try {
+    await updateDoc(doc(firestore, 'categories', id ?? '1'), category);
+  } catch (error: any) {
+    console.log('Error updating category', error.message);
   }
 };
 

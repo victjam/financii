@@ -84,9 +84,14 @@ const Profile = () => {
             handleTouch={() => navigation.navigate('UpdateUser')}
           />
           <ShadowButton
-            icon="md-swap-horizontal"
+            icon="contrast"
             text="Cambiar tema"
             handleTouch={() => dispatch(toggleDarkTheme())}
+          />
+          <ShadowButton
+            icon="cube"
+            text="Mis Categorias"
+            handleTouch={() => navigation.navigate('CategoriesByUser')}
           />
         </Div>
         <ShadowButton
