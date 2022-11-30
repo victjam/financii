@@ -57,7 +57,9 @@ const CategoryList = ({ navigation }: any) => {
     const filterByUser = (categories: Category[]) => {
       const privateCat = categories.filter(
         (category: Category) =>
-          category.userId === user.uid && category.private,
+          category.userId === user.uid &&
+          category.private &&
+          !category.isDeleted,
       );
       const publicCat = categories.filter(
         (category: Category) => category.private === false,

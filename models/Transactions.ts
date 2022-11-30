@@ -14,4 +14,5 @@ export interface CategoryTransaction {
   id: string;
   title: string;
   icon: string;
+  isDeleted?: boolean;
 }

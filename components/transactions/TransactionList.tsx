@@ -8,6 +8,7 @@ import { formatDate, formatToPrice } from '../../util/util';
 
 // refactor transaccion type
 const TransactionList = ({ transactions }: any) => {
+  console.log(transactions);
   const navigation = useNavigation();
 
   const isDarkThemeEnable = useSelector(

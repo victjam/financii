@@ -145,7 +145,32 @@ const RouteStack = () => {
               },
             })}
           />
-          <Stack.Screen name="CategoriesByUser" component={CategoriesByUser} />
+          <Stack.Screen
+            name="CategoriesByUser"
+            component={CategoriesByUser}
+            options={({ navigation }) => ({
+              headerShown: true,
+              headerBackVisible: false,
+              animationTypeForReplace: 'push',
+              headerTitle: '',
+              headerShadowVisible: false,
+              headerBackTitleVisible: false,
+              headerStyle: {
+                backgroundColor: backgroundColor,
+              },
+              headerRight: () => {
+                return (
+                  <Pressable onPressIn={() => navigation.goBack()}>
+                    <MaterialIcons
+                      name="close"
+                      size={30}
+                      color={selectedColor}
+                    />
+                  </Pressable>
+                );
+              },
+            })}
+          />
           <Stack.Screen
             name="IconList"
             component={IconList}

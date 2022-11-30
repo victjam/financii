@@ -1,12 +1,10 @@
-import { Ionicons } from '@expo/vector-icons';
 import { useIsFocused } from '@react-navigation/native';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { FlatList, Pressable } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
 import { useSelector } from 'react-redux';
 import { Category } from '../../models/Category';
-import { getCategories } from '../../services/categories';
-import { upperCaseFirstLetter } from '../../util/util';
+import { deleteCategory, getCategories } from '../../services/categories';
 
 import { useDispatch } from 'react-redux';
 import {
@@ -18,6 +16,7 @@ import {
   WrappedBox,
 } from '../../styles/global';
 import CustomInput from '../form/CustomInput';
+import CategoryRenderList from './CategoryRenderList';
 
 const CategoriesByUser = ({ navigation }: any) => {
   const user = useSelector((state: any) => state.user.user);
@@ -36,6 +35,7 @@ const CategoriesByUser = ({ navigation }: any) => {
     },
   });
   const dispatch = useDispatch();
+  let flatListRef = useRef(null);
 
   useEffect(() => {
     const searchIfInclude = (title: string | any) => {
@@ -59,7 +59,9 @@ const CategoriesByUser = ({ navigation }: any) => {
     const filterByUser = (categories: Category[]) => {
       const privateCat = categories.filter(
         (category: Category) =>
-          category.userId === user.uid && category.private,
+          category.userId === user.uid &&
+          category.private &&
+          !category.isDeleted,
       );
       return privateCat;
     };
@@ -73,17 +75,15 @@ const CategoriesByUser = ({ navigation }: any) => {
     getCategoriesData();
   }, [user, isFocused, dispatch]);
 
-  const selectCategory = (category: Category) => {
-    navigation.navigate('AddCategory', {
-      category: category,
-      updated: true,
-    });
-  };
-
   const redirectToAddCategory = () => {
     setValue('search', '');
     navigation.navigate('AddCategory');
   };
+
+  const onRemoveCategory = async (category: Category) => {
+    await deleteCategory(category.id);
+  };
+
   return (
     <Container>
       <Div paddingLeft={10} paddingRight={10}>
@@ -102,37 +102,14 @@ const CategoriesByUser = ({ navigation }: any) => {
       {categories.length !== 0 ? (
         <FlatList
           data={categories}
+          ref={flatListRef}
           keyExtractor={item => item.id}
           renderItem={({ item }: any) => (
-            <Pressable onPress={() => selectCategory(item)}>
-              <Div paddingLeft={10} paddingRight={10}>
-                <Div
-                  marginTop={30}
-                  paddingLeft={20}
-                  paddingRight={20}
-                  paddingTop={10}
-                  shadowWidth={0}
-                  shadowHeight={4}
-                  elevation={6}
-                  shadowRadius={4}
-                  shadowOpacity={0.9}
-                  shadowColor="#0D365F"
-                  paddingBottom={10}
-                  backgroundColor={item.color}
-                  height="100px"
-                  width="100%"
-                  flexDirection="row"
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="space-between"
-                  borderRadius={5}>
-                  <Text fontSize={28} fontWeight="bold" color="white">
-                    {upperCaseFirstLetter(item.title)}
-                  </Text>
-                  <Ionicons name={item.icon} size={50} color="white" />
-                </Div>
-              </Div>
-            </Pressable>
+            <CategoryRenderList
+              category={item}
+              simultaneousHandlers={flatListRef}
+              onDismiss={onRemoveCategory}
+            />
           )}
         />
       ) : (

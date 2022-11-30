@@ -251,6 +251,36 @@ export const SText = styled.Text<Props>`
   padding-top: ${props => props.paddingTop || 0}px;
   color: ${props => (props.color ? props.color : props.theme.TITLE_COLOR)};
 `;
+export const DivAnimated = styled(Animated.View).attrs((props: Props) => ({
+  shadowColor: props.shadowColor || '#333',
+  shadowOffset: {
+    width: props.shadowWidth || 0,
+    height: props.shadowHeight || 0,
+  },
+  shadowOpacity: props.shadowOpacity || 0,
+  shadowRadius: props.shadowRadius || 4,
+
+  elevation: props.elevation || 0,
+}))<Props>`
+  justify-content: ${props => props.justifyContent || 'space-between'};
+  align-items: ${props => props.alignItems || 'stretch'};
+  flex: ${props => props.flex || 'none'};
+  width: ${props => props.width || 'auto'};
+  height: ${props => props.height || 'auto'};
+  padding-top: ${props => props.paddingTop || 0}px;
+  border-radius: ${props => props.borderRadius || 0}px;
+  margin-bottom: ${props => props.marginBottom || 0}px;
+  margin-right: ${props => props.marginRight || 0}px;
+  margin-left: ${props => props.marginLeft || 0}px;
+  margin-top: ${props => props.marginTop || 0}px;
+  background-color: ${props =>
+    props.backgroundColor || props.theme.PRIMARY_COLOR};
+  padding-left: ${props => props.paddingLeft || 0}px;
+  padding-bottom: ${props => props.paddingBottom || 0}px;
+  padding-top: ${props => props.paddingTop || 0}px;
+  padding-right: ${props => props.paddingRight || 0}px;
+`;
+
 export const Text = styled(Animated.Text)<Props>`
   font-family: ${props =>
     `SF-pro-${props.fontWeight ? props.fontWeight : 'medium'}` ||

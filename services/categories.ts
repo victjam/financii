@@ -20,6 +20,16 @@ export const getCategory = async (id: string) => {
   }
 };
 
+export const deleteCategory = async (id: string) => {
+  try {
+    await updateDoc(doc(firestore, 'categories', id ?? '1'), {
+      isDeleted: true,
+    });
+  } catch (error: any) {
+    console.log('Error deleting category', error.message);
+  }
+};
+
 export const updateCategory = async (id: string, category: Category) => {
   try {
     await updateDoc(doc(firestore, 'categories', id ?? '1'), category);

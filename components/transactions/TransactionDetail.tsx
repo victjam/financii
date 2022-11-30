@@ -9,6 +9,7 @@ import {
   saveTotalTransactionAmount,
 } from '../../features/transactions/transactionsSlice';
 import { Transaction } from '../../models/Transactions';
+import { getCategory } from '../../services/categories';
 import { deleteTransaction } from '../../services/transactions';
 import {
   COLORS,
@@ -30,6 +31,7 @@ const TransactionDetail = () => {
   const navigation = useNavigation();
   const transactionId = route?.params?.id;
   const [transaction, setTransaction] = useState<Transaction>({});
+  const [category, setCategory] = useState({});
   const isDarkThemeEnable = useSelector(
     (state: any) => state.theme.darkThemeEnabled,
   );
@@ -42,8 +44,17 @@ const TransactionDetail = () => {
     const transaction = getTransactions.find(
       (transaction: any) => transaction.id === transactionId,
     );
+
+    const getCategoryById = async (id: string) => {
+      const currentCategory = await getCategory(id);
+      if (currentCategory) {
+        setCategory(currentCategory);
+        console.log(currentCategory);
+      }
+    };
+    getCategoryById(transaction?.category.id);
     setTransaction(transaction);
-  }, [transaction, getTransactions, transactionId]);
+  }, [transaction, getTransactions, transactionId, setCategory]);
 
   const onDeleteTransaction = async () => {
     try {
@@ -114,6 +125,9 @@ const TransactionDetail = () => {
                 {upperCaseFirstLetter(transaction?.category?.title || '')}
               </Text>
             </GradientDiv>
+            <Text marginBottom={20} color={COLORS.RED} fontWeight="bold">
+              {category?.isDeleted ? '(Categoria excluída)' : ''}
+            </Text>
             <Text paddingTop={20} fontWeight="bold">
               Valor
             </Text>

@@ -118,6 +118,7 @@ const AddTransaction = ({ navigation }: any) => {
           id: isEnabled ? category.id : 'uURJYMOPOd3nPrmtSmX8',
           icon: isEnabled ? category.icon : 'cash',
           title: isEnabled ? category.title : 'Ingreso',
+          isDeleted: category.isDeleted ? category.isDeleted : false,
         },
         title: watch('title'),
         type: isEnabled ? 'expense' : 'income',
