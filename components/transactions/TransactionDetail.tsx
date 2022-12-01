@@ -49,7 +49,6 @@ const TransactionDetail = () => {
       const currentCategory = await getCategory(id);
       if (currentCategory) {
         setCategory(currentCategory);
-        console.log(currentCategory);
       }
     };
     getCategoryById(transaction?.category.id);

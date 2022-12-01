@@ -18,7 +18,6 @@ export default function App() {
   const auth = getAuth();
   const user = auth.currentUser;
   if (user !== null) {
-    console.log(user);
   } else {
     // alert('logout');
   }

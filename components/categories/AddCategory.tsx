@@ -75,7 +75,6 @@ const AddCategory = ({ navigation }: any) => {
         await updateCategory(category.id, newCat);
         navigation.goBack();
       } else {
-        console.log(color);
         const categoryObj = {
           title: watch('Name').toLocaleLowerCase(),
           icon: icon,

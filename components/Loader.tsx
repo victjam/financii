@@ -11,7 +11,6 @@ const Loader = () => {
   const [loader, setLoader] = useState(false);
   useEffect(() => {
     setLoader(isLoading);
-    console.log('loader', loader);
   }, [isLoading, loader]);
 
   const activeLoader = () => {

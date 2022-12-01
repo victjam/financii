@@ -72,7 +72,6 @@ const UpdateUser = () => {
     } else {
       try {
         const userInfo = await onChangeEmailWithAuth(user.uid, userData);
-        console.log(userInfo);
         dispatch(createUser(userInfo));
         navigation.navigate('Profile');
         setTimeout(() => {
