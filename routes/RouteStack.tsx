@@ -12,6 +12,7 @@ import AddTransaction from '../components/transactions/AddTransaction';
 import TransactionDetail from '../components/transactions/TransactionDetail';
 import Login from '../containers/Login';
 import Main from '../containers/Main';
+import Signup from '../containers/Signup';
 import TabNav from '../containers/TabNav';
 import UpdateUser from '../containers/UpdateUser';
 import { COLORS } from '../styles/global';
@@ -39,6 +40,7 @@ const RouteStack = () => {
             component={user ? TabNav : Main}
           />
           <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Signup" component={Signup} />
           <Stack.Screen name="UpdateUser" component={UpdateUser} />
 
           <Stack.Screen

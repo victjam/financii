@@ -144,7 +144,8 @@ export const global = StyleSheet.create({
 
 /// styled
 export const Container = styled.SafeAreaView<Props>`
-  background-color: ${props => props.theme.PRIMARY_COLOR};
+  background-color: ${props =>
+    props.backgroundColor || props.theme.PRIMARY_COLOR};
   flex: 1;
   transition: all 0.3s ease;
 `;
