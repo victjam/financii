@@ -21,6 +21,7 @@ const CategoryRenderList = ({
   category,
   onDismiss,
   simultaneousHandlers,
+  isFiltering,
 }: any) => {
   const navigation = useNavigation();
   const translationX = useSharedValue(0);
@@ -73,10 +74,16 @@ const CategoryRenderList = ({
   });
 
   const selectCategory = (category: Category) => {
-    navigation.navigate('AddCategory', {
-      category: category,
-      updated: true,
-    });
+    if (!isFiltering) {
+      navigation.navigate('AddCategory', {
+        category: category,
+        updated: true,
+      });
+    } else {
+      navigation.navigate('Transactions', {
+        categoryId: category.id,
+      });
+    }
   };
   return (
     <Animated.View style={[rItemContainer, styles.container]}>
@@ -95,10 +102,10 @@ const CategoryRenderList = ({
                 rItemContainer,
                 { backgroundColor: category?.color },
               ]}>
-              <Text fontSize={28} fontWeight="bold" color="white">
+              <Text fontSize={22} fontWeight="bold" color="white">
                 {upperCaseFirstLetter(category.title)}
               </Text>
-              <Ionicons name={category.icon} size={50} color="white" />
+              <Ionicons name={category.icon} size={30} color="white" />
             </Animated.View>
           </Pressable>
         </Animated.View>
@@ -109,6 +116,7 @@ const CategoryRenderList = ({
 const styles = StyleSheet.create({
   container: {
     marginVertical: 10,
+    height: 120,
   },
   iconContainer: {
     height: 50,

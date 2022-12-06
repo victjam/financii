@@ -73,6 +73,7 @@ const TabNav = () => {
         headerShown: false,
         tabBarStyle: {
           backgroundColor: isDarkThemeEnable ? COLORS.BLACK : COLORS.WHITE,
+          borderTopWidth: 0,
         },
       }}>
       {TabArr.map((item: any, index: number) => {

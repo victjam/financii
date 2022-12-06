@@ -1,4 +1,4 @@
-import { useIsFocused } from '@react-navigation/native';
+import { useIsFocused, useRoute } from '@react-navigation/native';
 import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FlatList } from 'react-native-gesture-handler';
@@ -21,6 +21,8 @@ import CategoryRenderList from './CategoryRenderList';
 const CategoriesByUser = ({ navigation }: any) => {
   const user = useSelector((state: any) => state.user.user);
   const isFocused = useIsFocused();
+  const route = useRoute();
+  const filterBy = route?.params?.filterBy ? route?.params?.filterBy : false;
   const [globalCategories, setGlobalCategories] = useState<any>([]);
   const [categories, setCategories] = useState<any>([]);
 
@@ -87,26 +89,36 @@ const CategoriesByUser = ({ navigation }: any) => {
   return (
     <Container>
       <Div paddingLeft={10} paddingRight={10}>
-        <CustomInput name="search" label="Buscar categoria" control={control} />
-        {categories.length > 0 ? (
+        {categories.length > 0 && (
+          <CustomInput
+            name="search"
+            label="Buscar categoria"
+            control={control}
+          />
+        )}
+        {categories.length > 0 && !filterBy ? (
           <PrimaryButton
             marginTop={20}
             width="100%"
             borderRadius={5}
             marginBottom={20}
             onPressIn={() => redirectToAddCategory()}>
-            <TextButton fontWeight="bold">Agregar Categoria</TextButton>
+            <TextButton fontWeight="bold">
+              Agregar Categoria {filterBy}
+            </TextButton>
           </PrimaryButton>
         ) : null}
       </Div>
       {categories.length !== 0 ? (
         <FlatList
+          style={{ paddingHorizontal: 10 }}
           data={categories}
           ref={flatListRef}
           keyExtractor={item => item.id}
           renderItem={({ item }: any) => (
             <CategoryRenderList
               category={item}
+              isFiltering={filterBy}
               simultaneousHandlers={flatListRef}
               onDismiss={onRemoveCategory}
             />

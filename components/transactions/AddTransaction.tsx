@@ -220,7 +220,7 @@ const AddTransaction = ({ navigation }: any) => {
                 numColumns={numbers.length / 4}
               />
             </Div>
-            <Div width="100%">
+            <Div width="100%" marginRight={20}>
               {isEnabled ? (
                 <ShadowButton
                   text={
@@ -229,7 +229,7 @@ const AddTransaction = ({ navigation }: any) => {
                         ' - Cambiar categoria'
                       : 'Selecciona una categoria'
                   }
-                  ArrowEnabled={false}
+                  ArrowEnabled={true}
                   handleTouch={() => navigation.navigate('CategoryList')}
                 />
               ) : null}

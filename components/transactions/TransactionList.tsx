@@ -87,7 +87,7 @@ const TransactionList = ({ transactions }: any) => {
   };
 
   const selectedColor = isDarkThemeEnable ? COLORS.BLACK : COLORS.WHITE;
-  const selectedColorBg = isDarkThemeEnable ? COLORS.WHITE : COLORS.BLACK;
+  const selectedColorBg = isDarkThemeEnable ? COLORS.WHITE : COLORS.BLACK_TEXT;
   return <Div>{renderTransactionsIfExist()}</Div>;
 };
 

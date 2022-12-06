@@ -107,7 +107,7 @@ const CategoryList = ({ navigation }: any) => {
           keyExtractor={item => item.id}
           renderItem={({ item }: any) => (
             <Pressable onPress={() => selectCategory(item)}>
-              <Div paddingLeft={10} paddingRight={10}>
+              <Div height={140} paddingLeft={10} paddingRight={10}>
                 <Div
                   marginTop={30}
                   paddingLeft={20}
@@ -128,10 +128,10 @@ const CategoryList = ({ navigation }: any) => {
                   alignItems="center"
                   justifyContent="space-between"
                   borderRadius={5}>
-                  <Text fontSize={28} fontWeight="bold" color="white">
+                  <Text fontSize={22} fontWeight="bold" color="white">
                     {upperCaseFirstLetter(item.title)}
                   </Text>
-                  <Ionicons name={item.icon} size={50} color="white" />
+                  <Ionicons name={item.icon} size={20} color="white" />
                 </Div>
               </Div>
             </Pressable>

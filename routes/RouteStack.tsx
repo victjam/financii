@@ -24,7 +24,7 @@ const RouteStack = () => {
     (state: any) => state.theme.darkThemeEnabled,
   );
   const user = useSelector((state: any) => state.user.user);
-  const selectedColor = isDarkThemeEnable ? COLORS.WHITE : COLORS.BLACK;
+  const selectedColor = isDarkThemeEnable ? COLORS.WHITE : COLORS.BLACK_TEXT;
   const backgroundColor = !isDarkThemeEnable ? COLORS.WHITE : COLORS.BLACK;
 
   const themeMode = !isDarkThemeEnable ? lightTheme : darkTheme;
