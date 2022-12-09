@@ -20,7 +20,7 @@
     "@shopify/react-native-skia": "0.1.157",
     "@types/gaussian": "^1.2.0",
     "d3": "^7.6.1",
-    "expo": "^47.0.0",
+    "expo": "~47.0.8",
     "expo-haptics": "~12.0.1",
     "expo-linear-gradient": "~12.0.1",
     "expo-linking": "~3.2.3",
@@ -73,8 +73,8 @@
   },
   "private": true,
   "resolutions": {
-    "@types/react": "17.0.2",
-    "@types/react-dom": "17.0.2",
+    "@types/react": "17.0.14",
+    "@types/react-dom": "17.0.14",
     "graphql": "^16.5.0"
   }
 }
