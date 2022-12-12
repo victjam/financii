@@ -43,7 +43,6 @@ const Transactions = ({ navigation }: any) => {
       setCategory(null);
     }
   }, [transactions, categoryId]);
-
   return (
     <Container>
       <ScrollView>
@@ -79,7 +78,7 @@ const Transactions = ({ navigation }: any) => {
             <Text>Todas tus transacciones en un solo lugar</Text>
           </Div>
         </Div>
-        {transactions.lenght > 0 && (
+        {transactions.length > 0 && (
           <Div marginTop={10} marginBottom={5}>
             <Text paddingLeft={10} paddingRight={10}>
               Filtra por categoria

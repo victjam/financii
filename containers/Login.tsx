@@ -1,4 +1,5 @@
 import { AntDesign } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useForm } from 'react-hook-form';
 import {
@@ -76,7 +77,8 @@ const styles = StyleSheet.create({
   },
 });
 
-const Login = ({ navigation }: any) => {
+const Login = () => {
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const isDarkThemeEnable = useSelector(
     (state: any) => state.theme.darkThemeEnabled,
