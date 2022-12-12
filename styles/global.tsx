@@ -36,6 +36,12 @@ export const FONTS = {
   l: 50,
 };
 export const global = StyleSheet.create({
+  divContainerText: {
+    zIndex: 99,
+    height: 260,
+    paddingTop: 30,
+    paddingHorizontal: 20,
+  },
   imagePersonal: {
     width: windowWidth,
     height: 300,

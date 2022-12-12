@@ -14,7 +14,13 @@ import { Dimensions, View } from 'react-native';
 import { useSelector } from 'react-redux';
 import { COLORS } from '../styles/global';
 
-const BackgroundDiv = ({ children, height }: any) => {
+const BackgroundDiv = ({
+  children,
+  height,
+  colors,
+  enableShadow = false,
+  shadowColor,
+}: any) => {
   const darkTheme = useSelector((state: any) => state.theme.darkThemeEnabled);
   const selectedColor = darkTheme ? COLORS.BLACK : COLORS.WHITE;
 
@@ -30,20 +36,17 @@ const BackgroundDiv = ({ children, height }: any) => {
         position: 'relative',
         width: '100%',
         height: height,
-        padding: 10,
-        paddingLeft: 20,
-        paddingTop: 30,
       }}>
       {children}
       <Canvas style={{ width: width, height: height, position: 'absolute' }}>
         <Fill color={selectedColor} />
-        <Box box={rrect(rect(10, 20, width - 20, 200), 10, 10)} color="#add8e6">
-          <BoxShadow dx={0} dy={0} blur={6} color="#5E4AE3" inner />
-          <LinearGradient
-            start={vec(0, 0)}
-            end={colorNoise}
-            colors={['#05299E', '#F26CA7']}
-          />
+        <Box
+          box={rrect(rect(10, 15, width - 20, height - 30), 5, 5)}
+          color="#add8e6">
+          {enableShadow && (
+            <BoxShadow dx={0} dy={0} blur={5} color={shadowColor} />
+          )}
+          <LinearGradient start={vec(0, 0)} end={colorNoise} colors={colors} />
         </Box>
       </Canvas>
     </View>
