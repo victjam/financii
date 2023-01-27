@@ -267,7 +267,7 @@ PODS:
   - React-jsinspector (0.70.5)
   - React-logger (0.70.5):
     - glog
-  - react-native-animateable-text (0.10.1):
+  - react-native-animateable-text (0.10.2):
     - React-Core
   - react-native-safe-area-context (4.4.1):
     - RCT-Folly
@@ -624,7 +624,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 31564fa6912459921568e8b0e49024285a4d584b
   React-jsinspector: badd81696361249893a80477983e697aab3c1a34
   React-logger: fdda34dd285bdb0232e059b19d9606fa0ec3bb9c
-  react-native-animateable-text: f187075a99c67e451553873db1fc14aeeb0ed711
+  react-native-animateable-text: 0e95c09032a9ee9ad167da1583d13158813be005
   react-native-safe-area-context: 99b24a0c5acd0d5dcac2b1a7f18c49ea317be99a
   react-native-skia: 7f9a3bd36c4247005e87005d912dcf6db76a6289
   React-perflogger: e68d3795cf5d247a0379735cbac7309adf2fb931

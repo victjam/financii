@@ -1,28 +1,27 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import Constants from 'expo-constants';
-import { Pressable, ScrollView, View } from 'react-native';
+import {
+  Dimensions,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  View,
+} from 'react-native';
 import { useSelector } from 'react-redux';
 import BackgroundDiv from '../components/BackgroundDiv';
+import ButtonWithBorder from '../components/ButtonWithBorder';
+import Card from '../components/Cards/Card';
 import TransactionList from '../components/transactions/TransactionList';
-import {
-  COLORS,
-  Div,
-  DivIcon,
-  global,
-  Text,
-  WrappedBox,
-} from '../styles/global';
-import { formatToPrice } from '../util/util';
+import { COLORS, Div, DivIcon, Text, WrappedBox } from '../styles/global';
 
 const Home = () => {
   const navigation = useNavigation();
+  const { width } = Dimensions.get('window');
   const isDarkThemeEnable = useSelector(
     (state: any) => state.theme.darkThemeEnabled,
   );
   const user = useSelector((state: any) => state.user.user);
-  const totalTransactions =
-    useSelector((state: any = 0) => state.transactions.total) ?? 0;
   const transactions = useSelector(
     (state: any) => state.transactions.transactions,
   );
@@ -34,18 +33,6 @@ const Home = () => {
       return transactions.slice(0, 5);
     }
     return transactions;
-  };
-
-  const checkTimeToSayGreetings = () => {
-    const date = new Date();
-    const hour = date.getHours();
-    if (hour >= 0 && hour < 12) {
-      return 'Buenos dias';
-    } else if (hour >= 12 && hour < 18) {
-      return 'Buenas tardes';
-    } else {
-      return 'Buenas noches';
-    }
   };
 
   const renderTransactionList = () => {
@@ -76,51 +63,37 @@ const Home = () => {
             <Ionicons name="person-outline" color={selectedColor} size={26} />
           </DivIcon>
           <View>
-            <BackgroundDiv colors={['#05299E', '#F26CA7']} height={220}>
-              <View
-                style={[
-                  global.divContainerText,
-                  {
-                    height: 200,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                  },
-                ]}>
-                <View>
-                  <Text color={COLORS.WHITE}>
-                    {checkTimeToSayGreetings()}, {user?.name}.
-                  </Text>
-                  <Text paddingTop={5} color={COLORS.WHITE}>
-                    Tu balance
-                  </Text>
+            <Pressable onPress={() => navigation.navigate('CardList')}>
+              <Card width={width} name={user?.name} />
+            </Pressable>
+            <View style={styles.flex}>
+              <BackgroundDiv
+                colors={['#1F5587', '#76E0DA']}
+                width={width / 2}
+                height={80}>
+                <Pressable
+                  style={[styles.addButton]}
+                  onPress={() => navigation.navigate('AddTransaction')}>
                   <Text
-                    paddingTop={10}
-                    fontWeight="bold"
-                    fontSize={35}
-                    color={COLORS.WHITE}>
-                    {formatToPrice(totalTransactions)}
-                  </Text>
-                </View>
-                <Text fontSize={15} color={COLORS.WHITE}>
-                  Cuenta general
-                </Text>
-              </View>
-            </BackgroundDiv>
-            <BackgroundDiv colors={['#947BD3', '#6F5AA2']} height={100}>
-              <Pressable
-                style={[
-                  global.divContainerText,
-                  { height: 100, paddingTop: 35 },
-                ]}
-                onPress={() => navigation.navigate('AddTransaction')}>
-                <View>
-                  <Text color={COLORS.WHITE} fontSize={22}>
+                    marginTop={0}
+                    paddingTop={0}
+                    color={COLORS.WHITE}
+                    fontSize={17}>
                     Agregar Transaccion
                   </Text>
-                </View>
+                </Pressable>
+              </BackgroundDiv>
+              <Pressable onPress={() => navigation.navigate('CardList')}>
+                <ButtonWithBorder
+                  colors={['#F26CA7', '#5E4AE3']}
+                  text="Cuentas"
+                  fontSize={17}
+                  width={width / 2}
+                  height={80}
+                  backgroundColor={selectedColorBg}
+                />
               </Pressable>
-            </BackgroundDiv>
+            </View>
           </View>
         </Div>
         <Div paddingLeft={10} marginBottom={10}>
@@ -133,5 +106,30 @@ const Home = () => {
     </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  addButton: {
+    height: 80,
+    zIndex: 99,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  divContainerText: {
+    zIndex: 99,
+    height: 220,
+    paddingTop: 30,
+    paddingBottom: 5,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+  },
+  flex: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+});
 
 export default Home;

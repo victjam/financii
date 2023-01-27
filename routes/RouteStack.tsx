@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Pressable } from 'react-native';
 import { useSelector } from 'react-redux';
 import { ThemeProvider } from 'styled-components/native';
+import CardList from '../components/Cards/CardList';
 import AddCategory from '../components/categories/AddCategory';
 import CategoriesByUser from '../components/categories/CategoriesByUser';
 import CategoryList from '../components/categories/CategoryList';
@@ -27,6 +28,13 @@ const RouteStack = () => {
   const selectedColor = isDarkThemeEnable ? COLORS.WHITE : COLORS.BLACK_TEXT;
   const backgroundColor = !isDarkThemeEnable ? COLORS.WHITE : COLORS.BLACK;
 
+  const options = (navigation: any) => {
+    return (
+      <Pressable onPressIn={() => navigation.goBack()}>
+        <MaterialIcons name="close" size={30} color={selectedColor} />
+      </Pressable>
+    );
+  };
   const themeMode = !isDarkThemeEnable ? lightTheme : darkTheme;
   return (
     <ThemeProvider theme={themeMode}>
@@ -44,6 +52,25 @@ const RouteStack = () => {
           <Stack.Screen name="UpdateUser" component={UpdateUser} />
 
           <Stack.Screen
+            name="CardList"
+            component={CardList}
+            options={({ navigation }) => ({
+              headerShown: true,
+              presentation: 'modal',
+              headerBackVisible: false,
+              animationTypeForReplace: 'push',
+              headerTitle: '',
+              headerShadowVisible: false,
+              headerBackTitleVisible: false,
+              headerStyle: {
+                backgroundColor: backgroundColor,
+              },
+              headerRight: () => {
+                return options(navigation);
+              },
+            })}
+          />
+          <Stack.Screen
             name="AddTransaction"
             component={AddTransaction}
             options={({ navigation }) => ({
@@ -57,15 +84,7 @@ const RouteStack = () => {
                 backgroundColor: backgroundColor,
               },
               headerRight: () => {
-                return (
-                  <Pressable onPressIn={() => navigation.goBack()}>
-                    <MaterialIcons
-                      name="close"
-                      size={30}
-                      color={selectedColor}
-                    />
-                  </Pressable>
-                );
+                return options(navigation);
               },
             })}
           />
@@ -83,15 +102,7 @@ const RouteStack = () => {
                 backgroundColor: backgroundColor,
               },
               headerRight: () => {
-                return (
-                  <Pressable onPressIn={() => navigation.goBack()}>
-                    <MaterialIcons
-                      name="close"
-                      size={30}
-                      color={selectedColor}
-                    />
-                  </Pressable>
-                );
+                return options(navigation);
               },
             })}
           />
@@ -109,15 +120,7 @@ const RouteStack = () => {
                 backgroundColor: backgroundColor,
               },
               headerRight: () => {
-                return (
-                  <Pressable onPressIn={() => navigation.goBack()}>
-                    <MaterialIcons
-                      name="close"
-                      size={30}
-                      color={selectedColor}
-                    />
-                  </Pressable>
-                );
+                return options(navigation);
               },
             })}
           />
@@ -135,15 +138,7 @@ const RouteStack = () => {
                 backgroundColor: backgroundColor,
               },
               headerRight: () => {
-                return (
-                  <Pressable onPressIn={() => navigation.goBack()}>
-                    <MaterialIcons
-                      name="close"
-                      size={30}
-                      color={selectedColor}
-                    />
-                  </Pressable>
-                );
+                return options(navigation);
               },
             })}
           />
@@ -161,15 +156,7 @@ const RouteStack = () => {
                 backgroundColor: backgroundColor,
               },
               headerRight: () => {
-                return (
-                  <Pressable onPressIn={() => navigation.goBack()}>
-                    <MaterialIcons
-                      name="close"
-                      size={30}
-                      color={selectedColor}
-                    />
-                  </Pressable>
-                );
+                return options(navigation);
               },
             })}
           />
@@ -187,15 +174,7 @@ const RouteStack = () => {
                 backgroundColor: backgroundColor,
               },
               headerRight: () => {
-                return (
-                  <Pressable onPressIn={() => navigation.goBack()}>
-                    <MaterialIcons
-                      name="close"
-                      size={30}
-                      color={selectedColor}
-                    />
-                  </Pressable>
-                );
+                return options(navigation);
               },
             })}
           />

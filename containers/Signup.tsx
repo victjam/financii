@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomInput from '../components/form/CustomInput';
+import { createCards } from '../features/card/cardSlice';
 import { toggleLoader } from '../features/loader/loaderSlice';
 import {
   createTransactions,
@@ -17,6 +18,7 @@ import {
 } from '../features/transactions/transactionsSlice';
 import { createUser } from '../features/user/userSlice';
 import { auth } from '../firebase';
+import { addCard } from '../services/cards';
 import { getTransactionsByUserId } from '../services/transactions';
 import { createUserDocument } from '../services/user';
 import {
@@ -119,6 +121,13 @@ const Signup = ({ navigation }: any) => {
       const { totalAmount, transactionsData } = await getTransactionsByUserId(
         user.uid,
       );
+      const cardData = {
+        userId: user.uid,
+        title: 'Cuenta personal',
+      };
+      const card = await addCard(cardData);
+      dispatch(createCards(card));
+      dispatch(createTransactions(transactionsData));
       dispatch(createTransactions(transactionsData));
       dispatch(saveTotalTransactionAmount(totalAmount));
       dispatch(createUser(userDoc));
