@@ -1,4 +1,3 @@
-import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useForm } from 'react-hook-form';
@@ -26,7 +25,6 @@ import {
   global,
   LGText,
   PrimaryButton,
-  PrimaryButtonWithIcon,
   REGEX,
   Text,
   TextButton,
@@ -168,12 +166,12 @@ const Login = () => {
             <TextButton fontWeight="bold">Iniciar sesion</TextButton>
           </PrimaryButton>
         </Div>
-        <View style={styles.box}>
+        {/* <View style={styles.box}>
           <View style={styles.left} />
           <Text style={[styles.marginHorizontal, styles.lineText]}>OR</Text>
           <View style={styles.right} />
-        </View>
-        <Div paddingTop={30}>
+        </View> */}
+        {/* <Div paddingTop={30}>
           <PrimaryButtonWithIcon
             style={{ height: 50 }}
             onPress={() => navigation.navigate('Home')}>
@@ -198,7 +196,7 @@ const Login = () => {
             />
             <TextButton fontWeight="bold">Continua con Google</TextButton>
           </PrimaryButtonWithIcon>
-        </Div>
+        </Div> */}
       </WrappedBox>
     </Container>
   );

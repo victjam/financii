@@ -19,12 +19,13 @@ const Card = ({ width, name }: any) => {
 
   const totalTransactions =
     useSelector((state: any = 0) => state.transactions.total) ?? 0;
-  const card = useSelector((state: any = 0) => state.card.card) ?? [];
+  const user = useSelector((state: any) => state.user.user);
   const getFirstCard = () => {
-    if (card.length > 0) {
-      return card[0];
+    if (user?.cards.length > 0) {
+      return user?.cards[0];
     }
   };
+
   return (
     <BackgroundDiv colors={['#05299E', '#F26CA7']} width={width} height={240}>
       <View style={[styles.divContainerText]}>

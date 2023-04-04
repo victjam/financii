@@ -1,16 +1,9 @@
-import { AntDesign } from '@expo/vector-icons';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useForm } from 'react-hook-form';
-import {
-  Dimensions,
-  ScrollView,
-  StyleSheet,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { Dimensions, ScrollView, TouchableWithoutFeedback } from 'react-native';
+import uuid from 'react-native-uuid';
+import { useDispatch } from 'react-redux';
 import CustomInput from '../components/form/CustomInput';
-import { createCards } from '../features/card/cardSlice';
 import { toggleLoader } from '../features/loader/loaderSlice';
 import {
   createTransactions,
@@ -18,16 +11,13 @@ import {
 } from '../features/transactions/transactionsSlice';
 import { createUser } from '../features/user/userSlice';
 import { auth } from '../firebase';
-import { addCard } from '../services/cards';
 import { getTransactionsByUserId } from '../services/transactions';
 import { createUserDocument } from '../services/user';
 import {
-  COLORS,
   Container,
   Div,
   LGText,
   PrimaryButton,
-  PrimaryButtonWithIcon,
   REGEX,
   Text,
   TextButton,
@@ -35,60 +25,9 @@ import {
 } from '../styles/global';
 
 export const windowWidth = Dimensions.get('window').width;
-const styles = StyleSheet.create({
-  paddingTop: {
-    paddingTop: 100,
-  },
-  marginBottom: {
-    marginBottom: 20,
-  },
-  marginTop: {
-    marginTop: 20,
-  },
-  highlightForgot: {
-    color: COLORS.BLACK,
-  },
-  buttonWidth: {
-    alignItems: 'stretch',
-  },
-  marginRight: {
-    marginRight: 20,
-  },
-  box: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 20,
-  },
-  left: {
-    height: 1,
-    width: 150,
-    backgroundColor: COLORS.GRAY,
-  },
-  right: {
-    height: 1,
-    width: 150,
-    backgroundColor: COLORS.GRAY,
-  },
-  iconWidth: {
-    position: 'absolute',
-    left: 10,
-    top: 7,
-  },
-  marginHorizontal: {
-    marginHorizontal: 10,
-  },
-  lineText: {
-    color: COLORS.DARKGRAY,
-  },
-});
 
 const Signup = ({ navigation }: any) => {
   const dispatch = useDispatch();
-  const isDarkThemeEnable = useSelector(
-    (state: any) => state.theme.darkThemeEnabled,
-  );
   const { control, handleSubmit, watch } = useForm({
     defaultValues: {
       email: '',
@@ -117,16 +56,16 @@ const Signup = ({ navigation }: any) => {
       const userDoc = await createUserDocument(user, {
         name: watch('name'),
         lastName: watch('lastName'),
+        cards: [
+          {
+            id: uuid.v4(),
+            title: 'Tarjeta de debito',
+          },
+        ],
       });
       const { totalAmount, transactionsData } = await getTransactionsByUserId(
         user.uid,
       );
-      const cardData = {
-        userId: user.uid,
-        title: 'Cuenta personal',
-      };
-      const card = await addCard(cardData);
-      dispatch(createCards(card));
       dispatch(createTransactions(transactionsData));
       dispatch(createTransactions(transactionsData));
       dispatch(saveTotalTransactionAmount(totalAmount));
@@ -230,7 +169,7 @@ const Signup = ({ navigation }: any) => {
                 <TextButton fontWeight="bold">Crear cuenta</TextButton>
               </PrimaryButton>
             </Div>
-            <Div style={styles.box}>
+            {/* <Div style={styles.box}>
               <View style={styles.left} />
               <Text style={[styles.marginHorizontal, styles.lineText]}>OR</Text>
               <View style={styles.right} />
@@ -256,7 +195,7 @@ const Signup = ({ navigation }: any) => {
                 />
                 <TextButton fontWeight="bold">Continua con Google</TextButton>
               </PrimaryButtonWithIcon>
-            </Div>
+            </Div> */}
           </Div>
         </ScrollView>
       </WrappedBox>

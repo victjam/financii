@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import { useSelector } from 'react-redux';
 import BackgroundDiv from '../components/BackgroundDiv';
-import ButtonWithBorder from '../components/ButtonWithBorder';
 import Card from '../components/Cards/Card';
 import TransactionList from '../components/transactions/TransactionList';
 import { COLORS, Div, DivIcon, Text, WrappedBox } from '../styles/global';
@@ -69,7 +68,7 @@ const Home = () => {
             <View style={styles.flex}>
               <BackgroundDiv
                 colors={['#1F5587', '#76E0DA']}
-                width={width / 2}
+                width={width}
                 height={80}>
                 <Pressable
                   style={[styles.addButton]}
@@ -83,7 +82,7 @@ const Home = () => {
                   </Text>
                 </Pressable>
               </BackgroundDiv>
-              <Pressable onPress={() => navigation.navigate('CardList')}>
+              {/* <Pressable onPress={() => navigation.navigate('CardList')}>
                 <ButtonWithBorder
                   colors={['#F26CA7', '#5E4AE3']}
                   text="Cuentas"
@@ -92,7 +91,7 @@ const Home = () => {
                   height={80}
                   backgroundColor={selectedColorBg}
                 />
-              </Pressable>
+              </Pressable> */}
             </View>
           </View>
         </Div>
@@ -109,7 +108,7 @@ const Home = () => {
 
 const styles = StyleSheet.create({
   addButton: {
-    height: 80,
+    height: '100%',
     zIndex: 99,
     display: 'flex',
     flexDirection: 'column',

@@ -145,7 +145,7 @@ export const global = StyleSheet.create({
   },
 });
 
-/// styled
+/// Components styles
 export const Container = styled.SafeAreaView<Props>`
   background-color: ${props =>
     props.backgroundColor || props.theme.PRIMARY_COLOR};
