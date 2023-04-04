@@ -22,7 +22,7 @@ export const getCategory = async (id: string) => {
 
 export const deleteCategory = async (id: string) => {
   try {
-    await updateDoc(doc(firestore, 'categories', id ?? '1'), {
+    await updateDoc(doc(firestore, 'custom_categories', id), {
       isDeleted: true,
     });
   } catch (error: any) {
@@ -32,7 +32,7 @@ export const deleteCategory = async (id: string) => {
 
 export const updateCategory = async (id: string, category: Category) => {
   try {
-    await updateDoc(doc(firestore, 'categories', id ?? '1'), category);
+    await updateDoc(doc(firestore, 'custom_categories', id), category);
   } catch (error: any) {
     console.log('Error updating category', error.message);
   }
@@ -40,7 +40,7 @@ export const updateCategory = async (id: string, category: Category) => {
 
 export const addCategory = async (category: Category) => {
   try {
-    await addDoc(collection(firestore, 'categories'), category);
+    await addDoc(collection(firestore, 'custom_categories'), category);
   } catch (error: any) {
     console.log('Error fetching categories', error.message);
   }
@@ -48,9 +48,16 @@ export const addCategory = async (category: Category) => {
 
 export const getCategories = async () => {
   try {
-    const querySnapshot = await getDocs(collection(firestore, 'categories'));
+    const publicCategories = await getDocs(collection(firestore, 'categories'));
+    const customCategories = await getDocs(
+      collection(firestore, 'custom_categories'),
+    );
     const categories: Category[] = [];
-    querySnapshot.forEach(doc => {
+    publicCategories.forEach(doc => {
+      categories.push({ id: doc.id, ...doc.data() } as Category);
+    });
+    if (customCategories.empty) return categories;
+    customCategories.forEach(doc => {
       categories.push({ id: doc.id, ...doc.data() } as Category);
     });
     return categories;
