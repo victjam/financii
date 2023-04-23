@@ -15,8 +15,8 @@ import TransactionList from '../components/transactions/TransactionList';
 import { COLORS, Div, DivIcon, Text, WrappedBox } from '../styles/global';
 
 const Home = () => {
-  const navigation = useNavigation();
   const { width } = Dimensions.get('window');
+  const navigation = useNavigation();
   const isDarkThemeEnable = useSelector(
     (state: any) => state.theme.darkThemeEnabled,
   );
@@ -24,25 +24,19 @@ const Home = () => {
   const transactions = useSelector(
     (state: any) => state.transactions.transactions,
   );
+
   const selectedColor = isDarkThemeEnable ? COLORS.WHITE : COLORS.BLACK;
   const selectedColorBg = isDarkThemeEnable ? COLORS.BLACK : COLORS.WHITE;
+  const firstFiveTransactions =
+    transactions?.length > 5 ? transactions.slice(0, 5) : transactions;
 
-  const getFirst5Transactions = () => {
-    if (transactions?.length > 5) {
-      return transactions.slice(0, 5);
-    }
-    return transactions;
+  const navigateTo = (route: string) => {
+    navigation.navigate(route as never);
   };
 
   const renderTransactionList = () => {
-    return <TransactionList transactions={getFirst5Transactions()} />;
+    return <TransactionList transactions={firstFiveTransactions} />;
   };
-
-  // const [value, setValue] = useState(0);
-  // const valueData = useComputedValue(
-  //   () => setValue(loop.current * 700),
-  //   [loop],
-  // );
 
   return (
     <ScrollView style={{ backgroundColor: selectedColorBg }}>
@@ -62,7 +56,7 @@ const Home = () => {
             <Ionicons name="person-outline" color={selectedColor} size={26} />
           </DivIcon>
           <View>
-            <Pressable onPress={() => navigation.navigate('CardList')}>
+            <Pressable onPress={() => navigateTo('CardList')}>
               <Card width={width} name={user?.name} />
             </Pressable>
             <View style={styles.flex}>
@@ -72,7 +66,7 @@ const Home = () => {
                 height={80}>
                 <Pressable
                   style={[styles.addButton]}
-                  onPress={() => navigation.navigate('AddTransaction')}>
+                  onPress={() => navigateTo('AddTransaction')}>
                   <Text
                     marginTop={0}
                     paddingTop={0}
@@ -82,16 +76,6 @@ const Home = () => {
                   </Text>
                 </Pressable>
               </BackgroundDiv>
-              {/* <Pressable onPress={() => navigation.navigate('CardList')}>
-                <ButtonWithBorder
-                  colors={['#F26CA7', '#5E4AE3']}
-                  text="Cuentas"
-                  fontSize={17}
-                  width={width / 2}
-                  height={80}
-                  backgroundColor={selectedColorBg}
-                />
-              </Pressable> */}
             </View>
           </View>
         </Div>

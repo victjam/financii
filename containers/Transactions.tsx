@@ -1,5 +1,5 @@
 import { useRoute } from '@react-navigation/native';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ScrollView } from 'react-native';
 import { useSelector } from 'react-redux';
 import ShadowButton from '../components/form/ShadowButton';
@@ -31,6 +31,13 @@ const Transactions = ({ navigation }: any) => {
     setAllTransactions(transactions);
   };
 
+  const goToCategories = () => {
+    if (categoryId) {
+      resetFilters();
+    }
+    navigation.navigate('CategoryList', { filterBy: true });
+  };
+
   useEffect(() => {
     if (categoryId) {
       setCategory(categoryId);
@@ -43,6 +50,7 @@ const Transactions = ({ navigation }: any) => {
       setCategory(null);
     }
   }, [transactions, categoryId]);
+
   return (
     <Container>
       <ScrollView>
@@ -85,9 +93,7 @@ const Transactions = ({ navigation }: any) => {
             </Text>
             <ShadowButton
               text="Seleccionar categoria"
-              handleTouch={() =>
-                navigation.navigate('CategoriesByUser', { filterBy: true })
-              }
+              handleTouch={() => goToCategories()}
             />
             {category && (
               <Div>

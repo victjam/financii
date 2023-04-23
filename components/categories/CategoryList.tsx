@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { useIsFocused } from '@react-navigation/native';
+import { useIsFocused, useRoute } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FlatList, Pressable } from 'react-native';
@@ -20,6 +20,8 @@ import CustomInput from '../form/CustomInput';
 
 const CategoryList = ({ navigation }: any) => {
   const user = useSelector((state: any) => state.user.user);
+  const route = useRoute();
+  const filterBy = route?.params?.filterBy ? route?.params?.filterBy : false;
   const isFocused = useIsFocused();
   const [globalCategories, setGlobalCategories] = useState<any>([]);
   const [categories, setCategories] = useState<any>([]);
@@ -77,6 +79,12 @@ const CategoryList = ({ navigation }: any) => {
   }, [user, isFocused]);
 
   const selectCategory = (category: Category) => {
+    if (filterBy) {
+      navigation.navigate('Transactions', {
+        categoryId: category.id,
+      });
+      return;
+    }
     navigation.navigate('AddTransaction', {
       category: category,
     });

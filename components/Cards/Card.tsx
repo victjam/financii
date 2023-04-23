@@ -1,10 +1,9 @@
 import { StyleSheet, View } from 'react-native';
-import { useSelector } from 'react-redux';
 import { COLORS, Text } from '../../styles/global';
 import { formatToPrice } from '../../util/util';
 import BackgroundDiv from '../BackgroundDiv';
 
-const Card = ({ width, name }: any) => {
+const Card = ({ width }: any) => {
   const checkTimeToSayGreetings = () => {
     const date = new Date();
     const hour = date.getHours();
@@ -17,21 +16,12 @@ const Card = ({ width, name }: any) => {
     }
   };
 
-  const totalTransactions =
-    useSelector((state: any = 0) => state.transactions.total) ?? 0;
-  const user = useSelector((state: any) => state.user.user);
-  const getFirstCard = () => {
-    if (user?.cards.length > 0) {
-      return user?.cards[0];
-    }
-  };
-
   return (
     <BackgroundDiv colors={['#05299E', '#F26CA7']} width={width} height={240}>
       <View style={[styles.divContainerText]}>
         <View>
           <Text color={COLORS.WHITE}>
-            {checkTimeToSayGreetings()}, {name}.
+            {checkTimeToSayGreetings()}, {'Victor'}.
           </Text>
           <Text paddingTop={5} color={COLORS.WHITE}>
             Tu balance
@@ -41,11 +31,11 @@ const Card = ({ width, name }: any) => {
             fontWeight="bold"
             fontSize={35}
             color={COLORS.WHITE}>
-            {formatToPrice(totalTransactions)}
+            {formatToPrice(20000)}
           </Text>
         </View>
         <Text fontSize={15} color={COLORS.WHITE}>
-          {getFirstCard()?.title}
+          Tarjeta personal
         </Text>
       </View>
     </BackgroundDiv>
